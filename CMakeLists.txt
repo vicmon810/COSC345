@@ -3,15 +3,14 @@ project(MovidAndFood)
 
 set(CMAKE_CXX_STANDARD 11)
 
-# Include directories
-include_directories(/usr/local/Cellar/mongo-cxx-driver/3.8.0/include/bsoncxx/v_noabi) ##Please chanage this to YOUSELF's mongo-xcc-driver location in YOU OWN machine
-include_directories(/usr/local/Cellar/mongo-cxx-driver/3.8.0/include/mongocxx/v_noabi)##Please chanage this to YOUSELF's mongo-xcc-driver location in YOU OWN machine
+set(CMAKE_TOOLCHAIN_FILE "C:\\vclib\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake")
 
-# Link directories
-link_directories(/usr/local/Cellar/mongo-cxx-driver/3.8.0/lib)##Please chanage this to YOUSELF's mongo-xcc-driver location in YOU OWN machine
+find_package(bsoncxx CONFIG REQUIRED)
+find_package(mongocxx CONFIG REQUIRED)
 
 # Add the source file to the project
-add_executable(MovidAndFood Connection.cpp)
+add_executable(MovieAndFood Connection.cpp)
 
-# Link libraries
-target_link_libraries(MovidAndFood bsoncxx mongocxx)
+target_link_libraries(MovieAndFood PRIVATE $<IF:$<TARGET_EXISTS:mongo::bsoncxx_static>,mongo::bsoncxx_static,mongo::bsoncxx_shared>)
+target_link_libraries(MovieAndFood PRIVATE $<IF:$<TARGET_EXISTS:mongo::mongocxx_static>,mongo::mongocxx_static,mongo::mongocxx_shared>)
+
