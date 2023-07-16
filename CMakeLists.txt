@@ -1,13 +1,17 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(hello.cpp VERSION 0.1.0 LANGUAGES C CXX)
+cmake_minimum_required(VERSION 3.12)
+project(MovidAndFood)
 
-include(CTest)
-enable_testing()
+set(CMAKE_CXX_STANDARD 11)
 
-add_executable(hello.cpp main.cpp)
+# Include directories
+include_directories(/usr/local/Cellar/mongo-cxx-driver/3.8.0/include/bsoncxx/v_noabi) ##Please chanage this to YOUSELF's mongo-xcc-driver location in YOU OWN machine
+include_directories(/usr/local/Cellar/mongo-cxx-driver/3.8.0/include/mongocxx/v_noabi)##Please chanage this to YOUSELF's mongo-xcc-driver location in YOU OWN machine
 
-set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-include(CPack)
+# Link directories
+link_directories(/usr/local/Cellar/mongo-cxx-driver/3.8.0/lib)##Please chanage this to YOUSELF's mongo-xcc-driver location in YOU OWN machine
 
+# Add the source file to the project
+add_executable(MovidAndFood Connection.cpp)
 
+# Link libraries
+target_link_libraries(MovidAndFood bsoncxx mongocxx)
