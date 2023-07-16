@@ -14,14 +14,14 @@ int main(int, char **)
 
     document << "hello"
              << "world";
-    collection.insert_one(document.view());
+    // collection.insert_one(document.view());
 
     auto cursor = collection.find({});
 
     for (auto &&doc : cursor)
     {
         std::cout << bsoncxx::to_json(doc) << std::endl;
-        std::cout << "SUCCESS!" << std::endl;
+        // std::cout << "SUCCESS!" << std::endl;
     }
 
     return 0;
