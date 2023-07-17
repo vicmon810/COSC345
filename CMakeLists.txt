@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
 project(MovidAndFood)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_TOOLCHAIN_FILE "C:\\vclib\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake")
+set(CMAKE_TOOLCHAIN_FILE "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake")
 
 find_package(bsoncxx CONFIG REQUIRED)
 find_package(mongocxx CONFIG REQUIRED)
