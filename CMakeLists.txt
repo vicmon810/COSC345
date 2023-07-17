@@ -13,4 +13,3 @@ add_executable(MovieAndFood Connection.cpp)
 
 target_link_libraries(MovieAndFood PRIVATE $<IF:$<TARGET_EXISTS:mongo::bsoncxx_static>,mongo::bsoncxx_static,mongo::bsoncxx_shared>)
 target_link_libraries(MovieAndFood PRIVATE $<IF:$<TARGET_EXISTS:mongo::mongocxx_static>,mongo::mongocxx_static,mongo::mongocxx_shared>)
-
