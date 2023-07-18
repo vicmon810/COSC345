@@ -17,16 +17,36 @@ namespace cosc345
         mongocxx::client conn{mongocxx::uri{"mongodb+srv://admin2:1EiG7CUoKjvMn6p9@cluster0.hayoush.mongodb.net/test"}};
 
         bsoncxx::builder::stream::document document{};
-        auto collection = conn["MOVIE_APP"]["Movies"];
-
-        long size = 0;
-
-        auto cursor = collection.find({});
-
-        for (auto &&doc : cursor)
+        auto collection_movie = conn["MOVIE_APP"]["Movies"];
+        auto collection_food = conn["MOVIE_APP"]["Recipe"];
+        size_movie = 0;
+        size_food = 0;
+        auto cursor_movie = collection_movie.find({});
+        auto cursor_food = collection_food.find({});
+        for (auto &&doc : cursor_movie)
         {
-            size++;
+            size_movie++;
         }
-        cout << size << endl;
+        for (auto &&doc : cursor_food)
+            size_food++;
+        // cout << size << endl;
+    }
+    /*
+    @Desc:return total size of the movied data set
+    */
+    int Connection::getSizeMovie()
+    {
+        return size_movie;
+    }
+
+    /*
+    @Desc:return total size of the food in data set
+    */
+    int Connection::getSizeFood()
+    {
+        return size_food;
+    }
+    string Connection::getDetial()
+    {
     }
 }

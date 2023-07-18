@@ -14,9 +14,14 @@ namespace cosc345
     public:
         Connection();
         void est_conn();
+        int getSizeMovie();
+        int getSizeFood();
+        string getDetial();
 
     private:
         string result;
+        int size_movie;
+        int size_food;
     };
 }
 
