@@ -23,7 +23,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(MovidAndFood)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 # Find the required Qt components
 find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets)
