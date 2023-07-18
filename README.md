@@ -18,3 +18,5 @@
 * [Moives lists](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset)
 * [C++ Connect to MongoDB](https://www.google.com/search?sxsrf=AB5stBildVmcn50TbInE3bXgggo5pPk5Lg:1689388570083&q=connecting+mongodb+compass+with+C%2B%2B&tbm=vid&sa=X&ved=2ahUKEwictO3s1o-AAxXpq1YBHRdkDyMQ0pQJegQICxAB#fpstate=ive&vld=cid:1452010a,vid:GKTItIcOb60)
 * [Getting Started with MongoDB and C++](https://www.mongodb.com/developer/products/mongodb/getting-started-mongodb-cpp/)
+* [Qt with CMake](https://doc.qt.io/qt-6/cmake-get-started.html#building-a-c-console-application)
+* [Qt called by main class](https://stackoverflow.com/questions/17450039/qt-c-gui-call-from-another-class)
