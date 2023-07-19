@@ -46,7 +46,7 @@ namespace cosc345
     {
         return size_food;
     }
-    string Connection::getDetial()
-    {
-    }
+    //string Connection::getDetial()
+    //{
+    //}
 }
