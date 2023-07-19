@@ -12,8 +12,8 @@ Our goal is to create a user-friendly app that provides personalized movie recom
 # Team members: 
 [Kris Mao](https://github.com/vicmon810) 7248988 
 [Andrew Goh](https://github.com/andre2410) 3457439
-[Andrew Booth](https://github.com/booan450) 8539924
-[Tommy Light](https://github.com/) 15894859
+[Andrew Booth](https://github.com/boo13103) 8539924
+[Tommy Light](https://github.com/tlite4) 15894859
 
 # Sources Rquirement : 
 [MongoDB C++ driver](https://mongocxx.org/mongocxx-v3/installation/)
