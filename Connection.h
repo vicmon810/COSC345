@@ -7,6 +7,9 @@
 
 using namespace std;
 
+/**
+* Header file for Connection.cpp
+*/
 namespace cosc345
 {
     class Connection
@@ -16,7 +19,6 @@ namespace cosc345
         void est_conn();
         int getSizeMovie();
         int getSizeFood();
-        string getDetial();
 
     private:
         string result;

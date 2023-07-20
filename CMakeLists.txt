@@ -1,7 +1,7 @@
 # Uncomment section for your respective OS
-# For windows
+# For Windows
 cmake_minimum_required(VERSION 3.12)
-project(MovidAndFood)
+project(MovieAndFood)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -9,15 +9,28 @@ set(CMAKE_TOOLCHAIN_FILE "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake")
 
 find_package(bsoncxx CONFIG REQUIRED)
 find_package(mongocxx CONFIG REQUIRED)
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
+find_package(Qt5Widgets REQUIRED)
 
-# Add the source file to the project
+# Add the source files to the project
 add_executable(MovieAndFood 
 				Connection.cpp
 				main.cpp
+				GUI.cpp
 				)
 
-target_link_libraries(MovieAndFood PRIVATE $<IF:$<TARGET_EXISTS:mongo::bsoncxx_static>,mongo::bsoncxx_static,mongo::bsoncxx_shared>)
-target_link_libraries(MovieAndFood PRIVATE $<IF:$<TARGET_EXISTS:mongo::mongocxx_static>,mongo::mongocxx_static,mongo::mongocxx_shared>)
+# Set AUTOMOC and AUTOUIC to automatically handle Qt's moc and uic
+set_target_properties(MovieAndFood PROPERTIES AUTOMOC ON)
+set_target_properties(MovieAndFood PROPERTIES AUTOUIC ON)
+
+target_link_libraries(MovieAndFood PRIVATE 
+	$<IF:$<TARGET_EXISTS:mongo::bsoncxx_static>,mongo::bsoncxx_static,mongo::bsoncxx_shared>
+	$<IF:$<TARGET_EXISTS:mongo::mongocxx_static>,mongo::mongocxx_static,mongo::mongocxx_shared>
+	Qt5::Core
+	Qt5::Gui
+	Qt5::Widgets
+)
 
 # For MAC
 #cmake_minimum_required(VERSION 3.12)

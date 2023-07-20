@@ -10,10 +10,10 @@ Our goal is to create a user-friendly app that provides personalized movie recom
 2: Food Pairing Suggestions: In addition to movie recommendations, the app will suggest suitable food options that complement the user's selected movie and mood. It will provide recipes, restaurant suggestions, or delivery options based on the user's location and dietary preferences.
 
 # Team members: 
-[Kris Mao](https://github.com/vicmon810) 7248988 
-[Andrew Goh](https://github.com/andre2410) 3457439 
-[Andrew Booth](https://github.com/boo13103) 8539924 
-[Tommy Light](https://github.com/tlite4) 1589489 
+[Kris Mao](https://github.com/vicmon810) 7248988 <br>
+[Andrew Goh](https://github.com/andre2410) 3457439 <br>
+[Andrew Booth](https://github.com/boo13103) 8539924 <br>
+[Tommy Light](https://github.com/tlite4) 1589489 <br>
 
 # Sources Rquirement : 
 [MongoDB C++ driver](https://mongocxx.org/mongocxx-v3/installation/)

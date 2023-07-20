@@ -7,6 +7,9 @@
 
 using namespace std;
 
+/**
+* Functions for connecting to mongodb atlas database
+*/
 namespace cosc345
 {
     Connection::Connection() {}
