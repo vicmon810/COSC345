@@ -8,8 +8,8 @@
 using namespace std;
 
 /**
-* Header file for Connection.cpp
-*/
+ * Header file for Connection.cpp
+ */
 namespace cosc345
 {
     class Connection
@@ -19,11 +19,23 @@ namespace cosc345
         void est_conn();
         int getSizeMovie();
         int getSizeFood();
+        string getDetial();
 
     private:
         string result;
         int size_movie;
         int size_food;
+        struct Movies
+        {
+            string movieName;
+            bool adult;
+            string genres;
+            string overview;
+            string produceCompany;
+            string releaseDate;
+            double runTime;
+            double rating;
+        };
     };
 }
 

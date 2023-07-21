@@ -14,6 +14,8 @@ namespace cosc345
 {
     Connection::Connection() {}
 
+    /*TESTING*/
+
     void Connection::est_conn()
     {
         mongocxx::instance inst{};
@@ -48,7 +50,32 @@ namespace cosc345
     {
         return size_food;
     }
-    // string Connection::getDetial()
-    //{
-    // }
+
+    string Connection::getDetial() // chatGPT
+    {
+        string result;
+
+        // Step 1: Connect to the MongoDB Atlas database
+        mongocxx::client conn{mongocxx::uri{"mongodb+srv://admin2:1EiG7CUoKjvMn6p9@cluster0.hayoush.mongodb.net/test"}};
+
+        // Step 2: Access the collection you want to query
+        auto collection = conn["MOVIE_APP"]["Movies"];
+
+        // Step 3: Define your query (e.g., find all documents)
+        bsoncxx::builder::stream::document query{};
+        query << bsoncxx::builder::stream::finalize;
+        cout << query << endl;
+        // Step 4: Execute the query and get the cursor to the result
+        auto cursor = collection.find(query.view());
+        // Step 5: Iterate through the cursor to process each document
+        for (const auto &doc : cursor)
+        {
+            // Assuming the document has a field called "title," you can access it like this:
+            bsoncxx::document::element titleElement = doc["title"];
+
+            // result += bsoncxx::to_json(doc) + "\n";
+        }
+
+        return result;
+    }
 }
