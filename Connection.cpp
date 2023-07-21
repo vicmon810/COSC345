@@ -29,7 +29,6 @@ namespace cosc345
         }
         for (auto &&doc : cursor_food)
             size_food++;
-        // cout << size << endl;
     }
     /*
     @Desc:return total size of the movied data set
@@ -46,6 +45,8 @@ namespace cosc345
     {
         return size_food;
     }
+
+    /**/
     string Connection::getDetial()
     {
     }
