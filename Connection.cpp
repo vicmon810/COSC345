@@ -7,6 +7,9 @@
 
 using namespace std;
 
+/**
+ * Functions for connecting to mongodb atlas database
+ */
 namespace cosc345
 {
     Connection::Connection() {}
@@ -45,9 +48,7 @@ namespace cosc345
     {
         return size_food;
     }
-
-    /**/
-    string Connection::getDetial()
-    {
-    }
+    // string Connection::getDetial()
+    //{
+    // }
 }
