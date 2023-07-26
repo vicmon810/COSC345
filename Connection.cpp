@@ -64,7 +64,7 @@ namespace cosc345
         // Step 3: Define your query (e.g., find all documents)
         bsoncxx::builder::stream::document query{};
         query << bsoncxx::builder::stream::finalize;
-        cout << query << endl;
+        // cout << query << endl;
         // Step 4: Execute the query and get the cursor to the result
         auto cursor = collection.find(query.view());
         // Step 5: Iterate through the cursor to process each document
