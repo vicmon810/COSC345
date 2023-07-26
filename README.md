@@ -1,4 +1,4 @@
-# [team report](https://github.com/vicmon810/COSC345/tree/main/Team%20Report)
+# [team report](https://github.com/vicmon810/COSC345/blob/main/Team%20Report/COSC345%20A1.pdf)
 
 # Movies and Food:
 2023 Otago COSC345 Team Work: We are aiming to develop an application that recommends movies and suggests suitable food based on the user's preferences, mood, and movie history.
