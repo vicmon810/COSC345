@@ -15,7 +15,7 @@ int main(int argc, char **argv) // As GUI thing needs this apparently
     conn.est_conn();
     cout << "Total Moive: " << conn.getSizeMovie() << endl;
     cout << "Total Recipe: " << conn.getSizeFood() << endl;
-    cout << "detial" << conn.getDetial() << endl;
+    //cout << "detail" << conn.getDetail() << endl;
     // GUI button;
     // button.slots();
 

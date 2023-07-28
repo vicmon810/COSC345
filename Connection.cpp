@@ -51,7 +51,7 @@ namespace cosc345
         return size_food;
     }
 
-    string Connection::getDetial() // chatGPT
+    string Connection::getDetail() // chatGPT
     {
         string result;
 
@@ -70,7 +70,7 @@ namespace cosc345
         // Step 5: Iterate through the cursor to process each document
         for (const auto &doc : cursor)
         {
-            // Assuming the document has a field called "title," you can access it like this:
+            // Assuming the document has a field called "title," you can access it like this: THIS DOESNT WORK
             bsoncxx::document::element titleElement = doc["title"];
 
             // result += bsoncxx::to_json(doc) + "\n";

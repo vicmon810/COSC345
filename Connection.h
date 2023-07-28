@@ -19,7 +19,7 @@ namespace cosc345
         void est_conn();
         int getSizeMovie();
         int getSizeFood();
-        string getDetial();
+        string getDetail();
 
     private:
         string result;
