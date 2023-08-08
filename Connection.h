@@ -4,6 +4,11 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <iostream>
+#include <bsoncxx/builder/stream/document.hpp>
+#include <bsoncxx/json.hpp>
+#include <mongocxx/client.hpp>
+#include <mongocxx/instance.hpp>
 
 using namespace std;
 
@@ -14,28 +19,31 @@ namespace cosc345
 {
     class Connection
     {
-    public:
-        Connection();
-        void est_conn();
-        int getSizeMovie();
-        int getSizeFood();
-        string getDetail();
 
     private:
+        mongocxx::collection collection_movie;
+        mongocxx::collection collection_food;
         string result;
         int size_movie;
         int size_food;
         struct Movies
         {
-            string movieName;
-            bool adult;
             string genres;
+            string imdb_id;
             string overview;
-            string produceCompany;
-            string releaseDate;
-            double runTime;
+            double release_date;
+            double runtime;
+            string title;
             double rating;
         };
+        vector<Movies> moviesDetail;
+
+    public:
+        Connection();
+        void est_conn();
+        int getSizeMovie();
+        int getSizeFood();
+        void getDetailMovie();
     };
 }
 

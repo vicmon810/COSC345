@@ -26,14 +26,14 @@ int main(int argc, char **argv) // As GUI thing needs this apparently
     // QApplication app(argc, argv);
 
     // Test connection to database
-    // Connection conn;
-    // conn.est_conn();
+    // Connection conn1;
+    // conn1.est_conn();
+    // conn1.getDetailMovie();
     // cout << "Total Moive: " << conn.getSizeMovie() << endl;
     // cout << "Total Recipe: " << conn.getSizeFood() << endl;
     // cout << "detail" << conn.getDetail() << endl;
     //  GUI button;
     //  button.slots();
-
     // Initialise QT App
     QApplication app(argc, argv);
     QPushButton button("Click Me");
@@ -64,6 +64,7 @@ int main(int argc, char **argv) // As GUI thing needs this apparently
     // Connecting into DB
     Connection conn;
     conn.est_conn();
+    // conn.getDetailMovie();
     // Initial Qt Objects
     QCheckBox *checkBox = new QCheckBox();
     QLineEdit *lineEdit = new QLineEdit();
