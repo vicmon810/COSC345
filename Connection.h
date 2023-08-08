@@ -27,9 +27,8 @@ namespace cosc345
         int size_movie;
         int size_food;
 
-        // comment
-
     public:
+        //Movie struct
         struct Movies
         {
             string genres;
@@ -40,12 +39,27 @@ namespace cosc345
             string title;
             double rating;
         };
+
+        //Food Struct
+        struct Food
+        {
+            string title;
+            string ingredients;
+            string directions;
+            string NER;
+        };
+
+        //Vector to store all movies and food
         vector<Movies> moviesDetail;
+        vector<Food> foodDetail;
+
+
         Connection();
         void est_conn();
         int getSizeMovie();
         int getSizeFood();
         vector<Movies> getDetailMovie();
+        vector<Food> getDetailFood();
     };
 }
 

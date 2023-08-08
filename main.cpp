@@ -23,19 +23,6 @@ int main(int argc, char **argv) // As GUI thing needs this apparently
     using namespace std;
     using namespace cosc345;
 
-    // Initialise QT App
-    // QApplication app(argc, argv);
-
-    // Test connection to database
-    // Connection conn1;
-    // conn1.est_conn();
-    // conn1.getDetailMovie();
-    // cout << "Total Moive: " << conn.getSizeMovie() << endl;
-    // cout << "Total Recipe: " << conn.getSizeFood() << endl;
-    // cout << "detail" << conn.getDetail() << endl;
-    //  GUI button;
-    //  button.slots();
-    // Initialise QT App
     QApplication app(argc, argv);
     QPushButton button("Click Me");
     QFrame frame;
@@ -74,9 +61,6 @@ int main(int argc, char **argv) // As GUI thing needs this apparently
     checkBox->setText("Movie Size: " + QString::number(conn.getSizeMovie()));
     checkBox->setChecked(true);
 
-    // Fill words in lineEdit with read only
-    // lineEdit->setText("Receipt Size: " + QString::number(conn.getSizeFood()));
-    // lineEdit->setReadOnly(true);
 
     // File detials
     vector<cosc345::Connection::Movies> moviesDetail = conn.getDetailMovie();
