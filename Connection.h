@@ -26,6 +26,10 @@ namespace cosc345
         string result;
         int size_movie;
         int size_food;
+
+        // comment
+
+    public:
         struct Movies
         {
             string genres;
@@ -36,15 +40,12 @@ namespace cosc345
             string title;
             double rating;
         };
-        // comment
         vector<Movies> moviesDetail;
-
-    public:
         Connection();
         void est_conn();
         int getSizeMovie();
         int getSizeFood();
-        void getDetailMovie();
+        vector<Movies> getDetailMovie();
     };
 }
 

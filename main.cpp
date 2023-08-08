@@ -74,9 +74,23 @@ int main(int argc, char **argv) // As GUI thing needs this apparently
     checkBox->setChecked(true);
 
     // Fill words in lineEdit with read only
-    lineEdit->setText("Receipt Size: " + QString::number(conn.getSizeFood()));
-    lineEdit->setReadOnly(true);
+    // lineEdit->setText("Receipt Size: " + QString::number(conn.getSizeFood()));
+    // lineEdit->setReadOnly(true);
 
+    // File detials
+    vector<cosc345::Connection::Movies> moviesDetail = conn.getDetailMovie();
+    QString movieDetailsString;
+    for (const auto &movie : moviesDetail) // AI
+    {
+        movieDetailsString += QString("Title: %1\nGenre: %2\nIMDB ID: %3\nOverview: %4\n\n")
+                                  .arg(QString::fromStdString(movie.title))
+                                  .arg(QString::fromStdString(movie.genres))
+                                  .arg(QString::fromStdString(movie.imdb_id))
+                                  .arg(QString::fromStdString(movie.overview));
+    }
+
+    lineEdit->setText(movieDetailsString);
+    lineEdit->setReadOnly(true);
     // alignments
     layout->addLayout(layout_v);
     layout_v->addWidget(checkBox);

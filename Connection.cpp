@@ -10,7 +10,7 @@ namespace cosc345
     Connection::Connection() {}
 
     /*TESTING*/
-
+    // cout << "mongocxx version: " << MONGOCXX_VERSION_STRING << endl;
     void Connection::est_conn()
     {
         mongocxx::instance inst{};
@@ -30,7 +30,7 @@ namespace cosc345
             size_movie++;
             Movies movie;
             if (doc["title"])
-                movie.title = doc["title"].get_utf8().value.to_string();
+                movie.title = string(doc["title"].get_utf8().value);
             if (doc["genres"])
                 movie.genres = doc["genres"].get_utf8().value.to_string();
             if (doc["imdb_id"])
@@ -47,7 +47,7 @@ namespace cosc345
 
             moviesDetail.push_back(movie);
         }
-        cout << moviesDetail.size() << endl;
+
         // count for food size
         for (auto &&doc : cursor_food)
             size_food++;
@@ -69,10 +69,8 @@ namespace cosc345
         return size_food;
     }
 
-    void Connection::getDetailMovie()
+    vector<Connection::Movies> Connection::getDetailMovie()
     {
-        // C++ build memory management
-
-        auto cursor_movie = collection_movie.find({});
+        return moviesDetail;
     }
 }
