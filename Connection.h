@@ -36,6 +36,7 @@ namespace cosc345
             string title;
             double rating;
         };
+        // comment
         vector<Movies> moviesDetail;
 
     public:

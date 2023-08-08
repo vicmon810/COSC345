@@ -36,19 +36,19 @@ namespace cosc345
             Movies movie;
             if (doc["title"])
                 movie.title = doc["title"].get_utf8().value.to_string();
-            // if (doc["genres"])
-            //     movie.genres = doc["genres"].get_utf8().value.to_string();
-            // if (doc["imdb_id"])
-            //     movie.imdb_id = doc["imdb_id"].get_utf8().value.to_string();
-            // if (doc["overveiw"])
-            //     movie.overview = doc["overview"].get_utf8().value.to_string();
-            // if (doc["release_date"])
-            //     movie.release_date = doc["release_date"].get_double().value;
-            // if (doc["runtime"])
-            //     movie.runtime = doc["runtime"].get_double().value;
-            // if (doc["rating"])
-            //     movie.rating = doc["rating"].get_double().value;
-            // moviesDetail.push_back(movie);
+            if (doc["genres"])
+                movie.genres = doc["genres"].get_utf8().value.to_string();
+            if (doc["imdb_id"])
+                movie.imdb_id = doc["imdb_id"].get_utf8().value.to_string();
+            if (doc["overveiw"])
+                movie.overview = doc["overview"].get_utf8().value.to_string();
+            if (doc["release_date"])
+                movie.release_date = doc["release_date"].get_double().value;
+            if (doc["runtime"])
+                movie.runtime = doc["runtime"].get_double().value;
+            if (doc["rating"])
+                movie.rating = doc["rating"].get_double().value;
+            moviesDetail.push_back(movie);
         }
 
         // count for food size
