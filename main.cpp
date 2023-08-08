@@ -14,6 +14,7 @@
 #include <QCheckBox>
 #include <QVBoxLayout>
 #include <QLineEdit>
+#include <QLabel>
 /**
  * Main file to run everything
  */
@@ -56,7 +57,7 @@ int main(int argc, char **argv) // As GUI thing needs this apparently
     // Layout for virtual display
     QHBoxLayout *layout = new QHBoxLayout;
     // layout for horntail displayy
-    QVBoxLayout *layout_v = new QVBoxLayout;
+    QVBoxLayout *layout_v = new QGridLayout;
     // add menu into frame virtual
     layout->addWidget(menu);
     layout->addSpacing(10);
@@ -80,17 +81,28 @@ int main(int argc, char **argv) // As GUI thing needs this apparently
     // File detials
     vector<cosc345::Connection::Movies> moviesDetail = conn.getDetailMovie();
     QString movieDetailsString;
+    int row = 0;
     for (const auto &movie : moviesDetail) // AI
     {
-        movieDetailsString += QString("Title: %1\nGenre: %2\nIMDB ID: %3\nOverview: %4\n\n")
-                                  .arg(QString::fromStdString(movie.title))
-                                  .arg(QString::fromStdString(movie.genres))
-                                  .arg(QString::fromStdString(movie.imdb_id))
-                                  .arg(QString::fromStdString(movie.overview));
+        // assign movies infor to lables
+        QLabel *titleLabel = new QLabel("Title: " + movie.title);
+        QLabel *genreLalbe = new QLabel("Genre: " + movie.genres);
+        QLabel *imdbLabel = new QLabel("IMDB ID:" + movie.imdb_id);
+        QLabel *overviewLabel = new QLabel("Overview: " + movie.overview);
+        QLabel *releaseLabel = new QLabel("Release Date: " + QString::number(movie.release_date));
+        QLabel *runtimeLabel = new QLabel("Runtime: " + QString::number(movie.runtime));
+        QLabel *ratingLabel = new QLabel("Rating: " + QString::number(movie.rating));
+        // aligning each label
+        layout_v->addWidget(titleLabel);
+        layout_v->addWidget(genreLalbe);
+        layout_v->addWidget(imdbLabel);
+        layout_v->addWidget(overviewLabel);
+        layout_v->addWidget(releaseLabel);
+        layout_v->addWidget(runtimeLabel);
+        layout_v->addWidget(ratingLabel);
+        row++;
     }
 
-    lineEdit->setText(movieDetailsString);
-    lineEdit->setReadOnly(true);
     // alignments
     layout->addLayout(layout_v);
     layout_v->addWidget(checkBox);
