@@ -59,10 +59,14 @@ namespace cosc345
             //Instance of struct
             Food food;
             //If statements are needed to check if the column still exists
-            food.title = string(doc["title"].get_utf8().value);
-            food.ingredients = string(doc["ingredients"].get_utf8().value);
-            food.directions = string(doc["directions"].get_utf8().value);
-            food.NER = string(doc["NER"].get_utf8().value);
+            if (doc["title"])
+                food.title = string(doc["title"].get_utf8().value);
+            if (doc["ingredients"])
+                food.ingredients = string(doc["ingredients"].get_utf8().value);
+            if (doc["directions"])
+                food.directions = string(doc["directions"].get_utf8().value);
+            if (doc["NER"])
+                food.NER = string(doc["NER"].get_utf8().value);
 
             foodDetail.push_back(food);
         }
