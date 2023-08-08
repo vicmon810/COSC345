@@ -31,8 +31,8 @@ namespace cosc345
             string genres;
             string imdb_id;
             string overview;
-            double release_date;
-            double runtime;
+            int release_date;
+            int runtime;
             string title;
             double rating;
         };

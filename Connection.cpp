@@ -1,8 +1,3 @@
-#include <iostream>
-#include <bsoncxx/builder/stream/document.hpp>
-#include <bsoncxx/json.hpp>
-#include <mongocxx/client.hpp>
-#include <mongocxx/instance.hpp>
 #include "Connection.h"
 
 using namespace std;
@@ -39,18 +34,20 @@ namespace cosc345
             if (doc["genres"])
                 movie.genres = doc["genres"].get_utf8().value.to_string();
             if (doc["imdb_id"])
-            //     movie.imdb_id = doc["imdb_id"].get_utf8().value.to_string();
-            // if (doc["overveiw"])
-            //     movie.overview = doc["overview"].get_utf8().value.to_string();
-            // if (doc["release_date"])
-            //     movie.release_date = doc["release_date"].get_double().value;
-            // if (doc["runtime"])
-            //     movie.runtime = doc["runtime"].get_double().value;
-            // if (doc["rating"])
-            //     movie.rating = doc["rating"].get_double().value;
-            // moviesDetail.push_back(movie);
-        }
+                movie.imdb_id = doc["imdb_id"].get_utf8().value.to_string();
+            if (doc["overview"])
+                movie.overview = doc["overview"].get_utf8().value.to_string();
+            if (doc["release_date"])
+                movie.release_date = doc["release_date"].get_int32().value;
+            if (doc["runtime"])
+                movie.runtime = doc["runtime"].get_int32().value;
+            if (doc["rating"])
 
+                movie.rating = doc["rating"].get_double().value;
+
+            moviesDetail.push_back(movie);
+        }
+        cout << moviesDetail.size() << endl;
         // count for food size
         for (auto &&doc : cursor_food)
             size_food++;
