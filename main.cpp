@@ -14,7 +14,6 @@
 #include <QCheckBox>
 #include <QVBoxLayout>
 #include <QLineEdit>
-#include <QLabel>
 /**
  * Main file to run everything
  */
@@ -23,6 +22,19 @@ int main(int argc, char **argv) // As GUI thing needs this apparently
     using namespace std;
     using namespace cosc345;
 
+    // Initialise QT App
+    // QApplication app(argc, argv);
+
+    // Test connection to database
+    // Connection conn1;
+    // conn1.est_conn();
+    // conn1.getDetailMovie();
+    // cout << "Total Moive: " << conn.getSizeMovie() << endl;
+    // cout << "Total Recipe: " << conn.getSizeFood() << endl;
+    // cout << "detail" << conn.getDetail() << endl;
+    //  GUI button;
+    //  button.slots();
+    // Initialise QT App
     QApplication app(argc, argv);
     QPushButton button("Click Me");
     QFrame frame;
@@ -44,7 +56,7 @@ int main(int argc, char **argv) // As GUI thing needs this apparently
     // Layout for virtual display
     QHBoxLayout *layout = new QHBoxLayout;
     // layout for horntail displayy
-    QVBoxLayout *layout_v = new QGridLayout;
+    QVBoxLayout *layout_v = new QVBoxLayout;
     // add menu into frame virtual
     layout->addWidget(menu);
     layout->addSpacing(10);
@@ -61,31 +73,9 @@ int main(int argc, char **argv) // As GUI thing needs this apparently
     checkBox->setText("Movie Size: " + QString::number(conn.getSizeMovie()));
     checkBox->setChecked(true);
 
-
-    // File detials
-    vector<cosc345::Connection::Movies> moviesDetail = conn.getDetailMovie();
-    QString movieDetailsString;
-    int row = 0;
-    for (const auto &movie : moviesDetail) // AI
-    {
-        // assign movies infor to lables
-        QLabel *titleLabel = new QLabel("Title: " + movie.title);
-        QLabel *genreLalbe = new QLabel("Genre: " + movie.genres);
-        QLabel *imdbLabel = new QLabel("IMDB ID:" + movie.imdb_id);
-        QLabel *overviewLabel = new QLabel("Overview: " + movie.overview);
-        QLabel *releaseLabel = new QLabel("Release Date: " + QString::number(movie.release_date));
-        QLabel *runtimeLabel = new QLabel("Runtime: " + QString::number(movie.runtime));
-        QLabel *ratingLabel = new QLabel("Rating: " + QString::number(movie.rating));
-        // aligning each label
-        layout_v->addWidget(titleLabel)
-        layout_v->addWidget(genreLalbe);
-        layout_v->addWidget(imdbLabel);
-        layout_v->addWidget(overviewLabel);
-        layout_v->addWidget(releaseLabel);
-        layout_v->addWidget(runtimeLabel);
-        layout_v->addWidget(ratingLabel);
-        row++;
-    }
+    // Fill words in lineEdit with read only
+    lineEdit->setText("Receipt Size: " + QString::number(conn.getSizeFood()));
+    lineEdit->setReadOnly(true);
 
     // alignments
     layout->addLayout(layout_v);
