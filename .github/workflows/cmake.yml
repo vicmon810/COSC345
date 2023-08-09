@@ -23,12 +23,15 @@ jobs:
       run: |
         git clone https://github.com/Microsoft/vcpkg.git
         ./vcpkg/bootstrap-vcpkg.sh
-        
-    - name: Install dependencies with vcpkg
-      run: ./vcpkg/vcpkg install mongo-cxx-driver
+    
+    - name: Update vcpkg in case
+      run: ./vcpkg/vcpkg update
+          
+    - name: Install mongo-cxx-driver
+      run: ./vcpkg/vcpkg install mongo-cxx-driver:x64-linux
       
-    - name: Install dependencies with vcpkg
-      run: ./vcpkg/vcpkg install qt5-base
+    - name: Install qt5-base
+      run: ./vcpkg/vcpkg install qt5-base:x64-linux
       
     - name: Configure and build project
       run: |
