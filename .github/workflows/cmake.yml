@@ -25,7 +25,9 @@ jobs:
         ./vcpkg/bootstrap-vcpkg.sh
     
     - name: Update vcpkg in case
-      run: ./vcpkg/vcpkg update
+      run: | 
+        ./vcpkg/vcpkg update
+        ./vcpkg/git pull
           
     - name: Install mongo-cxx-driver
       run: ./vcpkg/vcpkg install mongo-cxx-driver:x64-linux
