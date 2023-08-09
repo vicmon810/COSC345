@@ -1,0 +1,5 @@
+/Users/apple/COSC345/COSC345/build/CMakeFiles/MovieAndFood.dir
+/Users/apple/COSC345/COSC345/build/CMakeFiles/edit_cache.dir
+/Users/apple/COSC345/COSC345/build/CMakeFiles/rebuild_cache.dir
+/Users/apple/COSC345/COSC345/build/CMakeFiles/MovieAndFood_autogen_timestamp_deps.dir
+/Users/apple/COSC345/COSC345/build/CMakeFiles/MovieAndFood_autogen.dir

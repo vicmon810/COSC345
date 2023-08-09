@@ -77,7 +77,7 @@ int main(int argc, char **argv) // As GUI thing needs this apparently
         QLabel *runtimeLabel = new QLabel("Runtime: " + QString::number(movie.runtime));
         QLabel *ratingLabel = new QLabel("Rating: " + QString::number(movie.rating));
         // aligning each label
-        layout_v->addWidget(titleLabel);
+        layout_v->addWidget(titleLabel)
         layout_v->addWidget(genreLalbe);
         layout_v->addWidget(imdbLabel);
         layout_v->addWidget(overviewLabel);
