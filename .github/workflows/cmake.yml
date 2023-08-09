@@ -27,7 +27,8 @@ jobs:
     - name: Update vcpkg in case
       run: | 
         ./vcpkg/vcpkg update
-        ./vcpkg/git pull
+        cd vcpkg
+        git pull
           
     - name: Install mongo-cxx-driver
       run: ./vcpkg/vcpkg install mongo-cxx-driver:x64-linux
