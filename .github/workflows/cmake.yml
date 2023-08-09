@@ -25,10 +25,10 @@ jobs:
         ./vcpkg/bootstrap-vcpkg.sh
         
     - name: Install dependencies with vcpkg
-      run: ./vcpkg/vcpkg install mongo-cxx-driver:x64-windows
+      run: ./vcpkg/vcpkg install mongo-cxx-driver
       
     - name: Install dependencies with vcpkg
-      run: ./vcpkg/vcpkg install qt5-base:x64-windows
+      run: ./vcpkg/vcpkg install qt5-base
       
     - name: Configure and build project
       run: |
