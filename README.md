@@ -10,7 +10,7 @@ For our COSC345 Team Project: We are aiming to develop an application that recom
 [Tommy Lite](https://github.com/tlite4) 1589489 <br>
 
 ## Assignment submission
-### [A1 report](https://github.com/vicmon810/COSC345/blob/main/Team%20Report/COSC345%20A1.pdf)
+### [A2 alpha] soon
 
 ## Project Overview:
 Our goal is to create a user-friendly app that provides personalized movie recommendations and food suggestions to enhance the user's entertainment experience.
