@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\vclib\ultralight-quick-start\build\CMakeFiles\be5922221040e8a76be6237cd96e9406\UltralightSDK-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\vclib\ultralight-quick-start\build\CMakeFiles\be5922221040e8a76be6237cd96e9406\UltralightSDK-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\vclib\ultralight-quick-start\build\CMakeFiles\be5922221040e8a76be6237cd96e9406\UltralightSDK-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\vclib\ultralight-quick-start\build\CMakeFiles\be5922221040e8a76be6237cd96e9406\UltralightSDK-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\vclib\ultralight-quick-start\build\CMakeFiles\be5922221040e8a76be6237cd96e9406\UltralightSDK-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\vclib\ultralight-quick-start\build\CMakeFiles\be5922221040e8a76be6237cd96e9406\UltralightSDK-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\vclib\ultralight-quick-start\build\CMakeFiles\be5922221040e8a76be6237cd96e9406\UltralightSDK-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\vclib\ultralight-quick-start\build\CMakeFiles\24c6f93ecf07c654748b3dd3dcbbaeef\UltralightSDK-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\vclib\ultralight-quick-start\build\CMakeFiles\039e25e9d64d72d85506ea91ff1e95fb\UltralightSDK.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\vclib\ultralight-quick-start\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\vclib\ultralight-quick-start\build\CMakeFiles\UltralightSDK" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{132B45A2-99D7-34BC-8842-17B8AA3624C9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

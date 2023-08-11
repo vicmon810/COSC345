@@ -1,0 +1,13 @@
+# Target labels
+ UltralightSDK
+# Source files and their labels
+C:/vclib/ultralight-quick-start/build/CMakeFiles/UltralightSDK
+C:/vclib/ultralight-quick-start/build/CMakeFiles/039e25e9d64d72d85506ea91ff1e95fb/UltralightSDK.rule
+C:/vclib/ultralight-quick-start/build/CMakeFiles/24c6f93ecf07c654748b3dd3dcbbaeef/UltralightSDK-complete.rule
+C:/vclib/ultralight-quick-start/build/CMakeFiles/be5922221040e8a76be6237cd96e9406/UltralightSDK-build.rule
+C:/vclib/ultralight-quick-start/build/CMakeFiles/be5922221040e8a76be6237cd96e9406/UltralightSDK-configure.rule
+C:/vclib/ultralight-quick-start/build/CMakeFiles/be5922221040e8a76be6237cd96e9406/UltralightSDK-download.rule
+C:/vclib/ultralight-quick-start/build/CMakeFiles/be5922221040e8a76be6237cd96e9406/UltralightSDK-install.rule
+C:/vclib/ultralight-quick-start/build/CMakeFiles/be5922221040e8a76be6237cd96e9406/UltralightSDK-mkdir.rule
+C:/vclib/ultralight-quick-start/build/CMakeFiles/be5922221040e8a76be6237cd96e9406/UltralightSDK-patch.rule
+C:/vclib/ultralight-quick-start/build/CMakeFiles/be5922221040e8a76be6237cd96e9406/UltralightSDK-update.rule
