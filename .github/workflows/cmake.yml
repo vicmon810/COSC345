@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
   
-    - name: Get build folder from ultralight
+    - name: Get build folder to run ultralight
       run: | 
         cmake -B build
         cmake --build build --config Release
