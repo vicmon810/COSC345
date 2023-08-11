@@ -7,7 +7,6 @@ include(cmake/App.cmake)
 
 set(SOURCES "src/MyApp.h"
             "src/MyApp.cpp"
-            "src/main.cpp"
-            "ultralight-sdk-latest-win-x64.7z/include/")
+            "src/main.cpp")
 
 add_app("${SOURCES}")

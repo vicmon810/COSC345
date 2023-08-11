@@ -1,4 +1,4 @@
-[![CMake](https://github.com/vicmon810/COSC345/actions/workflows/cmake.yml/badge.svg)](https://github.com/vicmon810/COSC345/actions/workflows/cmake.yml)
+[![CMake](https://github.com/andre2410/COSC345/actions/workflows/cmake.yml/badge.svg)](https://github.com/andre2410/COSC345/actions/workflows/cmake.yml)
 
 # Movies and Food:
 For our COSC345 Team Project: We are aiming to develop an application that recommends movies and suggests suitable meal/snack pairings based on the user's preferences.
@@ -31,10 +31,8 @@ Regarding CMake settings, please see cmakethings.txt in the Extras folder.
 
 ## References:
 * [Mongodb connection with C/C++](https://www.mongodb.com/docs/drivers/cxx/)
+* [Ultralight API](https://ultralig.ht/)
 * [Food recipes lists](https://www.kaggle.com/datasets/paultimothymooney/recipenlg/code?resource=download)
 * [Food Ingreditents](https://www.kaggle.com/datasets/pes12017000148/food-ingredients-and-recipe-dataset-with-images)
-* [Moives lists](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset)
-* [C++ Connect to MongoDB](https://www.google.com/search?sxsrf=AB5stBildVmcn50TbInE3bXgggo5pPk5Lg:1689388570083&q=connecting+mongodb+compass+with+C%2B%2B&tbm=vid&sa=X&ved=2ahUKEwictO3s1o-AAxXpq1YBHRdkDyMQ0pQJegQICxAB#fpstate=ive&vld=cid:1452010a,vid:GKTItIcOb60)
-* [Getting Started with MongoDB and C++](https://www.mongodb.com/developer/products/mongodb/getting-started-mongodb-cpp/)
-* [Qt with CMake](https://doc.qt.io/qt-6/cmake-get-started.html#building-a-c-console-application)
-* [Qt called by main class](https://stackoverflow.com/questions/17450039/qt-c-gui-call-from-another-class)
+* [Movies lists](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset)
+
