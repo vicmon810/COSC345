@@ -1,4 +1,0 @@
-C:/vclib/ultralight-quick-start/build/CMakeFiles/UltralightSDK.dir
-C:/vclib/ultralight-quick-start/build/CMakeFiles/MyApp.dir
-C:/vclib/ultralight-quick-start/build/CMakeFiles/ALL_BUILD.dir
-C:/vclib/ultralight-quick-start/build/CMakeFiles/ZERO_CHECK.dir
