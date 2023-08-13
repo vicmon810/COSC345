@@ -4,7 +4,7 @@ const {
   getTitle,
   getAllTitle,
   deleteTitle,
-  postTitle,
+  createTitle,
   searchTitle,
   updateTitle, // Add this import for updating titles
 } = require("../controller/foodController");
@@ -24,7 +24,7 @@ routes.patch("/food/:id", updateTitle); // Use the appropriate update function
 routes.delete("/food/:id", deleteTitle);
 
 // Create a title
-routes.post("/food", postTitle);
+routes.post("/food", createTitle);
 
 // Search a title
 routes.get("/food/search/:searchInput", searchTitle);

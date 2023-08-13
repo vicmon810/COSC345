@@ -1,17 +1,17 @@
 const express = require("express");
 const dbo = require("../db/conn");
-
+const { getDB } = require("../db/conn");
 const ObjectID = require("mongodb").ObjectID;
 
 const getAllMovies = async (req, res) => {
   try {
-    let db_connect = dbo.getDb("MOVIE_APP");
+    let db_connect = dbo.getDB();
     const movies = await db_connect
-      .collections("Movies")
+      .collection("Movies")
       .find()
       .toArray(function (err, result) {
         if (err) throw err;
-        res.status(200).json(result0);
+        res.status(200).json(result);
       });
   } catch (err) {
     console.error(err);
@@ -23,7 +23,7 @@ const getAllMovies = async (req, res) => {
 
 const getMovie = async (req, res) => {
   try {
-    let db_connect = dbo.getDb("MOVIE_APP");
+    let db_connect = dbo.getDB();
     const my_query = {
       _id: ObjectID(req.params.id),
     };
@@ -41,7 +41,7 @@ const getMovie = async (req, res) => {
 //create a new moive
 const createMovie = async (req, res) => {
   try {
-    let db_connect = dbo.getDb("MOVIE_APP");
+    let db_connect = dbo.getDB();
     let movie = {
       title: req.body.title,
       genres: req.body.genres,
@@ -65,7 +65,7 @@ const createMovie = async (req, res) => {
 
 const updateMovie = async (req, res) => {
   try {
-    let db_connect = dbo.getDb("MOVIE_APP");
+    let db_connect = dbo.getDB();
     let movie = {
       title: req.body.title,
       genres: req.body.genres,
@@ -91,7 +91,7 @@ const updateMovie = async (req, res) => {
 
 const deleteMovie = async (req, res) => {
   try {
-    let db_connect = dbo.getDb("MOIVE_APP");
+    let db_connect = dbo.getDB();
     let my_query = { _id: ObjectID(req.params.id) };
     db_connect
       .collections("Movies")
@@ -109,7 +109,7 @@ const deleteMovie = async (req, res) => {
 
 const searchMovie = async (req, res) => {
   try {
-    const db_connect = dbo.getDb("MOVIE_APP");
+    const db_connect = dbo.getDB();
     const query = { title: { $regex: req.params.searchInput, $options: "i" } };
     const moive = await db_connect.collections("Movies").find(query).toArray();
     if (moive.length === 0) {

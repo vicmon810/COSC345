@@ -10,9 +10,9 @@ const {
 const routes = express.Router();
 
 //GET all moives
-routes.get("movie", getAllMovies);
+routes.get("/movie", getAllMovies);
 //GET one moives
-routes.get("/movie", getMovie);
+routes.get("/movie/:id", getMovie);
 //Update one moive
 routes.patch("/movie/:id", updateMovie);
 //Create one movie
