@@ -1,4 +1,4 @@
-#include "Connection.h"
+#include "../include/Connection.h"
 
 using namespace std;
 
@@ -10,11 +10,11 @@ namespace cosc345
     Connection::Connection() {}
 
     /**
-    * Connect to MongoDB and get all the data
-    */
+     * Connect to MongoDB and get all the data
+     */
     void Connection::est_conn()
     {
-        //Establish connection
+        // Establish connection
         mongocxx::instance inst{};
         mongocxx::client conn{mongocxx::uri{"mongodb+srv://admin2:1EiG7CUoKjvMn6p9@cluster0.hayoush.mongodb.net/test"}};
 
@@ -25,16 +25,14 @@ namespace cosc345
         size_food = 0;
         auto cursor_movie = collection_movie.find({});
         auto cursor_food = collection_food.find({});
-        moviesDetail;
-
 
         // count for movie size
         for (auto &&doc : cursor_movie)
         {
             size_movie++;
-            //Instance of struct
+            // Instance of struct
             Movies movie;
-            //If statements are needed to check if the column still exists
+            // If statements are needed to check if the column still exists
             if (doc["title"])
                 movie.title = string(doc["title"].get_utf8().value);
             if (doc["genres"])
@@ -54,11 +52,12 @@ namespace cosc345
         }
 
         // count for food size
-        for (auto&& doc : cursor_food) {
+        for (auto &&doc : cursor_food)
+        {
             size_food++;
-            //Instance of struct
+            // Instance of struct
             Food food;
-            //If statements are needed to check if the column still exists
+            // If statements are needed to check if the column still exists
             if (doc["title"])
                 food.title = string(doc["title"].get_utf8().value);
             if (doc["ingredients"])
@@ -89,16 +88,16 @@ namespace cosc345
     }
 
     /**
-    * Returns the details of all movies
-    */
+     * Returns the details of all movies
+     */
     vector<Connection::Movies> Connection::getDetailMovie()
     {
         return moviesDetail;
     }
 
     /**
-    * Returns the details of all food
-    */
+     * Returns the details of all food
+     */
     vector<Connection::Food> Connection::getDetailFood()
     {
         return foodDetail;

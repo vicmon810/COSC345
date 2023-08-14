@@ -2,9 +2,9 @@ name: CMake
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["TestBranch"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["TestBranch"]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -18,43 +18,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Install vcpkg
-      run: |
-        git clone https://github.com/Microsoft/vcpkg.git
-        ./vcpkg/bootstrap-vcpkg.sh
-    
-    - name: Update vcpkg in case
-      run: | 
-        ./vcpkg/vcpkg update
-        cd vcpkg
-        git pull
-          
-    - name: Install mongo-cxx-driver
-      run: ./vcpkg/vcpkg install mongo-cxx-driver:x64-linux
-      
-    - name: Install qt5-base
-      run: ./vcpkg/vcpkg install qt5-base:x64-linux
-      
-    - name: Configure and build project
-      run: |
-        mkdir build
-        cd build
-        cmake -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake ..
-        cmake --build .
+      - uses: actions/checkout@v2
 
-    - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      - name: Install vcpkg
+        run: |
+          git clone https://github.com/Microsoft/vcpkg.git
+          ./vcpkg/bootstrap-vcpkg.sh
 
-    - name: Build
-      # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      - name: Update vcpkg
+        run: |
+          cd vcpkg
+          git pull
 
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C ${{env.BUILD_TYPE}}
+      - name: Install mongo-cxx-driver
+        run: ./vcpkg/vcpkg install mongo-cxx-driver:x64-linux
 
+      - name: Install qt5-base
+        run: ./vcpkg/vcpkg install qt5-base:x64-linux
+
+      - name: Configure and build project
+        run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake ..
+          cmake --build .
+
+      - name: Test
+        working-directory: ${{github.workspace}}/build
+        # Execute tests defined by the CMake configuration.
+        # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+        run: ctest -C ${{env.BUILD_TYPE}}

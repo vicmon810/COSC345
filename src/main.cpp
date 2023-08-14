@@ -2,8 +2,8 @@
  * https://cpp.hotexamples.com/examples/-/QMenu/-/cpp-qmenu-class-examples.html
  */
 #include <iostream>
-#include "Connection.h"
-#include "GUI.h"
+#include "../include/Connection.h"
+// #include "../include/GUI.h"
 #include <QApplication>
 #include <QPushButton>
 #include <QMenu>
