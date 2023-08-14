@@ -1,7 +1,7 @@
 //import lib
 const express = require("express");
 const dbo = require("../db/conn");
-const { getDb } = require("../db/conn");
+const { getDB } = require("../db/conn");
 
 //THIS ObjectID to help us avoid duplicate item with same name
 const ObjectID = require("mongodb").ObjectID;
@@ -99,7 +99,7 @@ const updateTitle = async (req, res) => {
 //delete an item
 const deleteTitle = async (req, res) => {
   try {
-    let db_connection = dbo.getDb();
+    let db_connection = dbo.getDB();
     let myquery = {
       _id: ObjectID(req.params.id),
     };
@@ -118,7 +118,7 @@ const deleteTitle = async (req, res) => {
 //Search a food with title
 const searchTitle = async (req, res) => {
   try {
-    const db_connection = dbo.getDb();
+    const db_connection = dbo.getDB();
     const query = { title: { $regex: req.params.searchInput, $options: "i" } };
     console.log(query);
     const items = await db_connection.collection("Food").find(query).toArray();
