@@ -1,6 +1,7 @@
 //import lib
 const express = require("express");
 const dbo = require("../db/conn");
+const { getDB } = require("../db/conn");
 
 //THIS ObjectID to help us avoid duplicate item with same name
 const ObjectID = require("mongodb").ObjectID;
@@ -8,7 +9,7 @@ const ObjectID = require("mongodb").ObjectID;
 //Read all foods by title
 const getAllTitle = async (req, res) => {
   try {
-    let db_connect = dbo.getDB("MOVIE_APP");
+    let db_connect = dbo.getDB();
     const foods = await db_connect
       .collection("Food")
       .find()
@@ -69,17 +70,24 @@ const createTitle = async (req, res) => {
 const updateTitle = async (req, res) => {
   try {
     let db_connect = dbo.getDB();
-    let food = {
-      //Please match this with mongodb existing row head
-      title: req.body.title,
-      ingredients: req.body.ingredients,
-      directions: req.body.directions,
-      NER: req.body.NER,
+    let my_query = {
+      _id: ObjectID(req.params.id),
     };
-    db_connect.collection("Food").updateOne(food, function (err, result) {
-      if (err) throw err;
-      res.status(200).josn(result);
-    });
+    let update = {
+      $set: {
+        //Please match this with mongodb existing row head
+        title: req.body.title,
+        ingredients: req.body.ingredients,
+        directions: req.body.directions,
+        NER: req.body.NER,
+      },
+    };
+    db_connect
+      .collection("Food")
+      .updateOne(my_query, update, function (err, result) {
+        if (err) throw err;
+        res.status(200).json(result);
+      });
   } catch (err) {
     console.error(err);
     res.status(500).json({
@@ -87,12 +95,13 @@ const updateTitle = async (req, res) => {
     });
   }
 };
+
 //delete an item
 const deleteTitle = async (req, res) => {
   try {
-    let db_connection = dbo.getDb();
+    let db_connection = dbo.getDB();
     let myquery = {
-      _id: ObjectId(req.params.id),
+      _id: ObjectID(req.params.id),
     };
     db_connection.collection("Food").deleteOne(myquery, function (err, result) {
       if (err) throw err;
@@ -109,7 +118,7 @@ const deleteTitle = async (req, res) => {
 //Search a food with title
 const searchTitle = async (req, res) => {
   try {
-    const db_connection = dbo.getDb("MOVIE_APP");
+    const db_connection = dbo.getDB();
     const query = { title: { $regex: req.params.searchInput, $options: "i" } };
     console.log(query);
     const items = await db_connection.collection("Food").find(query).toArray();
