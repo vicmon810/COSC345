@@ -3,19 +3,10 @@ cmake_minimum_required(VERSION 3.3.2)
 
 include(cmake/App.cmake)
 # Include directories for mongo-cxx-driver
-include_directories(/usr/local/Cellar/mongo-cxx-driver/3.8.0/include/bsoncxx/v_noabi)
-include_directories(/usr/local/Cellar/mongo-cxx-driver/3.8.0/include/mongocxx/v_noabi)
-
-# Link directories for mongo-cxx-driver
-link_directories(/usr/local/Cellar/mongo-cxx-driver/3.8.0/lib)
-
-
-
-
-
+find_package(bsoncxx CONFIG REQUIRED)
+find_package(mongocxx CONFIG REQUIRED)
 
 #For ultralight
-
 set(SOURCES "src/MyApp.h"
             "src/MyApp.cpp"
             "src/main.cpp"
@@ -24,7 +15,8 @@ set(SOURCES "src/MyApp.h"
 
 add_app("${SOURCES}")
 
-
-
 # Link libraries
-target_link_libraries(MovieFood PRIVATE bsoncxx mongocxx)
+target_link_libraries(MovieFood PRIVATE 
+	$<IF:$<TARGET_EXISTS:mongo::bsoncxx_static>,mongo::bsoncxx_static,mongo::bsoncxx_shared>
+	$<IF:$<TARGET_EXISTS:mongo::mongocxx_static>,mongo::mongocxx_static,mongo::mongocxx_shared>
+)
