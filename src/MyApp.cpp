@@ -1,27 +1,20 @@
 #include "MyApp.h"
 
-#include ".././backend/include/connection.h"
-
-#define WINDOW_WIDTH 600
+#define WINDOW_WIDTH  600
 #define WINDOW_HEIGHT 400
 
-MyApp::MyApp()
-{
+MyApp::MyApp() {
   ///
   /// Create our main App instance.
   ///
   app_ = App::Create();
-  // initila connection function here
-  cosc345::Connection con;
-  con.est_conn();
-  // test:
-  cout << con.getSizeFood() << endl;
+
   ///
   /// Create a resizable window by passing by OR'ing our window flags with
   /// kWindowFlags_Resizable.
   ///
   window_ = Window::Create(app_->main_monitor(), WINDOW_WIDTH, WINDOW_HEIGHT,
-                           false, kWindowFlags_Titled | kWindowFlags_Resizable);
+    false, kWindowFlags_Titled | kWindowFlags_Resizable);
 
   ///
   /// Create our HTML overlay-- we don't care about its initial size and
@@ -37,7 +30,7 @@ MyApp::MyApp()
   ///
   /// Load a page into our overlay's View
   ///
-  overlay_->view()->LoadURL("file:///NOT_REACT_Front_end///app.html");
+  overlay_->view()->LoadURL("file:///app.html");
 
   ///
   /// Register our MyApp instance as an AppListener so we can handle the
@@ -64,17 +57,14 @@ MyApp::MyApp()
   overlay_->view()->set_view_listener(this);
 }
 
-MyApp::~MyApp()
-{
+MyApp::~MyApp() {
 }
 
-void MyApp::Run()
-{
+void MyApp::Run() {
   app_->Run();
 }
 
-void MyApp::OnUpdate()
-{
+void MyApp::OnUpdate() {
   ///
   /// This is called repeatedly from the application's update loop.
   ///
@@ -82,13 +72,11 @@ void MyApp::OnUpdate()
   ///
 }
 
-void MyApp::OnClose(ultralight::Window *window)
-{
+void MyApp::OnClose(ultralight::Window* window) {
   app_->Quit();
 }
 
-void MyApp::OnResize(ultralight::Window *window, uint32_t width, uint32_t height)
-{
+void MyApp::OnResize(ultralight::Window* window, uint32_t width, uint32_t height) {
   ///
   /// This is called whenever the window changes size (values in pixels).
   ///
@@ -97,21 +85,19 @@ void MyApp::OnResize(ultralight::Window *window, uint32_t width, uint32_t height
   overlay_->Resize(width, height);
 }
 
-void MyApp::OnFinishLoading(ultralight::View *caller,
+void MyApp::OnFinishLoading(ultralight::View* caller,
                             uint64_t frame_id,
                             bool is_main_frame,
-                            const String &url)
-{
+                            const String& url) {
   ///
   /// This is called when a frame finishes loading on the page.
   ///
 }
 
-void MyApp::OnDOMReady(ultralight::View *caller,
+void MyApp::OnDOMReady(ultralight::View* caller,
                        uint64_t frame_id,
                        bool is_main_frame,
-                       const String &url)
-{
+                       const String& url) {
   ///
   /// This is called when a frame's DOM has finished loading on the page.
   ///
@@ -119,9 +105,8 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   ///
 }
 
-void MyApp::OnChangeCursor(ultralight::View *caller,
-                           Cursor cursor)
-{
+void MyApp::OnChangeCursor(ultralight::View* caller,
+                           Cursor cursor) {
   ///
   /// This is called whenever the page requests to change the cursor.
   ///
@@ -130,9 +115,8 @@ void MyApp::OnChangeCursor(ultralight::View *caller,
   window_->SetCursor(cursor);
 }
 
-void MyApp::OnChangeTitle(ultralight::View *caller,
-                          const String &title)
-{
+void MyApp::OnChangeTitle(ultralight::View* caller,
+                          const String& title) {
   ///
   /// This is called whenever the page requests to change the title.
   ///
