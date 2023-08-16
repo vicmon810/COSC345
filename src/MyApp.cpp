@@ -1,6 +1,14 @@
 #include "MyApp.h"
+<<<<<<< HEAD
+// #include ".././extrnal/cpp-httplib-master/httplib.h"
+#include <httplib.h>
+#include "connection.h"
+
+#define WINDOW_WIDTH 600
+=======
 
 #define WINDOW_WIDTH  600
+>>>>>>> 585dffee3f6e468af4119b8d58c6beb8f7776e8a
 #define WINDOW_HEIGHT 400
 
 MyApp::MyApp() {
@@ -8,6 +16,10 @@ MyApp::MyApp() {
   /// Create our main App instance.
   ///
   app_ = App::Create();
+<<<<<<< HEAD
+  // initila connection function here
+=======
+>>>>>>> 585dffee3f6e468af4119b8d58c6beb8f7776e8a
 
   ///
   /// Create a resizable window by passing by OR'ing our window flags with
@@ -54,7 +66,25 @@ MyApp::MyApp() {
   /// Register our MyApp instance as a ViewListener so we can handle the
   /// View's OnChangeCursor and OnChangeTitle events below.
   ///
+
   overlay_->view()->set_view_listener(this);
+
+  // Create the httplib server instance
+  httplib::Server server;
+
+  // Define an API endpoint to retrieve data
+  server.Get("/get_data", [](const httplib::Request &req, httplib::Response &res)
+             {
+    // Retrieve the data you want to send to the frontend
+    cosc345::Connection con;
+    con.est_conn();
+    cout << con.getSizeFood() << " TEST"<< endl;
+    std::string str = std::to_string(con.getSizeMovie());
+    // Set the response content type 
+    res.set_content(str, "text/plain"); });
+
+  // Start the server
+  server.listen("localhost", 8084);
 }
 
 MyApp::~MyApp() {
