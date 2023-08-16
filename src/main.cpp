@@ -1,5 +1,5 @@
 #include "MyApp.h"
-#include ".././backend/include/connection.h"
+#include "connection.h"
 int main()
 {
   MyApp app;

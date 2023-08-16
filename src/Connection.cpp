@@ -3,7 +3,7 @@
 #include <bsoncxx/json.hpp>
 #include <mongocxx/client.hpp>
 #include <mongocxx/instance.hpp>
-#include "../include/connection.h"
+#include "connection.h"
 
 using namespace std;
 
@@ -29,32 +29,38 @@ namespace cosc345
         auto cursor_movie = collection_movie.find({});
         auto cursor_food = collection_food.find({});
         cout << "here" << endl;
-        // moviesDetail;
+        moviesDetail;
         // count for movie size
-        // for (auto &&doc : cursor_movie)
-        // {
-        //     size_movie++;
-        //     Movies movie;
-        //     if (doc["title"])
-        //         movie.title = doc["title"].get_utf8().value.to_string();
-        //     if (doc["genres"])
-        //         movie.genres = doc["genres"].get_utf8().value.to_string();
-        //     if (doc["imdb_id"])
-        //         movie.imdb_id = doc["imdb_id"].get_utf8().value.to_string();
-        //     if (doc["overveiw"])
-        //         movie.overview = doc["overview"].get_utf8().value.to_string();
-        //     if (doc["release_date"])
-        //         movie.release_date = doc["release_date"].get_double().value;
-        //     if (doc["runtime"])
-        //         movie.runtime = doc["runtime"].get_double().value;
-        //     if (doc["rating"])
-        //         movie.rating = doc["rating"].get_double().value;
-        //     moviesDetail.push_back(movie);
-        // }
+        for (auto &&doc : cursor_movie)
+        {
+            // cout << doc << endl;
+            size_movie++;
+            // Movies movie;
+            // if (doc["title"])
+            //     movie.title = doc["title"].get_utf8().value.to_string();
+            // if (doc["genres"])
+            //     movie.genres = doc["genres"].get_utf8().value.to_string();
+            // if (doc["imdb_id"])
+            //     movie.imdb_id = doc["imdb_id"].get_utf8().value.to_string();
+            // if (doc["overveiw"])
+            //     movie.overview = doc["overview"].get_utf8().value.to_string();
+            // if (doc["release_date"])
+            //     movie.release_date = doc["release_date"].get_double().value;
+            // if (doc["runtime"])
+            //     movie.runtime = doc["runtime"].get_double().value;
+            // if (doc["rating"])
+            //     movie.rating = doc["rating"].get_double().value;
+            // moviesDetail.push_back(movie);
+        }
 
         // count for food size
         for (auto &&doc : cursor_food)
+        {
             size_food++;
+        }
+
+        cout << size_food << endl;
+        cout << size_movie << endl;
     }
 
     /*
