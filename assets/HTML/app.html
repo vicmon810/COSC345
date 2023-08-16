@@ -19,6 +19,18 @@
 
     <main>
       <div class="content"></div>
+      <script>
+        // Fetch data from the C++ backend
+        fetch("http://localhost:8080/get_data")
+          .then((response) => response.text())
+          .then((data) => {
+            // Update the HTML content with the fetched data
+            document.getElementById("data").textContent = data;
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      </script>
     </main>
 
     <footer>2023 Your Company Name</footer>

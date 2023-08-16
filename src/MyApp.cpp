@@ -1,5 +1,5 @@
 #include "MyApp.h"
-
+#include <httplib.h>
 #include ".././backend/include/connection.h"
 
 #define WINDOW_WIDTH 600
@@ -14,8 +14,7 @@ MyApp::MyApp()
   // initila connection function here
   cosc345::Connection con;
   con.est_conn();
-  // test:
-  cout << con.getSizeFood() << endl;
+
   ///
   /// Create a resizable window by passing by OR'ing our window flags with
   /// kWindowFlags_Resizable.
@@ -62,6 +61,18 @@ MyApp::MyApp()
   /// View's OnChangeCursor and OnChangeTitle events below.
   ///
   overlay_->view()->set_view_listener(this);
+
+  // Define an API endpoint to retrieve data
+  server.Get("/get_data", [](const httplib::Request &req, httplib::Response &res)
+             {
+        // Retrieve the data you want to send to the frontend
+        std::string data = "Hello from C++ backend!";
+
+        // Set the response content type
+        res.set_content(data, "text/plain"); });
+
+  // Start the server
+  server.listen("localhost", 8080);
 }
 
 MyApp::~MyApp()
