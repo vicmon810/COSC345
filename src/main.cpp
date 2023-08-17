@@ -37,39 +37,39 @@ int main(int argc, char **argv)
     lineEdit->setText("Receipt Size: 20"); // You can replace "20" with the actual receipt size
     lineEdit->setReadOnly(true);
 
+    cosc345::Connection conn;
+    conn.est_conn();
+    vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
+
     QTableWidget *tableWidget = new QTableWidget();
-    QStringList headers = {"Genres", "IMDB ID", "Overview", "Release Date", "Runtime", "Title", "Rating"};
+    QStringList headers = {"Genres", "IMDB ID", "Overview", "Release Date", "Runtime", "Title", "Rating", "Food"};
     tableWidget->setColumnCount(headers.size());
     tableWidget->setHorizontalHeaderLabels(headers);
-    const cosc345::Connection conn;
-    conn.est_conn();
+
     int db_size = conn.getSizeMovie();
-    tableWidget->setRowCount(db_size); // Set row count based on data size
+    tableWidget->setRowCount(db_size);
 
     for (int row = 0; row < db_size; ++row)
     {
-        const cosc345::Connection::Movies &movie = moviesData[row]; // Get each movie
+        const cosc345::Connection::Movies &movie = movies[row];
         QTableWidgetItem *genresItem = new QTableWidgetItem(QString::fromStdString(movie.genres));
-        QTableWidgetItem *imdbIdItem = new QTableWidgetItem(QString::fromStdString(movie.imdb_id));
+        QTableWidgetItem *imdbItem = new QTableWidgetItem(QString::fromStdString(movie.imdb_id));
         QTableWidgetItem *overviewItem = new QTableWidgetItem(QString::fromStdString(movie.overview));
-        QTableWidgetItem *releaseDateItem = new QTableWidgetItem(QString::number(movie.release_date));
+        QTableWidgetItem *dateItem = new QTableWidgetItem(QString::number(movie.release_date));
         QTableWidgetItem *runtimeItem = new QTableWidgetItem(QString::number(movie.runtime));
         QTableWidgetItem *titleItem = new QTableWidgetItem(QString::fromStdString(movie.title));
         QTableWidgetItem *ratingItem = new QTableWidgetItem(QString::number(movie.rating));
-
-        // Add items to the table widget in the corresponding columns
+        QTableWidgetItem *foodItem = new QTableWidgetItem("Popcorn");
         tableWidget->setItem(row, 0, genresItem);
-        tableWidget->setItem(row, 1, imdbIdItem);
+        tableWidget->setItem(row, 1, imdbItem);
         tableWidget->setItem(row, 2, overviewItem);
-        tableWidget->setItem(row, 3, releaseDateItem);
+        tableWidget->setItem(row, 3, dateItem);
         tableWidget->setItem(row, 4, runtimeItem);
         tableWidget->setItem(row, 5, titleItem);
         tableWidget->setItem(row, 6, ratingItem);
+        tableWidget->setItem(row, 7, foodItem);
+        // ... (set other items)
     }
-
-    // Add the table widget to your layout or window
-    // For example:
-    layout_v->addWidget(tableWidget);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(menu);
