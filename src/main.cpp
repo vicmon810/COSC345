@@ -12,10 +12,13 @@
 #include <iostream> //test, delete after use
 #include <QDebug>
 #include <QListWidget>
-#include "../include/Connection.h"
 #include <QMessageBox>
 #include <QDialog>
 #include <QLabel>
+
+//h files
+#include "../include/Recommendation.h"
+#include "../include/Connection.h"
 
 /*Should display full movied detial not truncate data set*/
 void handleItemClicked(QListWidgetItem *item)
@@ -68,10 +71,12 @@ int main(int argc, char **argv)
     // Query data from back-end
     cosc345::Connection conn;
     conn.est_conn();
+    //Get movie and food vector structs
     vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
+    vector<cosc345::Connection::Food> food = conn.getDetailFood();
 
     // Initialize QList to for display data set
-    QListWidget *listWidget = new QListWidget();
+    QListWidget *listWidget = new QListWidget(); 
 
     for (const cosc345::Connection::Movies &movie : movies)
     {
