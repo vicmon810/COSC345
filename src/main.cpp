@@ -13,6 +13,30 @@
 #include <QDebug>
 #include <QListWidget>
 #include "../include/Connection.h"
+#include <QMessageBox>
+#include <QDialog>
+#include <QLabel>
+
+/*Should display full movied detial not truncate data set*/
+void handleItemClicked(QListWidgetItem *item)
+{
+    // Get the text (movie details) from the clicked item
+    QString movieDetails = item->text();
+
+    // Create a custom dialog to show the full movie details
+    QDialog dialog;
+    QVBoxLayout *layout = new QVBoxLayout;
+
+    // Display the full movie details in QLabel
+    QLabel *detailsLabel = new QLabel();
+    detailsLabel->setText(movieDetails);
+    layout->addWidget(detailsLabel);
+
+    dialog.setLayout(layout);
+    dialog.setWindowTitle("Movie Details");
+    dialog.exec();
+}
+
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
@@ -64,14 +88,16 @@ int main(int argc, char **argv)
         QListWidgetItem *item = new QListWidgetItem(movieDetails);
         item->setSizeHint(QSize(75, 75)); // Set the size of each card
         listWidget->addItem(item);
-        // Add a separator line
+        // Connect the itemClicked signal to the handleItemClicked slot
     }
     // Append menu/Qlist on main layout
     // mainLayout->addWidget(&frame);
     mainLayout->addWidget(menu);
     movieLayout->addWidget(listWidget);
+    QObject::connect(listWidget, &QListWidget::itemClicked, handleItemClicked);
     mainLayout->addLayout(movieLayout);
     movieLayout->addWidget(line);
+
     // display manLayout
     frame.setLayout(mainLayout);
     frame.show();
