@@ -22,32 +22,39 @@ jobs:
           git clone https://github.com/Microsoft/vcpkg.git
           cd vcpkg
           bootstrap-vcpkg.bat
+        shell: cmd
 
       - name: Update vcpkg
         run: |
           cd vcpkg
           git pull
+        shell: cmd
 
       - name: Install mongo-cxx-driver
         run: vcpkg install mongo-cxx-driver:x64-windows
+        shell: powershell
 
       - name: Install qt5-base
         run: vcpkg install qt5-base:x64-windows
+        shell: powershell
 
       - name: Print vcpkg root directory
         run: |
-            cd vcpkg
-            vcpkg_root=$(vcpkg --print-root)
-            echo "vcpkg root directory: $vcpkg_root"
-
-      - name: Configure CMake
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{ steps.print_vcpkg_root.outputs.vcpkg_root }}
+          $vcpkg_root = $(vcpkg --print-root)
+          echo "vcpkg root directory: $vcpkg_root"
+        shell: powershell
         id: print_vcpkg_root
         continue-on-error: true
 
+      - name: Configure CMake
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{ steps.print_vcpkg_root.outputs.vcpkg_root }}
+        shell: powershell
+
       - name: Build Project
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+        shell: powershell
 
       - name: Test
         working-directory: ${{github.workspace}}/build
         run: ctest -C ${{env.BUILD_TYPE}}
+        shell: powershell
