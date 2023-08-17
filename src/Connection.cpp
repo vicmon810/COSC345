@@ -1,5 +1,5 @@
 #include "../include/Connection.h"
-
+// #include
 using namespace std;
 
 /**
@@ -30,6 +30,7 @@ namespace cosc345
         for (auto &&doc : cursor_movie)
         {
             size_movie++;
+            // std::cout << bsoncxx::to_json(doc) << std::endl;
             // Instance of struct
             Movies movie;
             // If statements are needed to check if the column still exists
@@ -42,11 +43,15 @@ namespace cosc345
             if (doc["overview"])
                 movie.overview = string(doc["overview"].get_utf8().value);
             if (doc["release_date"])
-                movie.release_date = doc["release_date"].get_int32();
+                movie.release_date = string(doc["release_date"].get_utf8().value);
             if (doc["runtime"])
                 movie.runtime = doc["runtime"].get_int32();
             if (doc["rating"])
                 movie.rating = doc["rating"].get_double();
+            if (doc["poster"])
+                movie.poster = string(doc["poster"].get_utf8().value);
+            else
+                movie.poster = "";
 
             moviesDetail.push_back(movie);
         }

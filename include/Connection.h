@@ -34,10 +34,11 @@ namespace cosc345
             string genres;
             string imdb_id;
             string overview;
-            int release_date;
+            string release_date;
             int runtime;
             string title;
             double rating;
+            string poster;
         };
 
         // Food Struct

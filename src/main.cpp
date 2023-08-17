@@ -76,14 +76,15 @@ int main(int argc, char **argv)
     for (const cosc345::Connection::Movies &movie : movies)
     {
         QString movieDetails = "Title: " + QString::fromStdString(movie.title) + "\n" +
-                               "Genres: " + QString::fromStdString(movie.genres) + "\n" + "IMDB ID: " + QString::fromStdString(movie.imdb_id) + "\n" + "Overview: " + QString::fromStdString(movie.overview) + "\n" + "Release Date: " + QString::number(movie.release_date) + "\n" + "Runtime: " + QString::number(movie.runtime) + "\n" + "Rating: " + QString::number(movie.rating) + "\n" + "Food: Popcorn";
+                               "Genres: " + QString::fromStdString(movie.genres) + "\n" + "IMDB ID: " + QString::fromStdString(movie.imdb_id) + "\n" + "Overview: " + QString::fromStdString(movie.overview) + "\n" + "Release Date: " + QString::fromStdString(movie.release_date) + "\n" + "Runtime: " + QString::number(movie.runtime) + "\n" + "Rating: " + QString::number(movie.rating) + "\n" + "Food: Popcorn\n" + "Poster: " + QString::fromStdString(movie.poster);
+
         // we only display 50 chars
-        const int maxDisplayLen = 50;
-        if (movieDetails.length() > maxDisplayLen)
-        {
-            movieDetails.truncate(maxDisplayLen); // Truncate the string
-            movieDetails += "...";                // Add ellipses to indicate truncation
-        }
+        // const int maxDisplayLen = 50;
+        // if (movieDetails.length() > maxDisplayLen)
+        // {
+        //     movieDetails.truncate(maxDisplayLen); // Truncate the string
+        //     movieDetails += "...";                // Add ellipses to indicate truncation
+        // }
 
         QListWidgetItem *item = new QListWidgetItem(movieDetails);
         item->setSizeHint(QSize(75, 75)); // Set the size of each card
