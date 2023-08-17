@@ -13,8 +13,10 @@ find_package(Qt5Widgets REQUIRED)
 # Add the source files to the project
 add_executable(MovieAndFood 
 				src/Connection.cpp
+				include/Connection.h
 				src/main.cpp
-				)
+				include/Recommendation.h 
+				src/Recommendation.cpp)
 				
 # Set AUTOMOC and AUTOUIC to automatically handle Qt's moc and uic
 set_target_properties(MovieAndFood PROPERTIES AUTOMOC ON)

@@ -34,8 +34,16 @@ jobs:
       - name: Install qt5-base
         run: vcpkg install qt5-base:x64-windows
 
+      - name: Print vcpkg root directory
+        run: |
+            cd vcpkg
+            vcpkg_root=$(vcpkg --print-root)
+            echo "vcpkg root directory: $vcpkg_root"
+
       - name: Configure CMake
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{ steps.print_vcpkg_root.outputs.vcpkg_root }}
+        id: print_vcpkg_root
+        continue-on-error: true
 
       - name: Build Project
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
