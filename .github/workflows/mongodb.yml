@@ -1,6 +1,9 @@
 name: C++ CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - main  # Adjust to your repository's main branch
 
 jobs:
   build:
@@ -16,12 +19,6 @@ jobs:
       - name: Install OpenSSL
         run: brew install openssl
 
-      - name: Install MongoDB C Driver
-        run: sudo apt-get install -y libmongoc-1.0-0
-
-      - name: Install MongoDB C++ Driver Dependencies
-        run: sudo apt-get install -y libbsoncxx-3.6 libbsoncxx-3.6-dev
-
       - name: Build and Test MongoDB C++ Driver
         run: |
           git clone --branch r3.8.0 --depth 1 https://github.com/mongodb/mongo-cxx-driver.git
@@ -30,7 +27,7 @@ jobs:
           make
           ctest --output-on-failure
 
-      - name: Build and Test
+      - name: Build and Test Your Application
         run: |
           mkdir build
           cd build
