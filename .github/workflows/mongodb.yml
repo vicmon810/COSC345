@@ -18,7 +18,7 @@ jobs:
 
       - name: Install Qt5 
         run: |
-          brew install Qt5-base
+          brew install qt@5
 
       - name: Install MongoDB C++ Driver
         run: |
