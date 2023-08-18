@@ -56,14 +56,14 @@ int main(int argc, char **argv)
     // QVBoxLayout *layout = new QVBoxLayout;
 
     // initialize menu
-    // QMenu *menu = new QMenu();
-    // menu->setTitle(QObject::tr("Movie and Food"));
-    // menu->addAction(QObject::tr("I Feel Lucky"));
-    // menu->addAction(QObject::tr("Open"));
-    // menu->addAction(QObject::tr("Save"));
-    // QMenu *submenu = menu->addMenu(QObject::tr("Settings"));
-    // submenu->addAction(QObject::tr("Preferences"));
-    // submenu->addAction(QObject::tr("Language"));
+    QMenu *menu = new QMenu();
+    menu->setTitle(QObject::tr("Movie and Food"));
+    menu->addAction(QObject::tr("I Feel Lucky"));
+    menu->addAction(QObject::tr("Open"));
+    menu->addAction(QObject::tr("Save"));
+    QMenu *submenu = menu->addMenu(QObject::tr("Settings"));
+    submenu->addAction(QObject::tr("Preferences"));
+    submenu->addAction(QObject::tr("Language"));
 
     // Initialize layout
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -81,8 +81,17 @@ int main(int argc, char **argv)
 
     for (const cosc345::Connection::Movies &movie : movies)
     {
+        // QString movieDetails = "Title: " + QString::fromStdString(movie.title) + "\n" +
+        //                        "Genres: " + QString::fromStdString(movie.genres) + "\n" + "IMDB ID: " + QString::fromStdString(movie.imdb_id) + "\n" + "Overview: " + QString::fromStdString(movie.overview) + "\n" + "Release Date: " + QString::fromStdString(movie.release_date) + "\n" + "Runtime: " + QString::fromStdString(movie.runtime) + "\n" + "Rating: " + QString::fromStdString(movie.rating) + "\n" + "Food: Popcorn\n" + "Poster: " + QString::fromStdString(movie.poster);
         QString movieDetails = "Title: " + QString::fromStdString(movie.title) + "\n" +
-                               "Genres: " + QString::fromStdString(movie.genres) + "\n" + "IMDB ID: " + QString::fromStdString(movie.imdb_id) + "\n" + "Overview: " + QString::fromStdString(movie.overview) + "\n" + "Release Date: " + QString::fromStdString(movie.release_date) + "\n" + "Runtime: " + QString::number(movie.runtime) + "\n" + "Rating: " + QString::number(movie.rating) + "\n" + "Food: Popcorn\n" + "Poster: " + QString::fromStdString(movie.poster);
+                               "Genres: " + QString::fromStdString(movie.genres) + "\n" +
+                               "IMDB ID: " + QString::fromStdString(movie.imdb_id) + "\n" +
+                               "Overview: " + QString::fromStdString(movie.overview) + "\n" +
+                               "Release Date: " + QString::fromStdString(movie.release_date) + "\n" +
+                               "Runtime: " + QString::number(movie.runtime) + "\n" +
+                               "Rating: " + QString::number(movie.rating) + "\n" + // Convert double to QString
+                               "Food: Popcorn\n" +
+                               "Poster: " + QString::fromStdString(movie.poster);
 
         // we only display 50 chars
         // const int maxDisplayLen = 50;
@@ -97,11 +106,11 @@ int main(int argc, char **argv)
         listWidget->addItem(item);
         // Connect the itemClicked signal to the handleItemClicked slot
     }
-    // Append menu/Qlist on main layout
-    // mainLayout->addWidget(&frame);
+    // Append menu / Qlist on main layout
+    mainLayout->addWidget(&frame);
     // mainLayout->addWidget(menu);
     movieLayout->addWidget(listWidget);
-    QObject::connect(listWidget, &QListWidget::itemClicked, handleItemClicked);
+    // QObject::connect(listWidget, &QListWidget::itemClicked, handleItemClicked);
     mainLayout->addLayout(movieLayout);
     movieLayout->addWidget(line);
 

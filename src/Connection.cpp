@@ -12,66 +12,40 @@ namespace cosc345
      */
     void Connection::est_conn()
     {
-        // Establish connection
-        mongocxx::instance inst{};
-        mongocxx::client conn{mongocxx::uri{"mongodb+srv://admin2:1EiG7CUoKjvMn6p9@cluster0.hayoush.mongodb.net/test"}};
 
-        bsoncxx::builder::stream::document document{};
-        collection_movie = conn["MOVIE_APP"]["Movies"];
-        collection_food = conn["MOVIE_APP"]["Food"];
-        size_movie = 0;
-        size_food = 0;
-        auto cursor_movie = collection_movie.find({});
-        auto cursor_food = collection_food.find({});
-
-        // count for movie size
-        for (auto &&doc : cursor_movie)
+        std::ifstream inputFile("../data/movies.csv");
+        if (!inputFile.is_open())
         {
-            size_movie++;
-            // std::cout << bsoncxx::to_json(doc) << std::endl;
-            // Instance of struct
-            Movies movie;
-            // If statements are needed to check if the column still exists
-            if (doc["title"])
-                movie.title = string(doc["title"].get_utf8().value);
-            if (doc["genres"])
-                movie.genres = string(doc["genres"].get_utf8().value);
-            if (doc["imdb_id"])
-                movie.imdb_id = string(doc["imdb_id"].get_utf8().value);
-            if (doc["overview"])
-                movie.overview = string(doc["overview"].get_utf8().value);
-            if (doc["release_date"])
-                movie.release_date = string(doc["release_date"].get_utf8().value);
-            if (doc["runtime"])
-                movie.runtime = doc["runtime"].get_int32();
-            if (doc["rating"])
-                movie.rating = doc["rating"].get_double();
-            if (doc["image_link"])
-                movie.poster = string(doc["image_link"].get_utf8().value);
-            else
-                movie.poster = "";
-
-            moviesDetail.push_back(movie);
+            std::cerr << "Failed to open the file." << std::endl;
         }
 
-        // count for food size
-        for (auto &&doc : cursor_food)
+        std::string line;
+        while (getline(inputFile, line))
         {
-            size_food++;
-            // Instance of struct
-            Food food;
-            // If statements are needed to check if the column still exists
-            if (doc["title"])
-                food.title = string(doc["title"].get_utf8().value);
-            if (doc["ingredients"])
-                food.ingredients = string(doc["ingredients"].get_utf8().value);
-            if (doc["directions"])
-                food.directions = string(doc["directions"].get_utf8().value);
-            if (doc["NER"])
-                food.NER = string(doc["NER"].get_utf8().value);
-
-            foodDetail.push_back(food);
+            std::vector<std::string> fields;
+            std::stringstream ss(line);
+            std::string field;
+            while (getline(ss, field, ','))
+            {
+                // cout << "Field: " << field << endl;
+                fields.push_back(field);
+            }
+            if (fields.size() >= 8) // Make sure you have at least 8 fields
+            {
+                Movies movie;
+                movie.genres = fields[0];
+                movie.poster = fields[1];
+                movie.imdb_id = fields[2];
+                movie.overview = fields[3];
+                movie.rating = fields[4];
+                movie.release_date = fields[5];
+                movie.runtime = fields[6];
+                movie.title = fields[7];
+                moviesDetail.push_back(movie); // Assuming you have a vector named moviesDetail
+            }
         }
+        cout << moviesDetail.size() << endl;
+        inputFile.close();
     }
 
     /*

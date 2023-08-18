@@ -8,9 +8,9 @@ find_package(mongocxx CONFIG REQUIRED)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
-
+file(COPY ${CMAKE_SOURCE_DIR}/data/movies.csv DESTINATION ${CMAKE_BINARY_DIR})
 add_executable(MovieAndFood 
-    src/Connection.cpp
+    src/readFile.cpp
     include/Connection.h
     src/main.cpp
     include/Recommendation.h 
