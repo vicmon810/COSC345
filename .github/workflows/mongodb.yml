@@ -16,9 +16,21 @@ jobs:
       - name: Update Package Repositories
         run: sudo apt-get update
 
-      - name: Install Essential Dependencies
+      - name: Set up CMake and Build Essentials
         run: |
-          sudo apt-get install -y cmake g++ libboost-all-dev libbson-dev libmongoc-dev git
+          sudo apt-get install -y cmake build-essential
+
+      - name: Install Qt5 Development Libraries
+        run: |
+          sudo apt-get install -y qtbase5-dev
+
+      - name: Install MongoDB C Driver
+        run: |
+          sudo apt-get install -y libmongoc-1.0-0
+
+      - name: Install libbson-1.0 Development Libraries
+        run: |
+          sudo apt-get install -y libbson-1.0-dev
 
       - name: Clone and Build MongoDB C++ Driver
         run: |
