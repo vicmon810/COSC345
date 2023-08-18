@@ -24,9 +24,8 @@ jobs:
         run: |
           sudo apt-get install -y qtbase5-dev
 
-      - name: Install Required Dependencies for libmongoc and libbson
-        run: |
-          sudo apt-get install -y cmake libssl-dev libsasl2-dev pkg-config
+      - name: Install libmongoc and libbson Development Packages
+        run: sudo apt-get install -y libmongoc-1.0-0 libbson-1.0-0
 
       - name: Clone and Build MongoDB C++ Driver
         run: |
