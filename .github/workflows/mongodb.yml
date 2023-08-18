@@ -32,9 +32,10 @@ jobs:
         run: |
           git clone --branch r3.8.0 --depth 1 https://github.com/mongodb/mongo-cxx-driver.git
           cd mongo-cxx-driver/build
-          cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_PREFIX_PATH="/path/to/libmongoc-1.0;/path/to/libbson-1.0"
           make
           ctest --output-on-failure
+
 
       - name: Deploy Your Application (if applicable)
         run: |
