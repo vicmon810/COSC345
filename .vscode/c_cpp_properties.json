@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/local/Cellar/mongo-cxx-driver/3.8.0/include/bsoncxx/v_noabi",
-                "/usr/local/Cellar/mongo-cxx-driver/3.8.0/include/mongocxx/v_noabi"
+                "/usr/local/Cellar/mongo-cxx-driver/3.8.0/include/mongocxx/v_noabi",
+                "/usr/local/Cellar/qt/6.5.1_2/lib/QtWidgets.framework/Versions/A/Headers"
             ],
             "defines": [],
             "macFrameworkPath": [
