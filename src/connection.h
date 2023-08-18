@@ -4,11 +4,10 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <iostream>
-#include <bsoncxx/builder/stream/document.hpp>
-#include <bsoncxx/json.hpp>
-#include <mongocxx/client.hpp>
-#include <mongocxx/instance.hpp>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -21,9 +20,6 @@ namespace cosc345
     {
 
     private:
-        mongocxx::collection collection_movie;
-        mongocxx::collection collection_food;
-        string result;
         int size_movie;
         int size_food;
 
@@ -35,9 +31,9 @@ namespace cosc345
             string imdb_id;
             string overview;
             string release_date;
-            int runtime;
+            string runtime;
             string title;
-            double rating;
+            string rating;
             string poster;
         };
 

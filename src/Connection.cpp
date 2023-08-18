@@ -1,4 +1,5 @@
-#include "../include/Connection.h"
+#include "/Connection.h"
+// #include <nlohmann/json.hpp>
 
 /**
  * Functions for connecting to mongodb atlas database
@@ -12,7 +13,6 @@ namespace cosc345
      */
     void Connection::est_conn()
     {
-
         std::ifstream inputFile("../data/movies.csv");
         if (!inputFile.is_open())
         {
@@ -30,24 +30,33 @@ namespace cosc345
                 // cout << "Field: " << field << endl;
                 fields.push_back(field);
             }
-            if (fields.size() >= 8) // Make sure you have at least 8 fields
+            int size = fields.size();
+            // cout << size << endl;
+            // genres	poster  imdb_id	overview rating	release_date	runtime	title
+            // 0        1           2       x         x-4         x-3             x-2     x-1
+            for (int i = 0; i < fields.size(); i++)
             {
                 Movies movie;
-                movie.genres = fields[0];
-                movie.poster = fields[1];
-                movie.imdb_id = fields[2];
-                movie.overview = fields[3];
-                movie.rating = fields[4];
-                movie.release_date = fields[5];
-                movie.runtime = fields[6];
-                movie.title = fields[7];
-                cout << "title: " << fields[7] << endl;
-                cout << "------------" << endl;
-                cout << "generes: " << fields[0] << endl;
-                moviesDetail.push_back(movie); // Assuming you have a vector named moviesDetail
+                if (i == 0)
+                    movie.genres = fields[0];
+                if (i == 1)
+                    movie.poster = fields[1];
+                if (i == 2)
+                    movie.imdb_id = fields[2];
+                if (i == fields.size() - 1)
+                    movie.title = fields[fields.size() - 1];
+                if (i == fields.size() - 2)
+                    movie.runtime = fields[fields.size() - 2];
+                if (i == fields.size() - 3)
+                    movie.release_date = fields[fields.size() - 3];
+                if (i == fields.size() - 4)
+                    movie.rating = fields[fields.size() - 4];
+                if (i > 2 && i < fields.size() - 4)
+                    movie.overview.append(fields[i]);
+                moviesDetail.push_back(movie);
             }
         }
-        cout << moviesDetail.size() << endl;
+
         inputFile.close();
     }
 
@@ -72,6 +81,7 @@ namespace cosc345
      */
     vector<Connection::Movies> Connection::getDetailMovie()
     {
+
         return moviesDetail;
     }
 

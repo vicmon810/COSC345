@@ -3,25 +3,30 @@ project(MovieAndFood)
 
 set(CMAKE_CXX_STANDARD 17)
 
-find_package(bsoncxx CONFIG REQUIRED)
-find_package(mongocxx CONFIG REQUIRED)
+
+# Make sure the nlohmann_json package is available
+find_package(nlohmann_json REQUIRED)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+
 file(COPY ${CMAKE_SOURCE_DIR}/data/movies.csv DESTINATION ${CMAKE_BINARY_DIR})
+
+
+
 add_executable(MovieAndFood 
-    src/readFile.cpp
-    include/Connection.h
+    src/Connection.h
     src/main.cpp
-    include/Recommendation.h 
+    src/Recommendation.h 
     src/Recommendation.cpp)
 
+    # Use the nlohmann_json_INCLUDE_DIRS provided by find_package
+target_include_directories(MovieAndFood PRIVATE ${nlohmann_json_INCLUDE_DIRS})
+target_include_directories(MovieAndFood PRIVATE /path/to/json/include)
 set_target_properties(MovieAndFood PROPERTIES AUTOMOC ON)
 set_target_properties(MovieAndFood PROPERTIES AUTOUIC ON)
 
 target_link_libraries(MovieAndFood PRIVATE 
-    $<IF:$<TARGET_EXISTS:mongo::bsoncxx_static>,mongo::bsoncxx_static,mongo::bsoncxx_shared>
-    $<IF:$<TARGET_EXISTS:mongo::mongocxx_static>,mongo::mongocxx_static,mongo::mongocxx_shared>
     Qt5::Core
     Qt5::Gui
     Qt5::Widgets

@@ -1,4 +1,5 @@
-#include "connection.h"
+#include "Recommendation.h"
+#include "Connection.h"
 #include <QApplication>
 #include <QPushButton>
 #include <QMenu>
@@ -17,9 +18,9 @@
 #include <QDialog>
 #include <QLabel>
 
-// h files
-#include "../include/Recommendation.h"
-#include "../include/Connection.h"
+
+
+
 
 /*Should display full movied detial not truncate data set*/
 void handleItemClicked(QListWidgetItem *item)
@@ -73,25 +74,25 @@ int main(int argc, char **argv)
     cosc345::Connection conn;
     conn.est_conn();
     // Get movie and food vector structs
-    vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
-    vector<cosc345::Connection::Food> food = conn.getDetailFood();
-
+    // vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
+    // vector<cosc345::Connection::Food> food = conn.getDetailFood();
+    
     // Initialize QList to for display data set
     QListWidget *listWidget = new QListWidget();
 
-    for (const cosc345::Connection::Movies &movie : movies)
-    {
+    // for (const cosc345::Connection::Movies &movie : movies)
+    // {
         // QString movieDetails = "Title: " + QString::fromStdString(movie.title) + "\n" +
         //                        "Genres: " + QString::fromStdString(movie.genres) + "\n" + "IMDB ID: " + QString::fromStdString(movie.imdb_id) + "\n" + "Overview: " + QString::fromStdString(movie.overview) + "\n" + "Release Date: " + QString::fromStdString(movie.release_date) + "\n" + "Runtime: " + QString::fromStdString(movie.runtime) + "\n" + "Rating: " + QString::fromStdString(movie.rating) + "\n" + "Food: Popcorn\n" + "Poster: " + QString::fromStdString(movie.poster);
-        QString movieDetails = "Title: " + QString::fromStdString(movie.title) + "\n" +
-                               "Genres: " + QString::fromStdString(movie.genres) + "\n" +
-                               "IMDB ID: " + QString::fromStdString(movie.imdb_id) + "\n" +
-                               "Overview: " + QString::fromStdString(movie.overview) + "\n" +
-                               "Release Date: " + QString::fromStdString(movie.release_date) + "\n" +
-                               "Runtime: " + QString::number(movie.runtime) + "\n" +
-                               "Rating: " + QString::number(movie.rating) + "\n" + // Convert double to QString
-                               "Food: Popcorn\n" +
-                               "Poster: " + QString::fromStdString(movie.poster);
+        // QString movieDetails = "Title: " + QString::fromStdString(movie.title) + "\n" +
+        //                        "Genres: " + QString::fromStdString(movie.genres) + "\n" +
+        //                        "IMDB ID: " + QString::fromStdString(movie.imdb_id) + "\n" +
+        //                        "Overview: " + QString::fromStdString(movie.overview) + "\n" +
+        //                        "Release Date: " + QString::fromStdString(movie.release_date) + "\n" +
+        //                        "Runtime: " + QString::fromStdString(movie.runtime) + "\n" +
+        //                        "Rating: " + QString::fromStdString(movie.rating) + "\n" + // Convert double to QString
+        //                        "Food: Popcorn\n" +
+        //                        "Poster: " + QString::fromStdString(movie.poster);
 
         // we only display 50 chars
         // const int maxDisplayLen = 50;
@@ -101,11 +102,11 @@ int main(int argc, char **argv)
         //     movieDetails += "...";                // Add ellipses to indicate truncation
         // }
 
-        QListWidgetItem *item = new QListWidgetItem(movieDetails);
-        item->setSizeHint(QSize(75, 75)); // Set the size of each card
-        listWidget->addItem(item);
+        // QListWidgetItem *item = new QListWidgetItem(movieDetails);
+        // item->setSizeHint(QSize(75, 75)); // Set the size of each card
+        // listWidget->addItem(item);
         // Connect the itemClicked signal to the handleItemClicked slot
-    }
+    // }
     // Append menu / Qlist on main layout
     mainLayout->addWidget(&frame);
     // mainLayout->addWidget(menu);
