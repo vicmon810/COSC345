@@ -15,7 +15,8 @@ jobs:
 
       - name: Install bsoncxx and mongocxx
         run: |
-          sudo apt-get install -y libbson-dev libmongoc-dev
+          sudo apt-get install -y libbson-1.0-0
+          sudo apt-get install -y libbson-1.0-dev
 
       - name: Install Qt5
         run: |
