@@ -24,13 +24,22 @@ jobs:
         run: |
           sudo apt-get install -y qtbase5-dev
 
-      - name: Install MongoDB C Driver
+      - name: Build and Install libbson and libmongoc from Source
         run: |
-          sudo apt-get install -y libmongoc-1.0-0
+          git clone https://github.com/mongodb/libbson.git
+          cd libbson
+          git checkout <desired-version>  # Replace with the version you need
+          cmake .
+          make
+          sudo make install
 
-      - name: Install libbsoncxx-dev (Alternative to libbson-1.0-dev)
-        run: |
-          sudo apt-get install -y libbsoncxx-dev
+          cd ..
+          git clone https://github.com/mongodb/mongo-c-driver.git
+          cd mongo-c-driver
+          git checkout <desired-version>  # Replace with the version you need
+          cmake .
+          make
+          sudo make install
 
       - name: Clone and Build MongoDB C++ Driver
         run: |
