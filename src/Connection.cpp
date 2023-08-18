@@ -1,9 +1,4 @@
 #include "../include/Connection.h"
-<<<<<<< HEAD
-// #include
-using namespace std;
-=======
->>>>>>> 0930304a6c892ff294bb1f49c6a8e780a37c0fa3
 
 /**
  * Functions for connecting to mongodb atlas database
@@ -33,7 +28,7 @@ namespace cosc345
         for (auto &&doc : cursor_movie)
         {
             size_movie++;
-            // std::cout << bsoncxx::to_json(doc) << std::endl;
+            std::cout << bsoncxx::to_json(doc) << std::endl;
             // Instance of struct
             Movies movie;
             // If statements are needed to check if the column still exists
