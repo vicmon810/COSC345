@@ -4,41 +4,29 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
 
       - name: Install CMake
-        run: sudo apt-get install cmake
+        run: brew install cmake
 
-      - name: install Dependencies
+      - name: Install OpenSSL
+        run: brew install openssl
+
+      - name: Install Qt5 
         run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential cmake libssl-dev libbson-1.0-dev libmongoc-1.0-dev
-
-
-          
-
-      - name: Install Qt5
-        run: |
-          sudo apt-get install -y qtbase5-dev
+          brew install Qt5-base
 
       - name: Install MongoDB C++ Driver
         run: |
-          wget https://github.com/mongodb/mongo-cxx-driver/archive/refs/tags/r3.8.0.tar.gz
-          tar -xzf r3.8.0.tar.gz
-          cd mongo-cxx-driver-r3.8.0
-          mkdir build
-          cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local \
-              -Dlibbson_DIR=/usr/local/lib/cmake/libbson-1.0 \
-              -Dlibmongoc_DIR=/usr/local/lib/cmake/libmongoc-1.0
+          git clone --branch r3.8.0 --depth 1 https://github.com/mongodb/mongo-cxx-driver.git
+          cd mongo-cxx-driver/build
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_PREFIX_PATH=/usr/local/opt/openssl
           make
           sudo make install
-
-
 
       - name: Build and Test
         run: |
