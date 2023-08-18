@@ -13,19 +13,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Update Package Repositories
+        run: sudo apt-get update
+
       - name: Set up CMake
-        run: sudo apt-get install cmake
+        run: sudo apt-get install cmake -y
 
       - name: Install Qt5
         run: |
           sudo apt-get install -y qtbase5-dev
 
-
       - name: Install MongoDB C Driver
         run: sudo apt-get install -y libmongoc-1.0-0
-
-      - name: Install MongoDB C++ Driver Dependencies
-        run: sudo apt-get install -y libbsoncxx-3.6 libbsoncxx-3.6-dev
 
       - name: Build and Test MongoDB C++ Driver
         run: |
@@ -38,7 +37,6 @@ jobs:
       - name: Deploy Your Application (if applicable)
         run: |
           # Add your deployment commands here
-
 
       - name: Build and Test Your Application
         run: |
