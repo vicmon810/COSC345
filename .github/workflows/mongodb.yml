@@ -1,4 +1,4 @@
-name: C++ CI
+name: MongoDB C++ Driver CI/CD
 
 on:
   push:
@@ -7,17 +7,25 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest  # Choose the runner platform
 
     steps:
-      - name: Git checkout
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install CMake
-        run: brew install cmake
+      - name: Set up CMake
+        run: sudo apt-get install cmake
 
-      - name: Install OpenSSL
-        run: brew install openssl
+      - name: Install Qt5
+        run: |
+          sudo apt-get install -y qtbase5-dev
+
+
+      - name: Install MongoDB C Driver
+        run: sudo apt-get install -y libmongoc-1.0-0
+
+      - name: Install MongoDB C++ Driver Dependencies
+        run: sudo apt-get install -y libbsoncxx-3.6 libbsoncxx-3.6-dev
 
       - name: Build and Test MongoDB C++ Driver
         run: |
@@ -26,6 +34,11 @@ jobs:
           cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
           make
           ctest --output-on-failure
+
+      - name: Deploy Your Application (if applicable)
+        run: |
+          # Add your deployment commands here
+
 
       - name: Build and Test Your Application
         run: |
