@@ -1,4 +1,4 @@
-#include "/Connection.h"
+#include "Connection.h"
 // #include <nlohmann/json.hpp>
 
 /**
@@ -34,9 +34,10 @@ namespace cosc345
             // cout << size << endl;
             // genres	poster  imdb_id	overview rating	release_date	runtime	title
             // 0        1           2       x         x-4         x-3             x-2     x-1
+            Movies movie;
             for (int i = 0; i < fields.size(); i++)
             {
-                Movies movie;
+
                 if (i == 0)
                     movie.genres = fields[0];
                 if (i == 1)
@@ -53,29 +54,12 @@ namespace cosc345
                     movie.rating = fields[fields.size() - 4];
                 if (i > 2 && i < fields.size() - 4)
                     movie.overview.append(fields[i]);
-                moviesDetail.push_back(movie);
             }
+            moviesDetail.push_back(movie);
         }
 
         inputFile.close();
     }
-
-    /*
-    @Desc:return total size of the movied data set
-    */
-    int Connection::getSizeMovie()
-    {
-        return size_movie;
-    }
-
-    /*
-    @Desc:return total size of the food in data set
-    */
-    int Connection::getSizeFood()
-    {
-        return size_food;
-    }
-
     /**
      * Returns the details of all movies
      */
@@ -83,13 +67,5 @@ namespace cosc345
     {
 
         return moviesDetail;
-    }
-
-    /**
-     * Returns the details of all food
-     */
-    vector<Connection::Food> Connection::getDetailFood()
-    {
-        return foodDetail;
     }
 }
