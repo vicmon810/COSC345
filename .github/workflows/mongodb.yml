@@ -28,9 +28,9 @@ jobs:
         run: |
           sudo apt-get install -y libmongoc-1.0-0
 
-      - name: Install libbson-1.0 Development Libraries
+      - name: Install libbsoncxx-dev (Alternative to libbson-1.0-dev)
         run: |
-          sudo apt-get install -y libbson-1.0-dev
+          sudo apt-get install -y libbsoncxx-dev
 
       - name: Clone and Build MongoDB C++ Driver
         run: |
