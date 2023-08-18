@@ -15,7 +15,9 @@ jobs:
 
       - name: Install bsoncxx and mongocxx
         run: |
-          sudo apt-get install -y libbson-dev libmongoc-dev
+          curl -OL https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.8.0/mongo-cxx-driver-r3.8.0.tar.gz
+          tar -xzf mongo-cxx-driver-r3.8.0.tar.gz
+          cd mongo-cxx-driver-r3.8.0/build
 
       - name: Install Qt5
         run: |
