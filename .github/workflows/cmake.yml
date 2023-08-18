@@ -2,9 +2,15 @@ name: CMake
 
 on:
   push:
+<<<<<<< HEAD
     branches: ["main"]
   pull_request:
     branches: ["main"]
+=======
+    branches: [ "main", "TestBranch" ]
+  pull_request:
+    branches: [ "main", "TestBranch" ]
+>>>>>>> b9874817c52b0a9c492bb8017ed73f11e3919285
 
 jobs:
   build:
@@ -14,7 +20,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+<<<<<<< HEAD
       - uses: actions/checkout@v2
+=======
+    - uses: actions/checkout@v2
+          
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+>>>>>>> b9874817c52b0a9c492bb8017ed73f11e3919285
 
       - name: Install libraries
         run: |
