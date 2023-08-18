@@ -24,9 +24,12 @@ namespace cosc345
         default_random_engine rng;
 
         //list of possible genres
-        vector<string> genres = { "Action", "Adventure", "Fantasy", "Animation", 
-                                  "Horror", "Comedy", "Thriller", "ScienceFiction"
-        };
+        vector<string> genres = { "Action", "Adventure", "Fantasy", "Animation",
+                                  "Crime", "Drama", "Biography", "Documentary"
+                                  "Horror", "Comedy", "Thriller", "ScienceFiction",
+                                  "Sci-Fi", "Romance", "Western", "Music",
+                                  "Mystery", "History", "Sport"
+                                };
 
     public:
         // Movie struct
