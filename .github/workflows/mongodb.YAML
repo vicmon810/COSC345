@@ -26,7 +26,7 @@ jobs:
 
       - name: Install libmongoc and libbson Development Packages
         run: sudo apt-get install -y libmongoc-1.0-0 libbson-1.0-0
-
+    
       - name: Clone and Build MongoDB C++ Driver
         run: |
           git clone --branch r3.8.0 --depth 1 https://github.com/mongodb/mongo-cxx-driver.git
@@ -35,9 +35,6 @@ jobs:
           make
           ctest --output-on-failure
 
-      - name: Deploy Your Application (if applicable)
-        run: |
-          # Add your deployment commands here
 
       - name: Build and Test Your Application
         run: |
