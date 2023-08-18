@@ -41,6 +41,9 @@ namespace cosc345
                 movie.release_date = fields[5];
                 movie.runtime = fields[6];
                 movie.title = fields[7];
+                cout << "title: " << fields[7] << endl;
+                cout << "------------" << endl;
+                cout << "generes: " << fields[0] << endl;
                 moviesDetail.push_back(movie); // Assuming you have a vector named moviesDetail
             }
         }
