@@ -46,8 +46,8 @@ namespace cosc345
                 movie.runtime = doc["runtime"].get_int32();
             if (doc["rating"])
                 movie.rating = doc["rating"].get_double();
-            if (doc["poster"])
-                movie.poster = string(doc["poster"].get_utf8().value);
+            if (doc["image_link"])
+                movie.poster = string(doc["image_link"].get_utf8().value);
             else
                 movie.poster = "";
 

@@ -99,7 +99,7 @@ int main(int argc, char **argv)
     }
     // Append menu/Qlist on main layout
     // mainLayout->addWidget(&frame);
-    mainLayout->addWidget(menu);
+    // mainLayout->addWidget(menu);
     movieLayout->addWidget(listWidget);
     QObject::connect(listWidget, &QListWidget::itemClicked, handleItemClicked);
     mainLayout->addLayout(movieLayout);
