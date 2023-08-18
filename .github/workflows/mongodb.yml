@@ -13,9 +13,11 @@ jobs:
       - name: Install CMake
         run: sudo apt-get install cmake
 
-      - name: Install bsoncxx and mongocxx
+      - name: install Dependencies
         run: |
-          sudo apt-get install -y libbson-dev libmongoc-dev
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake libssl-dev
+
           
 
       - name: Install Qt5
@@ -24,12 +26,14 @@ jobs:
 
       - name: Install MongoDB C++ Driver
         run: |
-          curl -OL https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.8.0/mongo-cxx-driver-r3.8.0.tar.gz
-          tar -xzf mongo-cxx-driver-r3.8.0.tar.gz
-          cd mongo-cxx-driver-r3.8.0/build
-          cmake .. -DCMAKE_BUILD_TYPE=Release
-          make
-          sudo make install
+         wget https://github.com/mongodb/mongo-cxx-driver/archive/refs/tags/r3.8.0.tar.gz
+         tar -xzf r3.8.0.tar.gz
+         cd mongo-cxx-driver-r3.8.0
+         cd build
+         cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
+         make
+         sudo make install
+
 
       - name: Build and Test
         run: |
