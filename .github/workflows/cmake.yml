@@ -15,14 +15,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Build Docker Image
-      run: |
-        docker build -t my-qt-builder .
-      
-    - name: Build C++ Application
-      run: |
-        docker run --rm -v $PWD:/app -w /app my-qt-builder qmake -project && qmake && make
           
     - name: Install libraries
       run: sudo apt-get install -y qt5-default
