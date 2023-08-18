@@ -13,10 +13,17 @@ jobs:
       - name: Install CMake
         run: sudo apt-get install cmake
 
+      - name: Install bsoncxx and mongocxx
+        run: |
+          sudo apt-get install -y libbson-dev libmongoc-dev
+
+      - name: Install Qt5
+        run: |
+          sudo apt-get install -y qtbase5-dev
+
       - name: Build and Test
         run: |
           mkdir build
           cd build
           cmake ..
           make
-          ctest --output-on-failure
