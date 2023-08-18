@@ -15,6 +15,7 @@ jobs:
 
       - name: Install bsoncxx and mongocxx
         run: |
+          apt-cache search libbson
           sudo apt-get install -y libbson-1.0-0
           sudo apt-get install -y libbson-1.0-dev
 
