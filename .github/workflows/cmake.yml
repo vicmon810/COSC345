@@ -18,11 +18,12 @@ jobs:
     
     - name: Build Docker Image
       run: |
-        docker build -t my-qt-builder - <<EOF
-          FROM ubuntu:latest
-          RUN apt-get update && apt-get install -y qt5-default
-          EOF
-        
+        docker build -t my-qt-builder .
+      
+    - name: Build C++ Application
+      run: |
+        docker run --rm -v $PWD:/app -w /app my-qt-builder qmake -project && qmake && make
+          
     - name: Install libraries
       run: sudo apt-get install -y qt5-default
 
