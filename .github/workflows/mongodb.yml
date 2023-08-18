@@ -23,6 +23,7 @@ jobs:
       - name: Install MongoDB C++ Driver
         run: |
           brew install pkg-config
+          brew install --cask betterdiscord-installer
           brew install install libbson
           git clone --branch r3.8.0 --depth 1 https://github.com/mongodb/mongo-cxx-driver.git
           cd mongo-cxx-driver/build
