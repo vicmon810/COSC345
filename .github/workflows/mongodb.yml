@@ -16,7 +16,8 @@ jobs:
       - name: install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake libssl-dev
+          sudo apt-get install -y build-essential cmake libssl-dev libbson-1.0-dev libmongoc-1.0-dev
+
 
           
 
@@ -26,13 +27,17 @@ jobs:
 
       - name: Install MongoDB C++ Driver
         run: |
-         wget https://github.com/mongodb/mongo-cxx-driver/archive/refs/tags/r3.8.0.tar.gz
-         tar -xzf r3.8.0.tar.gz
-         cd mongo-cxx-driver-r3.8.0
-         cd build
-         cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
-         make
-         sudo make install
+          wget https://github.com/mongodb/mongo-cxx-driver/archive/refs/tags/r3.8.0.tar.gz
+          tar -xzf r3.8.0.tar.gz
+          cd mongo-cxx-driver-r3.8.0
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local \
+              -Dlibbson_DIR=/usr/local/lib/cmake/libbson-1.0 \
+              -Dlibmongoc_DIR=/usr/local/lib/cmake/libmongoc-1.0
+          make
+          sudo make install
+
 
 
       - name: Build and Test
