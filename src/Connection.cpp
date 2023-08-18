@@ -1,9 +1,7 @@
 #include "../include/Connection.h"
-<<<<<<< HEAD
+
 // #include
 using namespace std;
-=======
->>>>>>> 0930304a6c892ff294bb1f49c6a8e780a37c0fa3
 
 /**
  * Functions for connecting to mongodb atlas database
