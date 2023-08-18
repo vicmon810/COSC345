@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest 20.04  # Choose the runner platform
+    runs-on: ubuntu-latest   # Choose the runner platform
 
     steps:
       - name: Checkout Repository
