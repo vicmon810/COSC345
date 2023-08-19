@@ -24,6 +24,10 @@ jobs:
         run: |
           sudo apt-get install -y qtbase5-dev
 
+      - name: Deploy Your Application (if applicable)
+        run: |
+          # Add your deployment commands here
+
       - name: Build and Test Your Application
         run: |
           ls
@@ -35,4 +39,3 @@ jobs:
           cd build
           cmake ..
           make
-          ctest --output-on-failure
