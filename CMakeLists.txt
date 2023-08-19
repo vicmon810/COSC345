@@ -10,12 +10,11 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
-file(COPY ${CMAKE_SOURCE_DIR}/data/movies.csv DESTINATION ${CMAKE_BINARY_DIR})
-
+file(COPY ${CMAKE_SOURCE_DIR}/data/Movies.csv DESTINATION ${CMAKE_BINARY_DIR})
 
 
 add_executable(MovieAndFood 
-    src/Connection.h
+    src/connection.h
     src/Connection.cpp
     src/main.cpp
     src/Recommendation.h 

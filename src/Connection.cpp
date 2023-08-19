@@ -13,7 +13,7 @@ namespace cosc345
      */
     void Connection::est_conn()
     {
-        std::ifstream inputFile("../data/movies.csv");
+        std::ifstream inputFile("Movies.csv");
         if (!inputFile.is_open())
         {
             std::cerr << "Failed to open the file." << std::endl;
