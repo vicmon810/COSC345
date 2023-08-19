@@ -24,10 +24,6 @@ jobs:
         run: |
           sudo apt-get install -y qtbase5-dev
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f341838997fa24fd3ac5ea3f1e4d307135411f9c
       - name: Build and Test Your Application
         run: |
           mkdir build
