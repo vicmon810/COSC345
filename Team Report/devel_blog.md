@@ -9,3 +9,22 @@
         - update algorithm<br>
 
 ![example](A_0.7.png)
+
+
+TODO alpha:
+
+        read movie.csv (done)
+        display movie detials (done)
+        read food.csv
+        display poster on GUI 
+        recommend function 
+
+|root
+|.github
+        |-workflows
+                |- cmake.yaml
+|cmakelist.txt
+|data
+    |-Movies.csv
+|src
+   |-main.cpp
