@@ -1,4 +1,4 @@
-name: MongoDB C++ Driver CI/CD
+name: CI/CD
 
 on:
   push:
@@ -26,6 +26,7 @@ jobs:
 
       - name: Build and Test Your Application
         run: |
+          ls
           mkdir build
           cd build
           cmake ..
