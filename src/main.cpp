@@ -44,27 +44,6 @@ int main(int argc, char **argv)
 
     // initialize QFrame
     QFrame frame;
-    QFrame *line = new QFrame();
-    line->setFrameShape(QFrame::HLine);
-    line->setFrameShadow(QFrame::Sunken);
-    frame.setFrameStyle(QFrame::Panel | QFrame::Raised);
-    frame.setLineWidth(2);
-    // Set the default size of QFrame
-    // QVBoxLayout *layout = new QVBoxLayout;
-
-    // initialize menu
-    QMenu *menu = new QMenu();
-    menu->setTitle(QObject::tr("Movie and Food"));
-    menu->addAction(QObject::tr("I Feel Lucky"));
-    menu->addAction(QObject::tr("Open"));
-    menu->addAction(QObject::tr("Save"));
-    QMenu *submenu = menu->addMenu(QObject::tr("Settings"));
-    submenu->addAction(QObject::tr("Preferences"));
-    submenu->addAction(QObject::tr("Language"));
-
-    // Initialize layout
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    QGridLayout *movieLayout = new QGridLayout;
 
     // Query data from back-end
     cosc345::Connection conn;
@@ -78,17 +57,6 @@ int main(int argc, char **argv)
 
     for (const cosc345::Connection::Movies &movie : movies)
     {
-        qDebug() << "Title: " << QString::fromStdString(movie.title);
-        qDebug() << "Genres: " << QString::fromStdString(movie.genres);
-        qDebug() << "IMDB ID: " << QString::fromStdString(movie.imdb_id);
-        qDebug() << "Overview: " << QString::fromStdString(movie.overview);
-        qDebug() << "Release Date: " << QString::fromStdString(movie.release_date);
-        qDebug() << "Runtime: " << QString::fromStdString(movie.runtime);
-        qDebug() << "Rating: " << QString::fromStdString(movie.rating);
-        qDebug() << "Food: Popcorn";
-        qDebug() << "Poster: " << QString::fromStdString(movie.poster);
-        qDebug() << "-------------------------";
-
         QString movieDetails = "Title: " + QString::fromStdString(movie.title) + "\n" +
                                "Genres: " + QString::fromStdString(movie.genres) + "\n" +
                                "IMDB ID: " + QString::fromStdString(movie.imdb_id) + "\n" +
@@ -111,15 +79,15 @@ int main(int argc, char **argv)
         listWidget->addItem(item);
         // Connect the itemClicked signal to the handleItemClicked slot
     }
-    // Append menu / Qlist on main layout
-    mainLayout->addWidget(&frame);
-    // mainLayout->addWidget(menu);
-    movieLayout->addWidget(listWidget);
-    // QObject::connect(listWidget, &QListWidget::itemClicked, handleItemClicked);
-    mainLayout->addLayout(movieLayout);
-    movieLayout->addWidget(line);
-
-    frame.setLayout(mainLayout);
+    // button reaction
+    QObject::connect(listWidget, &QListWidget::itemClicked, handleItemClicked);
+    // create layout for items
+    QGridLayout *layout = new QGridLayout;
+    // append item to layout
+    layout->addWidget(listWidget);
+    // append layout to frame
+    frame.setLayout(layout);
+    // Show frame
     frame.show();
 
     // Start the Qt event loop
