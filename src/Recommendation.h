@@ -1,7 +1,7 @@
 #ifndef RECOMMENDATION_H_INCLUDED
 #define RECOMMENDATION_H_INCLUDED
 
-#include "Connection.h"
+#include "connection.h"
 
 using namespace std;
 
