@@ -27,6 +27,7 @@ jobs:
       - name: Build and Test Your Application
         run: |
           ls
+          cat CMakeLists.txt
           mkdir build
           cd build
           cmake ..
