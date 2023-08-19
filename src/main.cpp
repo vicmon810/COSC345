@@ -1,5 +1,5 @@
 #include "Recommendation.h"
-#include "Connection.h"
+#include "connection.h"
 #include <QApplication>
 #include <QPushButton>
 #include <QMenu>

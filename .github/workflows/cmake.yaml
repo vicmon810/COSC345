@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: CI/CD
+=======
+name: Continous Integration CMAKE
+>>>>>>> fc05ecd5547a569ced23f92f3c21e1b10138ee21
 
 on:
   push:

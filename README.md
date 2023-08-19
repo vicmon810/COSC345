@@ -1,4 +1,4 @@
-[![CMake](https://github.com/andre2410/COSC345/actions/workflows/cmake.yml/badge.svg)](https://github.com/andre2410/COSC345/actions/workflows/cmake.yml)
+[![Continous Integration CMAKE](https://github.com/vicmon810/COSC345/actions/workflows/cmake.yaml/badge.svg)](https://github.com/vicmon810/COSC345/actions/workflows/cmake.yaml)
 
 # Movies and Food:
 For our COSC345 Team Project: We are aiming to develop an application that recommends movies and suggests suitable meal/snack pairings based on the user's preferences.
