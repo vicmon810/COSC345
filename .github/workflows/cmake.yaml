@@ -1,4 +1,4 @@
-name: MongoDB C++ Driver CI/CD
+name: Continous Integration CMAKE
 
 on:
   push:
