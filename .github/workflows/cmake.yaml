@@ -1,39 +1,38 @@
-name: CMake
+name: MongoDB C++ Driver CI/CD
 
 on:
   push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    branches:
+      - main  # Adjust to your repository's main branch
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Choose the runner platform
 
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      -  name: Install Qt 5
+      - name: Update Package Repositories
+        run: sudo apt-get update
+
+      - name: Set up CMake and Build Essentials
         run: |
-        sudo apt-get update
-        sudo apt-get install qt5-default
+          sudo apt-get install -y cmake build-essential
 
-    - name: Install libraries
-      run: |
-        wget https://download.qt.io/new_archive/qt/5.7/5.7.0/qt-opensource-linux-x64-5.7.0.run
-        chmod +x qt-opensource-linux-x64-5.7.0.run
-        ./qt-opensource-linux-x64-5.7.0.run
-        sudo apt-get install build-essential
-        sudo apt-get install libfontconfig1
+      - name: Install Qt5 Development Libraries
+        run: |
+          sudo apt-get install -y qtbase5-dev
 
 
-      - name: Configure CMake
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      - name: Deploy Your Application (if applicable)
+        run: |
+          # Add your deployment commands here
 
-      - name: Build
-        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-
-      - name: Test
-        working-directory: ${{github.workspace}}/build
-        run: ctest -C ${{env.BUILD_TYPE}}
+      - name: Build and Test Your Application
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ctest --output-on-failure
