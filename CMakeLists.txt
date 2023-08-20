@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Network REQUIRED)
 
 file(COPY ${CMAKE_SOURCE_DIR}/data/Movies.csv DESTINATION ${CMAKE_BINARY_DIR})
 
@@ -26,4 +27,5 @@ target_link_libraries(MovieAndFood PRIVATE
     Qt5::Core
     Qt5::Gui
     Qt5::Widgets
+    Qt5::Network
 )

@@ -16,7 +16,12 @@
 #include <QListWidget>
 #include <QMessageBox>
 #include <QDialog>
+#include <QIcon>
 #include <QLabel>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QThreadPool>
 
 /*Should display full movied detial not truncate data set*/
 void handleItemClicked(QListWidgetItem *item)
@@ -38,6 +43,48 @@ void handleItemClicked(QListWidgetItem *item)
     dialog.exec();
 }
 
+QPixmap downloadImage(const QString &imageUrl)
+{
+    // access to web location
+    QNetworkAccessManager manager;
+    QNetworkRequest request(imageUrl);
+    QNetworkReply *reply = manager.get(request);
+    // wait image to be loaded
+    QEventLoop loop;
+    QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+    // image download success
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        QByteArray data = reply->readAll();
+        QPixmap pixMap;
+        pixMap.loadFromData(data);
+        return pixMap;
+    }
+    // Error handers
+    return QPixmap();
+}
+class ImageDownloadWorker : public QRunnable
+{
+public:
+    ImageDownloadWorker(const QString &imageUrl, QListWidgetItem *item)
+        : m_imageUrl(imageUrl), m_item(item) {}
+
+    void run() override
+    {
+        QPixmap posterPixmap = downloadImage(m_imageUrl);
+        if (!posterPixmap.isNull())
+        {
+            qDebug() << "Loading ...";
+            m_item->setIcon(QIcon(posterPixmap));
+        }
+    }
+
+private:
+    QString m_imageUrl;
+    QListWidgetItem *m_item;
+};
+
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
@@ -54,7 +101,8 @@ int main(int argc, char **argv)
 
     // Initialize QList to for display data set
     QListWidget *listWidget = new QListWidget();
-
+    QThreadPool threadPool;
+    threadPool.setMaxThreadCount(QThread::idealThreadCount());
     for (const cosc345::Connection::Movies &movie : movies)
     {
         QString movieDetails = "Title: " + QString::fromStdString(movie.title) + "\n" +
@@ -66,7 +114,7 @@ int main(int argc, char **argv)
                                "Rating: " + QString::fromStdString(movie.rating) + "\n" + // Convert double to QString
                                "Food: Popcorn\n" +
                                "Poster: " + QString::fromStdString(movie.poster);
-
+        // QPixmap image(QString::fromStdString(movie.poster));
         // we only display 50 chars const int maxDisplayLen = 50;
         // if (movieDetails.length() > 50)
         // {
@@ -75,9 +123,13 @@ int main(int argc, char **argv)
         // }
 
         QListWidgetItem *item = new QListWidgetItem(movieDetails);
-        item->setSizeHint(QSize(75, 75)); // Set the size of each card
+        item->setSizeHint(QSize(200, 200)); // Set the size of each card
+        // Start a worker in the thread pool to download the image
+        QString imageUrl = QString::fromStdString(movie.poster);
+        ImageDownloadWorker *worker = new ImageDownloadWorker(imageUrl, item);
+        threadPool.start(worker);
+
         listWidget->addItem(item);
-        // Connect the itemClicked signal to the handleItemClicked slot
     }
     // button reaction
     QObject::connect(listWidget, &QListWidget::itemClicked, handleItemClicked);
@@ -85,6 +137,7 @@ int main(int argc, char **argv)
     QGridLayout *layout = new QGridLayout;
     // append item to layout
     layout->addWidget(listWidget);
+
     // append layout to frame
     frame.setLayout(layout);
     // Show frame
