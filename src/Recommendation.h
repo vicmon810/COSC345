@@ -2,6 +2,7 @@
 #define RECOMMENDATION_H_INCLUDED
 
 #include "connection.h"
+#include <random>
 
 using namespace std;
 
@@ -17,6 +18,14 @@ namespace cosc345
         // Vector to store all movies and food
         vector<cosc345::Connection::Movies> moviesDetail;
         vector<cosc345::Connection::Food> foodDetail;
+
+        //Genre vector 
+        vector<string> genres = { "Action", "Adventure", "Family",
+                                 "Fantasy" , "Crime", "Drama"
+                                 "Comedy", "Horror", "Sci-Fi", 
+                                 "ScienceFiction", "Romance", "Thriller", 
+                                 "War", "Documentary", "Mystery", 
+                                 "Music", "Western"};
 
     public:
         // Movie struct
