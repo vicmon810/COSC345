@@ -27,12 +27,12 @@ Currently, the alpha version of the app is being made.
 Regarding CMake settings, please see cmakethings.txt in the Extras folder.
 
 ## Sources Rquirement : 
-[MongoDB C++ driver](https://mongocxx.org/mongocxx-v3/installation/)
+[qt open source software](https://www.qt.io/)
 
 ## References:
-* [Mongodb connection with C/C++](https://www.mongodb.com/docs/drivers/cxx/)
-* [Ultralight API](https://ultralig.ht/)
 * [Food recipes lists](https://www.kaggle.com/datasets/paultimothymooney/recipenlg/code?resource=download)
-* [Food Ingreditents](https://www.kaggle.com/datasets/pes12017000148/food-ingredients-and-recipe-dataset-with-images)
+* [Food Ingredients](https://www.kaggle.com/datasets/pes12017000148/food-ingredients-and-recipe-dataset-with-images)
 * [Movies lists](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset)
+* [Qt with CMake](https://doc.qt.io/qt-6/cmake-get-started.html#building-a-c-console-application)
+* [Qt called by main class](https://stackoverflow.com/questions/17450039/qt-c-gui-call-from-another-class)
 
