@@ -76,7 +76,12 @@ public:
         if (!posterPixmap.isNull())
         {
             qDebug() << "Loading ...";
-            m_item->setIcon(QIcon(posterPixmap));
+            int newWidth = 600;
+            int newHeight = 400;
+            QPixmap scaledPixmap = posterPixmap.scaled(newWidth, newHeight, Qt::KeepAspectRatio);
+
+            // Set the scaled pixmap as the icon of the item
+            m_item->setIcon(QIcon(scaledPixmap));
         }
     }
 
@@ -123,7 +128,7 @@ int main(int argc, char **argv)
         // }
 
         QListWidgetItem *item = new QListWidgetItem(movieDetails);
-        item->setSizeHint(QSize(200, 200)); // Set the size of each card
+        item->setSizeHint(QSize(600, 400)); // Set the size of each card
         // Start a worker in the thread pool to download the image
         QString imageUrl = QString::fromStdString(movie.poster);
         ImageDownloadWorker *worker = new ImageDownloadWorker(imageUrl, item);

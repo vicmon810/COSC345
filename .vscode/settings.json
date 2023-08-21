@@ -72,5 +72,6 @@
         "concepts": "cpp",
         "algorithm": "cpp",
         "qicon": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

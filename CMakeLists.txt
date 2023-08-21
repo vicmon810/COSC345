@@ -8,6 +8,7 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
+find_package(Qt5Test REQUIRED)
 
 file(COPY ${CMAKE_SOURCE_DIR}/data/Movies.csv DESTINATION ${CMAKE_BINARY_DIR})
 
@@ -16,9 +17,12 @@ add_executable(MovieAndFood
     src/Connection.cpp
     src/main.cpp
     src/Recommendation.h 
-    src/Recommendation.cpp)
+    src/Recommendation.cpp
+    )
 
-    # Use the nlohmann_json_INCLUDE_DIRS provided by find_package
+    
+    
+    
 
 set_target_properties(MovieAndFood PROPERTIES AUTOMOC ON)
 set_target_properties(MovieAndFood PROPERTIES AUTOUIC ON)
@@ -28,4 +32,20 @@ target_link_libraries(MovieAndFood PRIVATE
     Qt5::Gui
     Qt5::Widgets
     Qt5::Network
-)
+    Qt5::Test
+    )
+find_package(Catch2 REQUIRED)
+add_executable(UnitTest 
+    test/TestMain.cpp
+    test/test.cpp
+    src/connection.h   # Include the header file
+    src/Connection.cpp # Include the source file
+    )
+target_link_libraries(UnitTest PRIVATE 
+    Qt5::Test)
+
+
+# Include Catch2 test discovery
+include(CTest)
+include(Catch)
+catch_discover_tests(UnitTest)

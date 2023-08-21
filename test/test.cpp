@@ -1,29 +1,35 @@
 #include <iostream>
+#include <cassert>
+#include "../src/connection.h"
+// Define a custom test runner function
 
-bool funcion(int a)
+void con_estTest(cosc345::Connection con)
 {
-    return a > 5;
+    con.est_conn();
+}
+/**!
+ * test getSizeMovies function return right value
+ */
+void readTest()
+{
+    cosc345::Connection con;
+    // con_estTest(con);
+    con.est_conn();
+    int movieCount = con.getSizeMovie();
+    // cout << movieCount << endl;
+    assert(movieCount != 0);                       // movie  is not 0
+    assert(movieCount == con.moviesDetail.size()); // movieDetail have same number of movieCount
 }
 
-// If parameter is not true, test fails
-// This check function would be provided by the test framework
-#define IS_TRUE(x)
+int main()
 {
-    if (!(x))
-        std::cout << __FUNCTION__ << " failed on line " << __LINE__ << std::endl;
-}
+    std::cout << "Running tests...\n";
 
-// Test for function1()
-// You would need to write these even when using a framework
-void test_function1()
-{
-    IS_TRUE(!function1(0));
-    IS_TRUE(!function1(5));
-    IS_TRUE(function1(10));
-}
+    // Call the read movie function
+    readTest();
 
-int main(void)
-{
-    // Call all tests. Using a test framework would simplify this.
-    test_function1();
+    // If no assertion errors occurred, tests passed
+    std::cout << "All tests passed!\n";
+
+    return 0;
 }

@@ -57,9 +57,16 @@ namespace cosc345
             }
             moviesDetail.push_back(movie);
         }
-
+        size_movie = moviesDetail.size();
         inputFile.close();
     }
+
+    int Connection::getSizeMovie()
+    {
+        size_movie = moviesDetail.size();
+        return size_movie;
+    }
+
     /**
      * Returns the details of all movies
      */
@@ -68,4 +75,5 @@ namespace cosc345
 
         return moviesDetail;
     }
+
 }
