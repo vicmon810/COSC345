@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-
+      
       - name: Update Package Repositories
         run: sudo apt-get update
 
@@ -35,3 +35,51 @@ jobs:
           cd build
           cmake ..
           make
+          ./UnitTestname: Continuous Integration CMAKE
+
+on:
+  push:
+    branches:
+      - main # Adjust to your repository's main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Choose the runner platform
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Update Package Repositories
+        run: sudo apt-get update
+
+      - name: Set up CMake and Build Essentials
+        run: |
+          sudo apt-get install -y cmake build-essential
+
+      - name: Install Qt5 Development Libraries
+        run: |
+          sudo apt-get install -y qtbase5-dev
+
+      - name: Deploy Your Application (if applicable)
+        run: |
+          # Add your deployment commands here
+
+      - name: Build and Test Your Application
+        run: |
+          cat CMakeLists.txt
+          mkdir build
+          cd build
+          cmake ..
+          make
+          ./UnitTest
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+          env:
+            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

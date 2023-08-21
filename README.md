@@ -1,5 +1,5 @@
 [![Continous Integration CMAKE](https://github.com/vicmon810/COSC345/actions/workflows/cmake.yaml/badge.svg)](https://github.com/vicmon810/COSC345/actions/workflows/cmake.yaml)
-
+[![Documentation](https://codedocs.xyz/vicmon810/COSC345.svg)](https://codedocs.xyz/vicmon810/COSC345/)
 # Movies and Food:
 For our COSC345 Team Project: We are aiming to develop an application that recommends movies and suggests suitable meal/snack pairings based on the user's preferences.
 

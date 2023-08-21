@@ -1,15 +1,14 @@
+/*!
+@file: read movies data from a csv file and pass this data to Qt based GUI
+*/
 #include "connection.h"
-// #include <nlohmann/json.hpp>
 
-/**
- * Functions for connecting to mongodb atlas database
- */
 namespace cosc345
 {
     Connection::Connection() {}
 
-    /**
-     * Connect to MongoDB and get all the data
+    /*!
+     * @brief: this function do something magic
      */
     void Connection::est_conn()
     {
