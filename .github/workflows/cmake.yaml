@@ -1,40 +1,28 @@
-name: Continous Integration CMAKE
+name: Code Coverage
 
 on:
   push:
     branches:
-      - main # Adjust to your repository's main branch
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest # Choose the runner platform
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Update Package Repositories
-        run: sudo apt-get update
+      - name: Set up CMake
+        run: cmake -S . -B build
 
-      - name: Set up CMake and Build Essentials
-        run: |
-          sudo apt-get install -y cmake build-essential
+      - name: Build and Test
+        run: cmake --build build && cd build && ctest
 
-      - name: Install Qt5 Development Libraries
+      - name: Install lcov
         run: |
-          sudo apt-get install -y qtbase5-dev
-
-      - name: Deploy Your Application (if applicable)
-        run: |
-          # Add your deployment commands here
-
-      - name: Build and Test Your Application
-        run: |
-          cat CMakeLists.txt
-          mkdir build
-          cd build
-          cmake ..
-          make
+          sudo apt-get update
+          sudo apt-get install lcov
 
       - name: Generate Code Coverage Report
         run: |
@@ -45,4 +33,4 @@ jobs:
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          file: ./coverage.inf
+          file: ./coverage.info
