@@ -35,11 +35,7 @@ jobs:
           cd build
           cmake ..
           make
-<<<<<<< HEAD
-
-=======
           
->>>>>>> f9fa89d2a1731de280d932005fd38ad10d97b896
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         with:
