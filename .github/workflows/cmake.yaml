@@ -36,6 +36,10 @@ jobs:
           cmake ..
           make
           ./UnitTest
+      - name : Install lcov
+        run: sudo apt-get install -y lcov
+      - name: Capture Coverage Data
+        run: lcov --capture --directory build --output-file coverage.info
       - name: Generate Coverage Report
         run: |
           lcov --capture --directory build --output-file coverage.info
