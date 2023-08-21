@@ -36,8 +36,14 @@ jobs:
           cmake ..
           make
           ./UnitTest
-          
+      - name: Generate Coverage Report
+        run: |
+          lcov --capture --directory build --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' --output-file coverage.info
+          lcov --list coverage.info
+        working-directory: ${{ github.workspace }}
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./path/to/your/coverage.info
