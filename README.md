@@ -1,5 +1,6 @@
 [![Continous Integration CMAKE](https://github.com/vicmon810/COSC345/actions/workflows/cmake.yaml/badge.svg)](https://github.com/vicmon810/COSC345/actions/workflows/cmake.yaml)
 [![Documentation](https://codedocs.xyz/vicmon810/COSC345.svg)](https://codedocs.xyz/vicmon810/COSC345/)
+[![code analysis]()](https://app.codacy.com/gh/vicmon810/COSC345/coverage/dashboard)
 # Movies and Food:
 For our COSC345 Team Project: We are aiming to develop an application that recommends movies and suggests suitable meal/snack pairings based on the user's preferences.
 
@@ -7,7 +8,7 @@ For our COSC345 Team Project: We are aiming to develop an application that recom
 [Kris Mao](https://github.com/vicmon810) 7248988 <br>
 [Andrew Goh](https://github.com/andre2410) 3457439 <br>
 [Andrew Booth](https://github.com/boo13103) 8539924 <br>
-[Tommy Lite](https://github.com/tlite4) 1589489 <br>
+[Tommy Light](https://github.com/tlite4) 1589489 <br>
 
 ## Assignment submission
 ### [A2 alpha] soon
