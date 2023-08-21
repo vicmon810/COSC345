@@ -34,7 +34,7 @@ target_link_libraries(MovieAndFood PRIVATE
     Qt5::Network
     Qt5::Test
     )
-find_package(Catch2 REQUIRED)
+
 add_executable(UnitTest 
     test/TestMain.cpp
     test/test.cpp
@@ -47,5 +47,4 @@ target_link_libraries(UnitTest PRIVATE
 
 # Include Catch2 test discovery
 include(CTest)
-include(Catch)
-catch_discover_tests(UnitTest)
+
