@@ -2,6 +2,7 @@
 #define RECOMMENDATION_H_INCLUDED
 
 #include "connection.h"
+#include <random>
 
 using namespace std;
 
@@ -18,6 +19,15 @@ namespace cosc345
         vector<cosc345::Connection::Movies> moviesDetail;
         vector<cosc345::Connection::Food> foodDetail;
 
+        // Genre vector
+        vector<string> genres = {"Action", "Adventure", "Family",
+                                 "Fantasy", "Crime", "Drama"
+                                                     "Comedy",
+                                 "Horror", "Sci-Fi",
+                                 "ScienceFiction", "Romance", "Thriller",
+                                 "War", "Documentary", "Mystery",
+                                 "Music", "Western"};
+
     public:
         // Movie struct
         struct Movies
@@ -25,10 +35,10 @@ namespace cosc345
             string genres;
             string imdb_id;
             string overview;
-            int release_date;
-            int runtime;
+            string release_date;
+            string runtime;
             string title;
-            double rating;
+            string rating;
         };
 
         // Food Struct
@@ -40,17 +50,15 @@ namespace cosc345
             string NER;
         };
 
-        //Default constructor
+        // Default constructor
         Recommendation();
-        
-        //Recommendation modes
+
+        // Recommendation modes
         Movies conditional(vector<string> genres, vector<double> rating, bool random);
         Movies tournament(vector<string> genres, vector<double> rating, bool random);
 
-        //Food stuff
-        //Later
-
-
+        // Food stuff
+        // Later
     };
 }
 
