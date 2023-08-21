@@ -35,8 +35,14 @@ jobs:
           cd build
           cmake ..
           make
-          
-      - name: Upload coverage reports to Codecov
+
+      - name: Generate Code Coverage Report
+        run: |
+          lcov --capture --directory build --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' --output-file coverage.info
+          lcov --list coverage.info
+
+      - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v3
-        env:
-             CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          file: ./coverage.inf
