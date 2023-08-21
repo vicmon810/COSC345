@@ -7,7 +7,7 @@ For our COSC345 Team Project: We are aiming to develop an application that recom
 [Kris Mao](https://github.com/vicmon810) 7248988 <br>
 [Andrew Goh](https://github.com/andre2410) 3457439 <br>
 [Andrew Booth](https://github.com/boo13103) 8539924 <br>
-[Tommy Lite](https://github.com/tlite4) 1589489 <br>
+[Tommy Light](https://github.com/tlite4) 1589489 <br>
 
 ## Assignment submission
 ### [A2 alpha] soon
