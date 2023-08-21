@@ -1,4 +1,4 @@
-name: Continous Integration CMAKE
+name: Continuous Integration CMAKE
 
 on:
   push:
@@ -37,7 +37,7 @@ jobs:
           make
           ./UnitTest
           
-      - name : Install lcov
+      - name: Install lcov
         run: sudo apt-get install -y lcov
         
       - name: Capture Coverage Data
@@ -51,15 +51,13 @@ jobs:
         working-directory: ${{ github.workspace }}
       
       - name: Debug
-         run:|
+        run: |
           ls -R
-          find . -name"coverage.info"
+          find . -name "coverage.info"
           
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         with:
-          file: ./path/to/your/coverage.info
+          file: coverage.info
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-           
