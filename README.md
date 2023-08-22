@@ -1,5 +1,5 @@
 [![Continous Integration CMAKE](https://github.com/vicmon810/COSC345/actions/workflows/cmake.yaml/badge.svg)](https://github.com/vicmon810/COSC345/actions/workflows/cmake.yaml)
-[![Documentation](https://codedocs.xyz/vicmon810/COSC345.svg)](https://codedocs.xyz/vicmon810/COSC345/namespacecosc345.html/)
+[![Documentation](https://codedocs.xyz/vicmon810/COSC345.svg)](https://codedocs.xyz/vicmon810/COSC345/)
 [![codecov](https://codecov.io/gh/vicmon810/COSC345/graph/badge.svg?token=P25HQT144Q)](https://codecov.io/gh/vicmon810/COSC345)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/db37ffc37f4b44fdb96f0b6e863c1410)](https://app.codacy.com/gh/vicmon810/COSC345/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 # Movies and Food:
