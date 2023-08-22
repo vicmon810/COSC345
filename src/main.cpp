@@ -1,27 +1,29 @@
-#include "Recommendation.h"
-#include "connection.h"
-#include <QApplication>
-#include <QPushButton>
-#include <QMenu>
-#include <QObject>
-#include <QFrame>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QCheckBox>
-#include <QLineEdit>
-#include <QTableWidget>
-#include <QTableWidgetItem>
-#include <iostream> //test, delete after use
-#include <QDebug>
-#include <QListWidget>
-#include <QMessageBox>
-#include <QDialog>
-#include <QIcon>
-#include <QLabel>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QThreadPool>
+// #include "Recommendation.h"
+// #include "connection.h"
+// #include <QApplication>
+// #include <QPushButton>
+// #include <QMenu>
+// #include <QObject>
+// #include <QFrame>
+// #include <QHBoxLayout>
+// #include <QVBoxLayout>
+// #include <QCheckBox>
+// #include <QLineEdit>
+// #include <QTableWidget>
+// #include <QTableWidgetItem>
+// #include <iostream> //test, delete after use
+// #include <QDebug>
+// #include <QListWidget>
+// #include <QMessageBox>
+// #include <QDialog>
+// #include <QIcon>
+// #include <QLabel>
+// #include <QNetworkAccessManager>
+// #include <QNetworkRequest>
+// #include <QNetworkReply>
+// #include <QThreadPool>
+
+#include "main.h"
 
 /*Should display full movied detial not truncate data set*/
 void handleItemClicked(QListWidgetItem *item)
