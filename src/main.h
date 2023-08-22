@@ -25,6 +25,13 @@
 #include <QNetworkReply>
 #include <QThreadPool>
 
+/*! \mainpage Movie and Food
+ *   \section intro Introduction
+ *  Introduction TODO
+ *   \section install_sec installation
+ *
+ */
+
 /*!
  *@brief: Declaration of handleItemClicked function
  *@param item : QListWidgetItem
