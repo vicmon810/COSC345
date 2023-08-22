@@ -6,11 +6,16 @@
 
 using namespace std;
 
-/**
- * Header file for Connection.cpp
+/*!
+ *@file recommendation.h
+ *header file of recommendation.cpp
  */
 namespace cosc345
 {
+    /*!
+     *@class Recommendation
+     *@brief TODO
+     */
     class Recommendation
     {
 
@@ -50,7 +55,9 @@ namespace cosc345
             string NER;
         };
 
-        // Default constructor
+        /*!
+         *@brief Default constructor of Commendation
+         */
         Recommendation();
 
         // Recommendation modes
