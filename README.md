@@ -37,9 +37,6 @@ Our goal is to create a user-friendly app that provides personalized movie recom
 ## Current Implementation
 The application can display 7000 movie details with a recommended food of popcorn and ice cream.
 
-**IMPORTANT:**<br>
-Regarding CMake settings, please see cmakethings.txt in the Extras folder.
-
 ## Sources Rquirement : 
 [qt open source software](https://www.qt.io/)
 

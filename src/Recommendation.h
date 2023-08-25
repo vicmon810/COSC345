@@ -31,7 +31,9 @@ namespace cosc345
                                  "Music", "Western"};
 
     public:
-        // Movie struct
+        /*!
+         *@brief Movie Struct to store movie details
+         */
         struct Movies
         {
             string genres;
@@ -43,7 +45,9 @@ namespace cosc345
             string rating;
         };
 
-        // Food Struct
+        /*!
+         *@brief Food Struct to store food details
+         */
         struct Food
         {
             string title;

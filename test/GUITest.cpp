@@ -4,6 +4,10 @@
 #include "../src/Recommendation.h"
 #include "../src/connection.h"
 
+/*!
+ *@class TestRecommendation
+ *@brief class used for Unit test in UnitTest.exe. It checks if the movie details are displayed correctly.
+ */
 class TestRecommendation : public QObject
 {
     Q_OBJECT
