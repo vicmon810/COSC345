@@ -1,14 +1,9 @@
 #include <iostream>
 #include <cassert>
 #include "../src/connection.h"
-// Define a custom test runner function
 
-void con_estTest(cosc345::Connection con)
-{
-    con.est_conn();
-}
 /**!
- * test getSizeMovies function return right value
+ * @brief test getSizeMovies function to return right value
  */
 void readTest()
 {
