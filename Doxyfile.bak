@@ -27,7 +27,7 @@ GENERATE_XML           = NO
 # Project information
 PROJECT_NAME           = "Movie and Food"
 PROJECT_NUMBER         = 1.0
-PROJECT_BRIEF          = "We recommand good food and good movie"
+PROJECT_BRIEF          = "We recommend good food with good movies"
 # PROJECT_LOGO           = logo.png
 OUTPUT_DIRECTORY       = ./docs
 

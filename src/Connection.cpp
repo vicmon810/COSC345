@@ -59,11 +59,21 @@ namespace cosc345
         size_movie = moviesDetail.size();
         inputFile.close();
     }
-
+    
+    /**
+    * Returns the size of the movie detail vector (the total number of movies)
+    */
     int Connection::getSizeMovie()
     {
-        size_movie = moviesDetail.size();
-        return size_movie;
+        return moviesDetail.size();
+    }
+
+    /**
+    * Returns the size of the food detail vector (the total number of food)
+    */
+    int Connection::getSizeFood()
+    {
+        return foodDetail.size();
     }
 
     /**
@@ -73,6 +83,15 @@ namespace cosc345
     {
 
         return moviesDetail;
+    }
+
+    /**
+    * Returns the details of all food
+    */
+    vector<Connection::Food> Connection::getDetailFood()
+    {
+
+        return foodDetail;
     }
 
 }
