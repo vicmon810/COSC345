@@ -24,7 +24,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QThreadPool>
-
+#include <QStackedWidget>
 /*! \mainpage Movie and Food
  *   \section intro Introduction
  *  Key Features:

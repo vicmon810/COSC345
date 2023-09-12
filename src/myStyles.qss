@@ -1,0 +1,19 @@
+/* Style for the QListWidget */
+QListWidget {
+    background-color: rgb(196, 20, 20);
+    border: 1px solid rgb(78, 23, 93);
+    border-radius: 5px;
+}
+
+/* Style for the QListWidgetItem */
+QListWidget::item {
+    background-color: rgb(105, 4, 4);
+    padding: 5px;
+    border: 1px solid rgb(21, 90, 136);
+}
+
+/* Style for selected QListWidgetItem */
+QListWidget::item:selected {
+    background-color: lightblue;
+    color: black;
+}

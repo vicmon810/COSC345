@@ -26,6 +26,12 @@ add_executable(MovieAndFood
     
     
     
+# Add the QSS file to your project
+file(COPY ${CMAKE_SOURCE_DIR}/src/myStyles.qss DESTINATION ${CMAKE_BINARY_DIR})
+
+# Add the QSS file to your executable's sources
+target_sources(MovieAndFood PRIVATE ${CMAKE_BINARY_DIR}/myStyles.qss)
+
 
 set_target_properties(MovieAndFood PROPERTIES AUTOMOC ON)
 set_target_properties(MovieAndFood PROPERTIES AUTOUIC ON)
@@ -52,4 +58,3 @@ target_link_libraries(UnitTest PRIVATE
 
 # Include Catch2 test discovery
 include(CTest)
-

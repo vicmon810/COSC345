@@ -1,31 +1,40 @@
-// #include "Recommendation.h"
-// #include "connection.h"
-// #include <QApplication>
-// #include <QPushButton>
-// #include <QMenu>
-// #include <QObject>
-// #include <QFrame>
-// #include <QHBoxLayout>
-// #include <QVBoxLayout>
-// #include <QCheckBox>
-// #include <QLineEdit>
-// #include <QTableWidget>
-// #include <QTableWidgetItem>
-// #include <iostream> //test, delete after use
-// #include <QDebug>
-// #include <QListWidget>
-// #include <QMessageBox>
-// #include <QDialog>
-// #include <QIcon>
-// #include <QLabel>
-// #include <QNetworkAccessManager>
-// #include <QNetworkRequest>
-// #include <QNetworkReply>
-// #include <QThreadPool>
+#include "Recommendation.h"
+#include "connection.h"
+#include <QApplication>
+#include <QPushButton>
+#include <QMenu>
+#include <QObject>
+#include <QFrame>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QCheckBox>
+#include <QLineEdit>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include <iostream>
+#include <QDebug>
+#include <QListWidget>
+#include <QMessageBox>
+#include <QDialog>
+#include <QIcon>
+#include <QLabel>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QThreadPool>
+#include <QFile>
+/*! \mainpage Movie and Food
+ *   \section intro Introduction
+ *  Key Features:
+ *1: Movie Recommendation: The app will analyze the user's movie preferences, ratings, and history to suggest new movies that align with their interests. It will consider factors like genre, cast, ratings, and release year.
+ *
+ *2: Food Pairing Suggestions: In addition to movie recommendations, the app will suggest suitable food options that complement the user's selected movie. It will provide recipes based on the movie chosen.
+ */
 
-#include "main.h"
-
-/*Should display full movied detial not truncate data set*/
+/*!
+ *@brief: Declaration of handleItemClicked function
+ *@param item : QListWidgetItem
+ */
 void handleItemClicked(QListWidgetItem *item)
 {
     // Get the text (movie details) from the clicked item
@@ -45,6 +54,11 @@ void handleItemClicked(QListWidgetItem *item)
     dialog.exec();
 }
 
+/*!
+ *@brief Declaration of downloadImage function
+ *@param imageUrl: QString represents poster resource download link
+ *@return poster images
+ */
 QPixmap downloadImage(const QString &imageUrl)
 {
     // access to web location
@@ -66,6 +80,11 @@ QPixmap downloadImage(const QString &imageUrl)
     // Error handers
     return QPixmap();
 }
+
+/*!
+ *@class Image download worker class
+ *@brief To enable poster image display on the GUI. Will be moved to a separate cpp and h file for the beta version
+ */
 class ImageDownloadWorker : public QRunnable
 {
 public:
@@ -77,7 +96,7 @@ public:
         QPixmap posterPixmap = downloadImage(m_imageUrl);
         if (!posterPixmap.isNull())
         {
-            qDebug() << "Loading ...";
+            qDebug();
             int newWidth = 600;
             int newHeight = 400;
             QPixmap scaledPixmap = posterPixmap.scaled(newWidth, newHeight, Qt::KeepAspectRatio);
@@ -92,12 +111,21 @@ private:
     QListWidgetItem *m_item;
 };
 
+/**
+ * Main function to run application
+ */
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-
+    QString executablePath = QCoreApplication::applicationDirPath();
+    QString qssFilePath = executablePath + "/myStyles.qss";
+    QFile styleFile(qssFilePath);
+    styleFile.open(QFile::ReadOnly);
+    QString style = QLatin1String(styleFile.readAll());
+    app.setStyleSheet(style);
     // initialize QFrame
     QFrame frame;
+    frame.setGeometry(QRect(300, 400, 800, 600));
 
     // Query data from back-end
     cosc345::Connection conn;
@@ -119,15 +147,7 @@ int main(int argc, char **argv)
                                "Release Date: " + QString::fromStdString(movie.release_date) + "\n" +
                                "Runtime: " + QString::fromStdString(movie.runtime) + "\n" +
                                "Rating: " + QString::fromStdString(movie.rating) + "\n" + // Convert double to QString
-                               "Food: Popcorn\n" +
-                               "Poster: " + QString::fromStdString(movie.poster);
-        // QPixmap image(QString::fromStdString(movie.poster));
-        // we only display 50 chars const int maxDisplayLen = 50;
-        // if (movieDetails.length() > 50)
-        // {
-        //     movieDetails.truncate(maxDisplayLen); // Truncate the string
-        //     movieDetails += "...";                // Add ellipses to indicate truncation
-        // }
+                               "Food: Popcorn and Ice Cream\n";                           // As of now, hardcoded food is popcorn and ice cream yay!
 
         QListWidgetItem *item = new QListWidgetItem(movieDetails);
         item->setSizeHint(QSize(600, 400)); // Set the size of each card
