@@ -96,13 +96,14 @@ public:
         QPixmap posterPixmap = downloadImage(m_imageUrl);
         if (!posterPixmap.isNull())
         {
-            qDebug();
-            int newWidth = 600;
-            int newHeight = 400;
-            QPixmap scaledPixmap = posterPixmap.scaled(newWidth, newHeight, Qt::KeepAspectRatio);
+            QSize iconSize(128, 128);
+            QPixmap scaledPixmap = posterPixmap.scaled(iconSize, Qt::KeepAspectRatio);
 
-            // Set the scaled pixmap as the icon of the item
-            m_item->setIcon(QIcon(scaledPixmap));
+            // Create a QIcon with the scaled QPixmap
+            QIcon poster(scaledPixmap);
+
+            // Set the icon with the desired size for the item
+            m_item->setIcon(poster);
         }
     }
 
@@ -150,7 +151,7 @@ int main(int argc, char **argv)
                                "Food: Popcorn and Ice Cream\n";                           // As of now, hardcoded food is popcorn and ice cream yay!
 
         QListWidgetItem *item = new QListWidgetItem(movieDetails);
-        item->setSizeHint(QSize(600, 400)); // Set the size of each card
+
         // Start a worker in the thread pool to download the image
         QString imageUrl = QString::fromStdString(movie.poster);
         ImageDownloadWorker *worker = new ImageDownloadWorker(imageUrl, item);
