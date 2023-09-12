@@ -20,7 +20,6 @@ add_executable(MovieAndFood
     src/main.cpp
     src/Recommendation.h 
     src/Recommendation.cpp
-    src/main.h
     )
 
     
@@ -50,7 +49,6 @@ add_executable(UnitTest
     # test/GUITest.cpp
     src/connection.h   # Include the header file
     src/Connection.cpp # Include the source file
-    src/main.h
     )
 target_link_libraries(UnitTest PRIVATE 
     Qt5::Test)

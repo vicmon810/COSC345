@@ -15,7 +15,16 @@ For our COSC345 Team Project: We are aiming to develop an application that recom
 [Tommy Light](https://github.com/tlite4) 1589489 <br>
 
 ## Assignment submission
-### [A2 alpha] soon
+### [A2 alpha]<br>
+For our alpha version of the application, we can display all 7000 movies with a recommended food of popcorn and ice cream. You can click on the movie details to expand the card showing 
+said details. Additionally, the movie poster image can be displayed although it is abit small.
+
+For the assignment requirements, the CI, doxygen, codecov and codacy details can be assessed by clicking the hyperlinks on the badges on top of the README.md file.
+
+For testing, please run UnitTest.exe instead of MovieAndFood.exe when running the project on Visual Studio. This would require the project to be built first which can be done by having 
+CMake installed and building it in the Visual Studio IDE.
+
+For our Questionnaire to be reviewed, it can be assessed [here](https://forms.office.com/r/13M44QcMks)
 
 ## Project Overview:
 Our goal is to create a user-friendly app that provides personalized movie recommendations and food suggestions to enhance the user's entertainment experience.
@@ -26,10 +35,7 @@ Our goal is to create a user-friendly app that provides personalized movie recom
 2: Food Pairing Suggestions: In addition to movie recommendations, the app will suggest suitable food options that complement the user's selected movie. It will provide recipes based on the movie chosen.
 
 ## Current Implementation
-Currently, the alpha version of the app is being made.
-
-**IMPORTANT:**<br>
-Regarding CMake settings, please see cmakethings.txt in the Extras folder.
+The application can display 7000 movie details with a recommended food of popcorn and ice cream.
 
 ## Sources Rquirement : 
 [qt open source software](https://www.qt.io/)

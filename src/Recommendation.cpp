@@ -1,6 +1,5 @@
 #include "Recommendation.h"
 
-
 /**
  * Functions for movie and food recommendation
  */
@@ -9,9 +8,6 @@ namespace cosc345
     //Default constructor
     Recommendation::Recommendation() {}
 
-    /**
-    * Method for the conditional select mode
-    */
     Recommendation::Movies conditional(vector<string> genres, vector<double> rating, bool random) {
 
         //separate vector of movies
@@ -48,7 +44,7 @@ namespace cosc345
     /**
     * Method for the conditional select mode
     */
-    Recommendation::Movies tournament(vector<string> genres, vector<double> rating, bool random) {  
+    Recommendation::Movies tournament(vector<string> genres, vector<double> rating, bool random) {   
         Recommendation::Movies movie; //Return empty struct for now 
 
         return movie;
