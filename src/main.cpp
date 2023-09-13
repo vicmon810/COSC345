@@ -236,7 +236,7 @@ int main(int argc, char **argv)
     }
     QHBoxLayout *layout = new QHBoxLayout;
     // layout->addWidget(searchBar);
-    window.addWidget(searchBar); // testing
+    // window.QWidget(searchBar); // testing
     window.setLayout(gridLayout);
     // Show the main window
     window.show();
