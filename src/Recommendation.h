@@ -23,18 +23,18 @@ namespace cosc345
     private:
         // Genre vector
         vector<string> genres = {"Action", "Adventure", "Family",
-                                 "Fantasy", "Crime", "Drama"
-                                                     "Comedy",
-                                 "Horror", "Sci-Fi",
+                                 "Fantasy", "Crime", "Drama", 
+                                 "Comedy", "Horror", "Sci-Fi",
                                  "ScienceFiction", "Romance", "Thriller",
                                  "War", "Documentary", "Mystery",
                                  "Music", "Western"};
+
 
     public:
         /*!
          *@brief Movie Struct to store movie details
          */
-        struct Movies
+        struct Movie
         {
             string genres;
             string imdb_id;
@@ -43,6 +43,7 @@ namespace cosc345
             string runtime;
             string title;
             string rating;
+            string poster;
         };
 
         /*!
@@ -57,27 +58,22 @@ namespace cosc345
         };
 
         // Vector to store all movies and food
-        vector<cosc345::Connection::Movies> moviesDetail;
-        vector<cosc345::Connection::Food> foodDetail;
+        vector<Movie> moviesList;
+        vector<Food> foodList;
 
         /*!
          *@brief Default constructor of Recommendation
          */
         Recommendation();
 
-        // Recommendation modes
-
         /*!
-        *@brief Function of conditional selection of movies
-        *@return movie details that meets conditions set
+        * @brief Init function of Recommendation
         */
-        Movies conditional(vector<string> genres, vector<double> rating, bool random);
+        void init();
 
-        /*!
-        *@brief Function of tournament selection of movies
-        *@return movie details that meets conditions set
-        */  
-        Movies tournament(vector<string> genres, vector<double> rating, bool random);
+        // Recommendation modes
+        Movie movieSelect(vector<string> genres, double rating); 
+        Movie randomMovieSelect(vector<string> genres, double rating);
 
         /*!
         *@brief Function to return a random food in the foodDetails vector
