@@ -1,20 +1,9 @@
-/* Style for the QListWidget */
-QListWidget {
-    icon-size: 960px 640px;
-    /* Set the desired icon size */
-}
-QLable::detailsLabel{
-    background-color: rgb(17, 172, 143);
-}
-/* Style for QListWidgetItem */
-QListWidget::item {
-    padding: 5px;
-    border: 1px solid rgb(21, 90, 136);
-}
 
-/* Style for selected QListWidgetItem */
-QListWidget::item:selected {
-    background-color: rgb(17, 172, 143);
-    border: 1px solid rgb(0, 0, 0);
-    color: black;
-}
+
+QButton::titleButton{
+    background-color: aqua;
+};
+
+QLable{
+background-color: rgb(17, 172, 143);
+};

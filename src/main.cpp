@@ -22,7 +22,11 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QThreadPool>
+#include <QMainWindow>
+#include <QScrollArea>
 #include <QFile>
+#include <QPixmap>
+// #include "myStyles.qss"
 /*! \mainpage Movie and Food
  *   \section intro Introduction
  *  Key Features:
@@ -30,6 +34,32 @@
  *
  *2: Food Pairing Suggestions: In addition to movie recommendations, the app will suggest suitable food options that complement the user's selected movie. It will provide recipes based on the movie chosen.
  */
+
+QString getMovieDetial()
+{
+    // Query data from back-end
+    cosc345::Connection conn;
+    conn.est_conn();
+    // Get movie and food vector structs
+    vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
+    // vector<cosc345::Connection::Food> food = conn.getDetailFood();
+
+    for (const cosc345::Connection::Movies &movie : movies)
+    {
+        QString movieDetails = "Title: " + QString::fromStdString(movie.title) + "\n" +
+                               "Genres: " + QString::fromStdString(movie.genres) + "\n" +
+                               "IMDB ID: " + QString::fromStdString(movie.imdb_id) + "\n" +
+                               "Overview: " + QString::fromStdString(movie.overview) + "\n" +
+                               "Release Date: " + QString::fromStdString(movie.release_date) + "\n" +
+                               "Runtime: " + QString::fromStdString(movie.runtime) + "\n" +
+                               "Rating: " + QString::fromStdString(movie.rating) + "\n" + // Convert double to QString
+                               "Food: Monster Drink\n";                                   // As of now, hardcoded food is popcorn and ice cream yay!
+                                                                                          // QString movieTitle = "Title: " + QString::fromStdString(movie.title);
+
+        return movieDetails;
+        // Start a worker in the thread pool to download the image
+    }
+}
 
 /*!
  *@brief: Declaration of handleItemClicked function
@@ -54,70 +84,71 @@ void handleItemClicked(QListWidgetItem *item)
     dialog.exec();
 }
 
-/*!
- *@brief Declaration of downloadImage function
- *@param imageUrl: QString represents poster resource download link
- *@return poster images
- */
+// Function to download an image synchronously
 QPixmap downloadImage(const QString &imageUrl)
 {
-    // access to web location
     QNetworkAccessManager manager;
     QNetworkRequest request(imageUrl);
     QNetworkReply *reply = manager.get(request);
-    // wait image to be loaded
+
     QEventLoop loop;
     QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
-    // image download success
+
     if (reply->error() == QNetworkReply::NoError)
     {
         QByteArray data = reply->readAll();
-        QPixmap pixMap;
-        pixMap.loadFromData(data);
-        return pixMap;
+        QPixmap pixmap;
+        pixmap.loadFromData(data);
+        return pixmap;
     }
-    // Error handers
-    return QPixmap();
+    else
+    {
+        qDebug() << "Failed to download image:" << reply->errorString();
+        return QPixmap(); // Return an empty pixmap in case of an error
+    }
 }
 
-/*!
- *@class Image download worker class
- *@brief To enable poster image display on the GUI. Will be moved to a separate cpp and h file for the beta version
- */
+// Image download worker class
 class ImageDownloadWorker : public QRunnable
 {
 public:
-    ImageDownloadWorker(const QString &imageUrl, QListWidgetItem *item)
-        : m_imageUrl(imageUrl), m_item(item) {}
+    ImageDownloadWorker(const QString &imageUrl, QLabel *imageLabel)
+        : m_imageUrl(imageUrl), m_imageLabel(imageLabel) {}
 
     void run() override
     {
         QPixmap posterPixmap = downloadImage(m_imageUrl);
         if (!posterPixmap.isNull())
         {
-            QSize iconSize(128, 128);
-            QPixmap scaledPixmap = posterPixmap.scaled(iconSize, Qt::KeepAspectRatio);
-
-            // Create a QIcon with the scaled QPixmap
-            QIcon poster(scaledPixmap);
-
-            // Set the icon with the desired size for the item
-            m_item->setIcon(poster);
+            // Set the downloaded image as the pixmap of the QLabel
+            m_imageLabel->setPixmap(posterPixmap);
         }
     }
 
 private:
     QString m_imageUrl;
-    QListWidgetItem *m_item;
+    QLabel *m_imageLabel;
 };
 
-/**
- * Main function to run application
- */
 int main(int argc, char **argv)
 {
+    string searchText = "";
+
     QApplication app(argc, argv);
+
+    // QString executablePath = QCoreApplication::applicationDirPath();
+    // QString qssFilePath = executablePath + "/myStyles.qss";
+    // QFile styleFile(qssFilePath);
+    // if (styleFile.exists() && styleFile.open(QFile::ReadOnly | QFile::Text))
+    // {
+    //     QString style = QLatin1String(styleFile.readAll());
+    //     app.setStyleSheet(style);
+    // }
+    // else
+    // {
+    //     qDebug() << "Failed to load QSS file.";
+    // }
     QString executablePath = QCoreApplication::applicationDirPath();
     QString qssFilePath = executablePath + "/myStyles.qss";
     QFile styleFile(qssFilePath);
@@ -127,50 +158,88 @@ int main(int argc, char **argv)
     // initialize QFrame
     QFrame frame;
     frame.setGeometry(QRect(300, 400, 800, 600));
-
-    // Query data from back-end
+    // Menu
+    QMenu *menu = new QMenu();
+    menu->setTitle(QObject::tr("Movie and Food"));
     cosc345::Connection conn;
     conn.est_conn();
-    // Get movie and food vector structs
     vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
-    // vector<cosc345::Connection::Food> food = conn.getDetailFood();
+    // Create a main window (QMainWindow)
 
-    // Initialize QList to for display data set
-    QListWidget *listWidget = new QListWidget();
-    QThreadPool threadPool;
-    threadPool.setMaxThreadCount(QThread::idealThreadCount());
-    for (const cosc345::Connection::Movies &movie : movies)
-    {
-        QString movieDetails = "Title: " + QString::fromStdString(movie.title) + "\n" +
-                               "Genres: " + QString::fromStdString(movie.genres) + "\n" +
-                               "IMDB ID: " + QString::fromStdString(movie.imdb_id) + "\n" +
-                               "Overview: " + QString::fromStdString(movie.overview) + "\n" +
-                               "Release Date: " + QString::fromStdString(movie.release_date) + "\n" +
-                               "Runtime: " + QString::fromStdString(movie.runtime) + "\n" +
-                               "Rating: " + QString::fromStdString(movie.rating) + "\n" + // Convert double to QString
-                               "Food: Popcorn and Ice Cream\n";                           // As of now, hardcoded food is popcorn and ice cream yay!
+    QLineEdit *searchBar = new QLineEdit();
+    searchBar->setClearButtonEnabled(true);
+    QIcon searchIcon("searchIcon.png");
+    // Add the action with the loaded icon
+    searchBar->addAction(searchIcon, QLineEdit::LeadingPosition);
+    searchBar->setPlaceholderText("Search...");
 
-        QListWidgetItem *item = new QListWidgetItem(movieDetails);
+    QMainWindow window;
+    window.setWindowTitle("Movie and Food");
+    // Create a central widget for the main window
+    QWidget *centralWidget = new QWidget();
+    window.setCentralWidget(centralWidget);
 
-        // Start a worker in the thread pool to download the image
-        QString imageUrl = QString::fromStdString(movie.poster);
-        ImageDownloadWorker *worker = new ImageDownloadWorker(imageUrl, item);
-        threadPool.start(worker);
+    // Create a scroll area
+    QScrollArea *scrollArea = new QScrollArea(centralWidget);
+    scrollArea->setWidgetResizable(true);
+    centralWidget->setLayout(new QVBoxLayout());
+    centralWidget->layout()->addWidget(scrollArea);
 
-        listWidget->addItem(item);
-    }
-    // button reaction
-    QObject::connect(listWidget, &QListWidget::itemClicked, handleItemClicked);
-    // create layout for items
-    QGridLayout *layout = new QGridLayout;
+    // Create a widget to hold the grid layout
+    QWidget *scrollWidget = new QWidget();
+    scrollArea->setWidget(scrollWidget);
+
+    // Create a grid layout
+    QGridLayout *gridLayout = new QGridLayout(scrollWidget);
+
+    // Connect the returnPressed() signal to a lambda function
+    QObject::connect(searchBar, &QLineEdit::returnPressed, [&]()
+                     {
+        searchText = searchBar->text().toStdString();
+        transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
+        cout << searchText << endl; });
+
     // append item to layout
-    layout->addWidget(listWidget);
+    gridLayout->addWidget(searchBar);
 
-    // append layout to frame
-    frame.setLayout(layout);
-    // Show frame
-    frame.show();
+    // Create and add 7800 items to the grid layout
+    const int numCols = 3;                       // Number of rows
+    const int numRows = conn.getSizeMovie() / 3; // Number of columns
+    int i = 0;
+    for (int row = 0; row < numRows; ++row)
+    {
 
-    // Start the Qt event loop
+        for (int col = 0; col < numCols; ++col)
+        {
+
+            QString name = QString::fromStdString(movies[i].title);
+            QString Genres = QString::fromStdString(movies[i].genres);
+            QString IMDB = QString::fromStdString(movies[i].imdb_id);
+            // QString Overview = QString::
+            QString URL = QString::fromStdString(movies[i].poster);
+
+            // Create a QLabel to display the image
+            QLabel *imageLabel = new QLabel();
+            // imageLabel->setFixedSize(128, 192);
+            gridLayout->addWidget(imageLabel, row, col);
+            // imageLabel->resize(128, 192);
+            // Create a QPushButton for the title
+            QPushButton *titleButton = new QPushButton((name));
+            // gridLayout->addWidget(titleButton, row, col);
+
+            // Create an ImageDownloadWorker to download and display the image
+            ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
+            QThreadPool::globalInstance()->start(imageWorker);
+
+            i++;
+        }
+    }
+    QHBoxLayout *layout = new QHBoxLayout;
+    // layout->addWidget(searchBar);
+    window.addWidget(searchBar); // testing
+    window.setLayout(gridLayout);
+    // Show the main window
+    window.show();
+
     return app.exec();
 }
