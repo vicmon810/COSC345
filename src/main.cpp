@@ -35,7 +35,8 @@
  *2: Food Pairing Suggestions: In addition to movie recommendations, the app will suggest suitable food options that complement the user's selected movie. It will provide recipes based on the movie chosen.
  */
 
-QString getMovieDetial()
+QString
+getMovieDetial()
 {
     // Query data from back-end
     cosc345::Connection conn;
@@ -137,50 +138,39 @@ int main(int argc, char **argv)
 
     QApplication app(argc, argv);
 
-    // QString executablePath = QCoreApplication::applicationDirPath();
-    // QString qssFilePath = executablePath + "/myStyles.qss";
-    // QFile styleFile(qssFilePath);
-    // if (styleFile.exists() && styleFile.open(QFile::ReadOnly | QFile::Text))
-    // {
-    //     QString style = QLatin1String(styleFile.readAll());
-    //     app.setStyleSheet(style);
-    // }
-    // else
-    // {
-    //     qDebug() << "Failed to load QSS file.";
-    // }
+    // Load QSS style sheet
     QString executablePath = QCoreApplication::applicationDirPath();
     QString qssFilePath = executablePath + "/myStyles.qss";
     QFile styleFile(qssFilePath);
     styleFile.open(QFile::ReadOnly);
     QString style = QLatin1String(styleFile.readAll());
     app.setStyleSheet(style);
+
     // initialize QFrame
-    QFrame frame;
-    frame.setGeometry(QRect(300, 400, 800, 600));
-    // Menu
-    QMenu *menu = new QMenu();
-    menu->setTitle(QObject::tr("Movie and Food"));
+    // QFrame frame;
+    // frame.setGeometry(QRect(300, 400, 800, 600));
+
+    // Back-end work, query data
     cosc345::Connection conn;
     conn.est_conn();
     vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
-    // Create a main window (QMainWindow)
-
-    QLineEdit *searchBar = new QLineEdit();
-    searchBar->setClearButtonEnabled(true);
-    QIcon searchIcon("searchIcon.png");
-    // Add the action with the loaded icon
-    searchBar->addAction(searchIcon, QLineEdit::LeadingPosition);
-    searchBar->setPlaceholderText("Search...");
 
     QMainWindow window;
     window.setWindowTitle("Movie and Food");
     // Create a central widget for the main window
     QWidget *centralWidget = new QWidget();
     window.setCentralWidget(centralWidget);
+    // window.setMenu();
+
+    // // Create a menu bar
+    // QMenuBar *menuBar = mainWindow.menuBar();
+
+    // // Create a File menu
+    // QMenu *fileMenu = menuBar->addMenu("File");
 
     // Create a scroll area
     QScrollArea *scrollArea = new QScrollArea(centralWidget);
+    scrollArea->setMinimumSize(1000, 1000);
     scrollArea->setWidgetResizable(true);
     centralWidget->setLayout(new QVBoxLayout());
     centralWidget->layout()->addWidget(scrollArea);
@@ -191,16 +181,6 @@ int main(int argc, char **argv)
 
     // Create a grid layout
     QGridLayout *gridLayout = new QGridLayout(scrollWidget);
-
-    // Connect the returnPressed() signal to a lambda function
-    QObject::connect(searchBar, &QLineEdit::returnPressed, [&]()
-                     {
-        searchText = searchBar->text().toStdString();
-        transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
-        cout << searchText << endl; });
-
-    // append item to layout
-    gridLayout->addWidget(searchBar);
 
     // Create and add 7800 items to the grid layout
     const int numCols = 3;                       // Number of rows
@@ -235,8 +215,7 @@ int main(int argc, char **argv)
         }
     }
     QHBoxLayout *layout = new QHBoxLayout;
-    // layout->addWidget(searchBar);
-    // window.QWidget(searchBar); // testing
+
     window.setLayout(gridLayout);
     // Show the main window
     window.show();
