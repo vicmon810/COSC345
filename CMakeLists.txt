@@ -20,6 +20,8 @@ add_executable(MovieAndFood
     src/main.cpp
     src/Recommendation.h 
     src/Recommendation.cpp
+    src/clickImage.h
+    src/clickImage.cpp
     )
 
     

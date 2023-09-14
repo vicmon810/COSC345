@@ -1,5 +1,6 @@
 #include "Recommendation.h"
 #include "connection.h"
+#include "clickImage.h"
 #include <algorithm>
 #include <random>
 #include <QApplication>
@@ -199,6 +200,7 @@ int main(int argc, char **argv)
 
         for (int col = 0; col < numCols; ++col)
         {
+            // ClickableLabel imageLabel = new ClickableLabel();
 
             QString name = QString::fromStdString(movies[i].title);
             QString Genres = QString::fromStdString(movies[i].genres);
@@ -207,7 +209,12 @@ int main(int argc, char **argv)
             QString URL = QString::fromStdString(movies[i].poster);
 
             // Create a QLabel to display the image
-            QLabel *imageLabel = new QLabel();
+            // QLabel *imageLabel = new QLabel();
+            ClickableLabel *imageLabel = new ClickableLabel();
+            QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
+                             {
+    // Code to execute when the label is clicked
+    qDebug() << "Label clicked!"; });
             // imageLabel->setFixedSize(128, 192);
             gridLayout->addWidget(imageLabel, row, col);
             // imageLabel->resize(128, 192);
