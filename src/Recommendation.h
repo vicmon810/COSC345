@@ -67,13 +67,34 @@ namespace cosc345
         Recommendation();
 
         /*!
-        * @brief Init function of Recommendation
+        * @brief Constructor of Recommendation that takes in 
+        * @param Connection object conn
         */
-        void init();
+        Recommendation(Connection conn);
 
-        // Recommendation modes
+        /*!
+        * @brief Accessor for the genres vector for the Recommendation class. Could set to public but I don't like having all the variables
+        * public.
+        * @return genres vector of genre strings
+        */
+        vector<string> getGenres() const;
+
+        /*!
+        * @brief Function to return movie struct from moviesList vector that matches
+        * genres and rating parameters
+        * @param genres String vector of genres
+        * @param rating rating of movie in a double type
+        * @return movie struct containing movie details
+        */
         Movie movieSelect(vector<string> genres, double rating); 
-        Movie randomMovieSelect(vector<string> genres, double rating);
+
+        /*!
+        * @brief Function to return a random movie struct from moviesList vector
+        * @param genres String vector of genres
+        * @param rating rating of movie in a double type
+        * @return movie struct containing movie details
+        */
+        Movie randomMovieSelect();
 
         /*!
         *@brief Function to return a random food in the foodDetails vector
