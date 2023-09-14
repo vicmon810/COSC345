@@ -1,35 +1,34 @@
 #include "Recommendation.h"
 #include "connection.h"
 #include "clickImage.h"
+#include "clickHandler.h"
 #include <algorithm>
 #include <random>
-#include <QApplication>
-#include <QPushButton>
-#include <QMenu>
-#include <QObject>
-#include <QFrame>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QCheckBox>
-#include <QLineEdit>
-#include <QTableWidget>
-#include <QTableWidgetItem>
-#include <iostream>
-#include <QDebug>
-#include <QListWidget>
-#include <QMessageBox>
-#include <QDialog>
-#include <QIcon>
-#include <QLabel>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QThreadPool>
-#include <QMainWindow>
-#include <QScrollArea>
-#include <QFile>
-#include <QPixmap>
-#include <QMenuBar>
+// #include <QApplication>
+// #include <QPushButton>
+// #include <QMenu>
+// #include <QObject>
+// #include <QFrame>
+// #include <QHBoxLayout>
+// #include <QVBoxLayout>
+// #include <QCheckBox>
+// #include <QLineEdit>
+// #include <QTableWidget>
+// #include <QTableWidgetItem>
+// #include <QDebug>
+// #include <QListWidget>
+
+// #include <QIcon>
+
+// #include <QNetworkAccessManager>
+// #include <QNetworkRequest>
+// #include <QNetworkReply>
+// #include <QThreadPool>
+// #include <QMainWindow>
+// #include <QScrollArea>
+// #include <QFile>
+// #include <QPixmap>
+// #include <QMenuBar>
 // #include "myStyles.qss"
 /*! \mainpage Movie and Food
  *   \section intro Introduction
@@ -38,56 +37,6 @@
  *
  *2: Food Pairing Suggestions: In addition to movie recommendations, the app will suggest suitable food options that complement the user's selected movie. It will provide recipes based on the movie chosen.
  */
-
-QString
-getMovieDetial()
-{
-    // Query data from back-end
-    cosc345::Connection conn;
-    conn.est_conn();
-    // Get movie and food vector structs
-    vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
-    // vector<cosc345::Connection::Food> food = conn.getDetailFood();
-
-    for (const cosc345::Connection::Movies &movie : movies)
-    {
-        QString movieDetails = "Title: " + QString::fromStdString(movie.title) + "\n" +
-                               "Genres: " + QString::fromStdString(movie.genres) + "\n" +
-                               "IMDB ID: " + QString::fromStdString(movie.imdb_id) + "\n" +
-                               "Overview: " + QString::fromStdString(movie.overview) + "\n" +
-                               "Release Date: " + QString::fromStdString(movie.release_date) + "\n" +
-                               "Runtime: " + QString::fromStdString(movie.runtime) + "\n" +
-                               "Rating: " + QString::fromStdString(movie.rating) + "\n" + // Convert double to QString
-                               "Food: Monster Drink\n";                                   // As of now, hardcoded food is popcorn and ice cream yay!
-                                                                                          // QString movieTitle = "Title: " + QString::fromStdString(movie.title);
-
-        return movieDetails;
-        // Start a worker in the thread pool to download the image
-    }
-}
-
-/*!
- *@brief: Declaration of handleItemClicked function
- *@param item : QListWidgetItem
- */
-void handleItemClicked(QListWidgetItem *item)
-{
-    // Get the text (movie details) from the clicked item
-    QString movieDetails = item->text();
-
-    // Create a custom dialog to show the full movie details
-    QDialog dialog;
-    QVBoxLayout *layout = new QVBoxLayout;
-
-    // Display the full movie details in QLabel
-    QLabel *detailsLabel = new QLabel();
-    detailsLabel->setText(movieDetails);
-    layout->addWidget(detailsLabel);
-
-    dialog.setLayout(layout);
-    dialog.setWindowTitle("Movie Details");
-    dialog.exec();
-}
 
 // Function to download an image synchronously
 QPixmap downloadImage(const QString &imageUrl)
@@ -203,18 +152,25 @@ int main(int argc, char **argv)
             // ClickableLabel imageLabel = new ClickableLabel();
 
             QString name = QString::fromStdString(movies[i].title);
-            QString Genres = QString::fromStdString(movies[i].genres);
+            QString genres = QString::fromStdString(movies[i].genres);
             QString IMDB = QString::fromStdString(movies[i].imdb_id);
-            // QString Overview = QString::
+            QString overview = QString::fromStdString(movies[i].overview);
+            QString runtime = QString::fromStdString(movies[i].runtime);
+            QString rating = QString::fromStdString(movies[i].rating);
+            QString release = QString::fromStdString(movies[i].release_date);
             QString URL = QString::fromStdString(movies[i].poster);
 
             // Create a QLabel to display the image
             // QLabel *imageLabel = new QLabel();
             ClickableLabel *imageLabel = new ClickableLabel();
+
             QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
                              {
     // Code to execute when the label is clicked
-    qDebug() << "Label clicked!"; });
+    cosc345::clickHandler ch;
+    ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release);
+    qDebug()
+        << "Label clicked!"; });
             // imageLabel->setFixedSize(128, 192);
             gridLayout->addWidget(imageLabel, row, col);
             // imageLabel->resize(128, 192);

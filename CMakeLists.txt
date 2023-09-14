@@ -17,11 +17,15 @@ file(COPY ${CMAKE_SOURCE_DIR}/src/searchIcon.png DESTINATION ${CMAKE_BINARY_DIR}
 add_executable(MovieAndFood 
     src/connection.h
     src/Connection.cpp
-    src/main.cpp
     src/Recommendation.h 
     src/Recommendation.cpp
+    src/imageDownload.h
+    src/imageDownload.cpp
     src/clickImage.h
     src/clickImage.cpp
+    src/clickHandler.h
+    src/clickHandler.cpp
+    src/main.cpp 
     )
 
     
