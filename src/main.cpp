@@ -99,10 +99,6 @@ int main(int argc, char **argv)
     QString style = QLatin1String(styleFile.readAll());
     app.setStyleSheet(style);
 
-    // initialize QFrame
-    // QFrame frame;
-    // frame.setGeometry(QRect(300, 400, 800, 600));
-
     // Back-end work, query data
     cosc345::Connection conn;
     conn.est_conn();
