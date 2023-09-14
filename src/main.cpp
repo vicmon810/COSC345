@@ -1,5 +1,7 @@
 #include "Recommendation.h"
 #include "connection.h"
+#include <algorithm>
+#include <random>
 #include <QApplication>
 #include <QPushButton>
 #include <QMenu>
@@ -26,6 +28,7 @@
 #include <QScrollArea>
 #include <QFile>
 #include <QPixmap>
+#include <QMenuBar>
 // #include "myStyles.qss"
 /*! \mainpage Movie and Food
  *   \section intro Introduction
@@ -154,7 +157,7 @@ int main(int argc, char **argv)
     cosc345::Connection conn;
     conn.est_conn();
     vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
-
+    shuffle(movies.begin(), movies.end(), default_random_engine());
     QMainWindow window;
     window.setWindowTitle("Movie and Food");
     // Create a central widget for the main window
@@ -162,11 +165,16 @@ int main(int argc, char **argv)
     window.setCentralWidget(centralWidget);
     // window.setMenu();
 
-    // // Create a menu bar
-    // QMenuBar *menuBar = mainWindow.menuBar();
+    // Create a menu bar
+    QMenuBar *menuBar = new QMenuBar(&window);
 
-    // // Create a File menu
-    // QMenu *fileMenu = menuBar->addMenu("File");
+    // Set the menu bar for the main window
+    window.setMenuBar(menuBar);
+
+    // Create a File menu
+    QMenu *fileMenu = menuBar->addMenu("File");
+    // Create a QAction for the File menu
+    QAction *openAction = fileMenu->addAction("search");
 
     // Create a scroll area
     QScrollArea *scrollArea = new QScrollArea(centralWidget);
