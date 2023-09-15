@@ -97,11 +97,19 @@ namespace cosc345
 
     vector<Connection::Movies> Connection::searching(string key)
     {
-        return moviesDetail;
+
+        for (int i = 0; i < moviesDetail.size(); i++)
+        {
+            string title = moviesDetail[i].title;
+            if (key == title)
+                searchResult.push_back(moviesDetail[i]);
+        }
+        return searchResult;
     }
 
     vector<Connection::Movies> Connection::sorting(string rating)
     {
+        
         return moviesDetail;
     }
 }

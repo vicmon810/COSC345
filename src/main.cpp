@@ -115,8 +115,8 @@ int main(int argc, char **argv)
     QMenu* fileMenu = menuBar->addMenu("File");
 
     // Create a custom widget for the search bar
-    QWidget* searchWidget = new QWidget();
-    QHBoxLayout* searchLayout = new QHBoxLayout(searchWidget);
+    QWidget *searchWidget = new QWidget();
+    QHBoxLayout *searchLayout = new QHBoxLayout(searchWidget);
 
     QLineEdit* searchBar = new QLineEdit();
     searchBar->setClearButtonEnabled(true);
@@ -161,7 +161,7 @@ int main(int argc, char **argv)
     // int size = getAllSize();
     int size = 500;
     // Create and add 7800 items to the grid layout
-    const int numCols = 3;             // Number of rows
+    const int numCols = 3;         // Number of rows
     const int numRows = size / 20; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
 
     int i = 0;
