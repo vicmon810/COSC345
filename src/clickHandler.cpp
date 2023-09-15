@@ -13,7 +13,7 @@ namespace cosc345
         QString message1 = "<font size='5'>Monster Drink!!!</font>";
         QString message2 = "<font size='5'>Pop Corn!!!</font> ";
         QString message3 = "<font size='5'>Ice Cream</font>";
-        QString message4 = "<font size='5'>Ice Cream</font>";
+        QString message4 = "<font size='5'>Ice </font>";
         std::srand(std::time(nullptr));
 
         // Generate a random number from 0 to 3 to select the RNG
@@ -25,12 +25,16 @@ namespace cosc345
         {
         case 0:
             msgBox.setText(message1);
+            break;
         case 1:
             msgBox.setText(message2);
+            break;
         case 2:
             msgBox.setText(message3);
+            break;
         case 3:
             msgBox.setText(message4);
+            break;
         }
 
         msgBox.exec();

@@ -56,7 +56,6 @@ namespace cosc345
             }
             moviesDetail.push_back(movie);
         }
-        
 
         size_movie = moviesDetail.size();
         inputFile.close();
@@ -96,4 +95,13 @@ namespace cosc345
         return foodDetail;
     }
 
+    vector<Connection::Movies> Connection::searching(string key)
+    {
+        return moviesDetail;
+    }
+
+    vector<Connection::Movies> Connection::sorting(string rating)
+    {
+        return moviesDetail;
+    }
 }

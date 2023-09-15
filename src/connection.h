@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+
 #include <random>
 using namespace std;
 
@@ -77,16 +78,26 @@ namespace cosc345
          *@return total size of recipe
          */
         int getSizeFood();
-        /**
+        /*!
          * @brief Retrieves and returns details of movies.
          * @return A vector of Movies containing movie details.
          */
         vector<Movies> getDetailMovie();
-        /**
+        /*!
          * @brief Retrieves and returns details of food items.
          * @return A vector of Food containing food details.
          */
         vector<Food> getDetailFood();
+        /*!
+         *@brief: search for matched keywords
+         *@return movie contain matched keywords
+         */
+        vector<Movies> searching(string key);
+        /*!
+         *@brief Sorting movie data set by order
+         *@return movie list by order
+         */
+        vector<Movies> sorting(string rating);
     };
 }
 

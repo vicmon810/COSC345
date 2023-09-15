@@ -33,6 +33,10 @@ namespace cosc345
     class clickHandler
     {
     private:
+        /*!
+        *@note: Please delete this after using
+        @return: random food from per-set
+        */
         void pop_food();
 
     public:

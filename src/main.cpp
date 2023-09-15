@@ -4,32 +4,7 @@
 #include "clickHandler.h"
 #include <algorithm>
 #include <random>
-// #include <QApplication>
-// #include <QPushButton>
-// #include <QMenu>
-// #include <QObject>
-// #include <QFrame>
-// #include <QHBoxLayout>
-// #include <QVBoxLayout>
-// #include <QCheckBox>
-// #include <QLineEdit>
-// #include <QTableWidget>
-// #include <QTableWidgetItem>
-// #include <QDebug>
-// #include <QListWidget>
 
-// #include <QIcon>
-
-// #include <QNetworkAccessManager>
-// #include <QNetworkRequest>
-// #include <QNetworkReply>
-// #include <QThreadPool>
-// #include <QMainWindow>
-// #include <QScrollArea>
-// #include <QFile>
-// #include <QPixmap>
-// #include <QMenuBar>
-// #include "myStyles.qss"
 /*! \mainpage Movie and Food
  *   \section intro Introduction
  *  Key Features:
@@ -85,6 +60,21 @@ private:
     QLabel *m_imageLabel;
 };
 
+vector<cosc345::Connection::Movies> getAllMovie()
+{
+    cosc345::Connection conn;
+    conn.est_conn();
+    vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
+    return movies;
+}
+
+int getAllSize()
+{
+    cosc345::Connection conn;
+    conn.est_conn();
+    return conn.getSizeMovie();
+}
+
 int main(int argc, char **argv)
 {
     string searchText = "";
@@ -100,9 +90,7 @@ int main(int argc, char **argv)
     app.setStyleSheet(style);
 
     // Back-end work, query data
-    cosc345::Connection conn;
-    conn.est_conn();
-    vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
+    vector<cosc345::Connection::Movies> movies = getAllMovie();
     shuffle(movies.begin(), movies.end(), default_random_engine());
     QMainWindow window;
     window.setWindowTitle("Movie and Food");
@@ -122,6 +110,13 @@ int main(int argc, char **argv)
     // Create a QAction for the File menu
     QAction *openAction = fileMenu->addAction("search");
 
+    QLineEdit *searchBar = new QLineEdit();
+    searchBar->setClearButtonEnabled(true);
+    QIcon searchIcon("searchIcon.png");
+    // Add the action with the loaded icon
+    searchBar->addAction(searchIcon, QLineEdit::LeadingPosition);
+    searchBar->setPlaceholderText("Search...");
+    
     // Create a scroll area
     QScrollArea *scrollArea = new QScrollArea(centralWidget);
     scrollArea->setMinimumSize(1000, 1000);
@@ -135,10 +130,13 @@ int main(int argc, char **argv)
 
     // Create a grid layout
     QGridLayout *gridLayout = new QGridLayout(scrollWidget);
-
+    // return all movies size
+    // int size = getAllSize();
+    int size = 500;
     // Create and add 7800 items to the grid layout
-    const int numCols = 3;                       // Number of rows
-    const int numRows = conn.getSizeMovie() / 3; // Number of columns
+    const int numCols = 20;             // Number of rows
+    const int numRows = size / numCols; // Number of columns
+
     int i = 0;
     for (int row = 0; row < numRows; ++row)
     {
@@ -162,11 +160,12 @@ int main(int argc, char **argv)
 
             QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
                              {
-    // Code to execute when the label is clicked
-    cosc345::clickHandler ch;
-    ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release);
-    qDebug()
-        << "Label clicked!"; });
+                                 // Code to execute when the label is clicked
+                                 cosc345::clickHandler ch;
+                                 ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release);
+                                 // qDebug()
+                                 //     << "Label clicked!";
+                             });
             // imageLabel->setFixedSize(128, 192);
             gridLayout->addWidget(imageLabel, row, col);
             // imageLabel->resize(128, 192);
