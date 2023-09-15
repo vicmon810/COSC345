@@ -78,6 +78,7 @@ int getAllSize()
 int main(int argc, char **argv)
 {
     string searchText = "";
+    int searchFigure = 0;
     QApplication app(argc, argv);
 
     // Load QSS style sheet
@@ -144,38 +145,91 @@ int main(int argc, char **argv)
     centralWidget->setLayout(new QVBoxLayout());
     centralWidget->layout()->addWidget(scrollArea);
 
-    // Connect the returnPressed() signal of QLineEdit to a slot
-    QObject::connect(searchBar, &QLineEdit::returnPressed, [&]()
-                     {
-        searchText = searchBar->text().toStdString();
-        transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
-        // Print the contents to the console
-        // std::cout << "Search Text: " << searchText << std::endl;
-        cosc345::Connection conn;
-
-        searchResult = conn.searching(searchText); });
-
     // Create a widget to hold the grid layout
     QWidget *scrollWidget = new QWidget();
     scrollArea->setWidget(scrollWidget);
 
-    // Create a grid layout
     QGridLayout *gridLayout = new QGridLayout(scrollWidget);
+
+    // Connect the returnPressed() signal of QLineEdit to a slot
+    QObject::connect(searchBar, &QLineEdit::returnPressed, [&]()
+                     {
+                         searchText = searchBar->text().toStdString();
+                         transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
+                         // Print the contents to the console
+                         // std::cout << "Search Text: " << searchText << std::endl;
+                         cosc345::Connection conn;
+
+                         searchResult = conn.searching(searchText);
+                         cout << searchResult.size() << endl;
+                         searchFigure = searchResult.size();
+
+                         int resultSize = searchResult.size();
+
+                         // Create and add 7800 items to the grid layout
+                         const int numCols = 3;              // Number of rows
+                         const int numRows = resultSize / 3; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
+
+                         int i = 0;
+
+                         for (int row = 0; row < numRows; ++row)
+                         {
+
+                             for (int col = 0; col < numCols; ++col)
+                             {
+                                 // ClickableLabel imageLabel = new ClickableLabel();
+
+                                 QString name = QString::fromStdString(searchResult[i].title);
+                                 QString genres = QString::fromStdString(searchResult[i].genres);
+                                 QString IMDB = QString::fromStdString(searchResult[i].imdb_id);
+                                 QString overview = QString::fromStdString(searchResult[i].overview);
+                                 QString runtime = QString::fromStdString(searchResult[i].runtime);
+                                 QString rating = QString::fromStdString(searchResult[i].rating);
+                                 QString release = QString::fromStdString(searchResult[i].release_date);
+                                 QString URL = QString::fromStdString(searchResult[i].poster);
+
+                                 // Create a QLabel to display the image
+                                 // QLabel *imageLabel = new QLabel();
+                                 ClickableLabel *imageLabel = new ClickableLabel();
+
+                                 QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
+                                                  {
+                                                      // Code to execute when the label is clicked
+                                                      cosc345::clickHandler ch;
+                                                      ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release);
+                                                      // qDebug()
+                                                      //     << "Label clicked!";
+                                                  });
+                                 // imageLabel->setFixedSize(128, 192);
+                                 gridLayout->addWidget(imageLabel, row, col);
+                                 // imageLabel->resize(128, 192);
+                                 // Create a QPushButton for the title
+                                 QPushButton *titleButton = new QPushButton((name));
+                                 // gridLayout->addWidget(titleButton, row, col);
+
+                                 // Create an ImageDownloadWorker to download and display the image
+                                 ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
+                                 QThreadPool::globalInstance()->start(imageWorker);
+
+                                 i++;
+                             }
+                         }
+                         gridLayout->update(); });
+
+    // Create a grid layout
     // return all movies size
-    // int size = getAllSize();
-    // int resultSize = searchResult.size();
-    // cout << resultSize << end;
-    if (searchResult.size() != 0)
+    int size = getAllSize();
+    // cout << searchResult.size() << end;
+    if (searchFigure != 0)
     {
         qDebug() << "test";
+        cout << "test" << endl;
     }
     else
     {
-
-        int size = 500;
         // Create and add 7800 items to the grid layout
-        const int numCols = 3;         // Number of rows
-        const int numRows = size / 20; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
+        const int numCols = 3;          // Number of rows
+        const int numRows = size / 200; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
 
         int i = 0;
 
