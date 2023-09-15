@@ -97,19 +97,29 @@ namespace cosc345
 
     vector<Connection::Movies> Connection::searching(string key)
     {
-
-        for (int i = 0; i < moviesDetail.size(); i++)
+        cout << key << endl;
+        // cout << moviesDetail.size() << endl;
+        cout << moviesDetail.size() << endl;
+        vector<Connection::Movies>
+            totalMovie = Connection::getDetailMovie();
+        // cout << totalMovie[0].title << endl;
+        int sizeMovies = Connection::getSizeMovie();
+        cout << sizeMovies << endl;
+        for (int i = 0; i < sizeMovies; i++)
         {
-            string title = moviesDetail[i].title;
-            if (key == title)
-                searchResult.push_back(moviesDetail[i]);
+            cout << "test" << endl;
+            string title = totalMovie[i].title;
+            cout << title << endl;
+            if (title == key)
+                searchResult.push_back(totalMovie[i]);
         }
+        // cout << "search result: " << searchResult[0].title << endl;
         return searchResult;
     }
 
     vector<Connection::Movies> Connection::sorting(string rating)
     {
-        
+
         return moviesDetail;
     }
 }

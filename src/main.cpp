@@ -77,6 +77,7 @@ int getAllSize()
 
 int main(int argc, char **argv)
 {
+    string searchText = "";
     QApplication app(argc, argv);
 
     // Load QSS style sheet
@@ -129,7 +130,11 @@ int main(int argc, char **argv)
     searchWidgetAction->setDefaultWidget(searchWidget);
     // Connect the returnPressed() signal to a lambda function
     QObject::connect(searchBar, &QLineEdit::returnPressed, [&]()
-                     { qDebug() << "H"; });
+                     {
+                         cosc345::Connection conn;
+                         searchText = searchBar->text().toStdString();
+                         transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
+                         conn.searching(searchText); });
     // Add the search action to the File menu
     fileMenu->addAction(searchWidgetAction);
 
