@@ -77,6 +77,8 @@ int getAllSize()
 
 int main(int argc, char **argv)
 {
+    string searchText = "";
+
     QApplication app(argc, argv);
 
     // Load QSS style sheet
@@ -97,47 +99,57 @@ int main(int argc, char **argv)
     window.setCentralWidget(centralWidget);
     // window.setMenu();
 
-    // Create a menu bar
-    QMenuBar *menuBar = new QMenuBar(&window);
+    // Create a layout for the central widget
+    QVBoxLayout* centralLayout = new QVBoxLayout(centralWidget);
 
-    // Set the menu bar for the main window
-    window.setMenuBar(menuBar);
+    // Create a custom QWidget to hold both the menu bar and the search bar
+    QWidget* menuAndSearchContainer = new QWidget();
+
+    // Create a layout for the menu bar and search bar
+    QVBoxLayout* menuAndSearchLayout = new QVBoxLayout(menuAndSearchContainer);
+
+    // Create a menu bar
+    QMenuBar* menuBar = new QMenuBar();
 
     // Create a File menu
-    QMenu *fileMenu = menuBar->addMenu("File");
-    // Create a QAction for the File menu
-    //QAction *openAction = fileMenu->addAction("search");
-
-    // Create a QWidgetAction to add a custom widget to the menu
-    QWidgetAction* searchWidgetAction = new QWidgetAction(&window);
+    QMenu* fileMenu = menuBar->addMenu("File");
 
     // Create a custom widget for the search bar
     QWidget* searchWidget = new QWidget();
     QHBoxLayout* searchLayout = new QHBoxLayout(searchWidget);
 
-    QLineEdit *searchBar = new QLineEdit();
+    QLineEdit* searchBar = new QLineEdit();
     searchBar->setClearButtonEnabled(true);
     QIcon searchIcon("searchIcon.png");
-    // Add the action with the loaded icon
     searchBar->addAction(searchIcon, QLineEdit::LeadingPosition);
     searchBar->setPlaceholderText("Search...");
 
     // Add the search bar to the search widget
     searchLayout->addWidget(searchBar);
 
-    // Set the custom widget as the default widget for the action
-    searchWidgetAction->setDefaultWidget(searchWidget);
+    // Add the menu bar to the menu and search layout
+    menuAndSearchLayout->addWidget(menuBar);
 
-    // Add the search action to the File menu
-    fileMenu->addAction(searchWidgetAction);
-    
-    
+    // Add the search widget to the menu and search layout
+    menuAndSearchLayout->addWidget(searchWidget);
+
+    // Set the custom QWidget as the menu bar for the main window
+    window.setMenuWidget(menuAndSearchContainer);
+
     // Create a scroll area
     QScrollArea *scrollArea = new QScrollArea(centralWidget);
     scrollArea->setMinimumSize(1000, 1000);
     scrollArea->setWidgetResizable(true);
     centralWidget->setLayout(new QVBoxLayout());
     centralWidget->layout()->addWidget(scrollArea);
+
+    // Connect the returnPressed() signal of QLineEdit to a slot
+    QObject::connect(searchBar, &QLineEdit::returnPressed, [&]() {
+        searchText = searchBar->text().toStdString();
+        transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
+        // Print the contents to the console
+        std::cout << "Search Text: " << searchText << std::endl;
+    });
 
     // Create a widget to hold the grid layout
     QWidget *scrollWidget = new QWidget();
@@ -195,7 +207,6 @@ int main(int argc, char **argv)
             i++;
         }
     }
-    QHBoxLayout *layout = new QHBoxLayout;
 
     window.setLayout(gridLayout);
     // Show the main window
