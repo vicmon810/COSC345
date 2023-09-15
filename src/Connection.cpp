@@ -107,10 +107,13 @@ namespace cosc345
         for (int i = 0; i < sizeMovies; i++)
         {
             string title = totalMovie[i].title;
-            if (title == key)
+            transform(title.begin(), title.end(), title.begin(), ::tolower);
+            if (title.find(key))
+            {
                 searchResult.push_back(totalMovie[i]);
+                        }
         }
-        // cout << "search result: " << searchResult[0].title << endl;
+        cout << "search result: " << searchResult[0].title << endl;
         return searchResult;
     }
 

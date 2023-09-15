@@ -71,7 +71,8 @@
         "compare": "cpp",
         "concepts": "cpp",
         "algorithm": "cpp",
-        "qicon": "cpp"
+        "qicon": "cpp",
+        "filesystem": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
