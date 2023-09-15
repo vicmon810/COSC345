@@ -27,6 +27,7 @@
 #include <QMenuBar>
 #include <QString>
 #include <random>
+#include <QWidgetAction>
 
 namespace cosc345
 {
