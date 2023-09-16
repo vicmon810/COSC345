@@ -5,7 +5,6 @@ namespace cosc345
 
     void clickHandler::pop_food(QString genres, Recommendation rec)
     {
-        cout << "Running!" << endl;
         QMessageBox msgBox;
         msgBox.setWindowTitle("Food Details");
 
@@ -54,7 +53,6 @@ namespace cosc345
             title = QString::fromStdString(food.title);
             type = QString::fromStdString(food.food_type);
         }
-        cout << title.toStdString() << endl;
         msgBox.setText(title + "\n" + type);
         msgBox.exec();
     }

@@ -24,7 +24,6 @@ namespace cosc345
             food.ingredients = f00d.ingredients;
             food.NER = f00d.NER;
             food.food_type = f00d.food_type;
-            cout << food.food_type << endl;
             //Append to either sweet or savoury food list
             if (food.food_type == "\"Savory\"") {
                 this->savouryFoodList.push_back(food);
@@ -97,19 +96,27 @@ namespace cosc345
     }
 
     Connection::Food Recommendation::savouryFoodSelect() {
+        unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+        //Randomiser
+        default_random_engine generator(seed);
+        uniform_int_distribution<int> distribution(0, savouryFoodList.size());
         //shuffle savouryFoodList
-        shuffle(savouryFoodList.begin(), savouryFoodList.end(), default_random_engine());
+        //shuffle(savouryFoodList.begin(), savouryFoodList.end(), default_random_engine());
 
         //Return first index of shuffled list
-        return savouryFoodList[0];
+        return savouryFoodList[distribution(generator)];
     }
 
     Connection::Food Recommendation::sweetFoodSelect() {
+        unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+        //Randomiser
+        default_random_engine generator(seed);
+        uniform_int_distribution<int> distribution(0, sweetFoodList.size());
         //shuffle sweetFoodList
-        shuffle(sweetFoodList.begin(), sweetFoodList.end(), default_random_engine());
+        //shuffle(sweetFoodList.begin(), sweetFoodList.end(), default_random_engine());
 
         //Return first index of shuffled list
-        return sweetFoodList[0];
+        return sweetFoodList[distribution(generator)];
     }
 }
 
