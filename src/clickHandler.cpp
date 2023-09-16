@@ -3,11 +3,11 @@
 namespace cosc345
 {
 
-    void clickHandler::pop_food()
+    void clickHandler::pop_food(QString genres)
     {
 
         QMessageBox msgBox;
-        msgBox.setWindowTitle("Message");
+        msgBox.setWindowTitle("Food Details");
 
         // Use HTML to set a bigger font size for the message
         QString message1 = "<font size='5'>Monster Drink!!!</font>";
@@ -36,6 +36,15 @@ namespace cosc345
             msgBox.setText(message4);
             break;
         }
+
+        //Initialise Recommendation class
+        Recommendation rec = Recommendation();
+        //Loop through genre and check for savoury genre
+
+
+        //If loop finishes, return sweet food
+
+
 
         msgBox.exec();
     }
@@ -72,7 +81,7 @@ namespace cosc345
         layout->addWidget(titleButton);
 
         QObject::connect(titleButton, &QPushButton::clicked, [&]()
-                         { clickHandler::pop_food(); });
+                         { clickHandler::pop_food(genres); });
 
         dialog.setLayout(layout);
         dialog.setWindowTitle("Movie Details");

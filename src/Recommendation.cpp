@@ -11,7 +11,7 @@ namespace cosc345
     Recommendation::Recommendation(Connection conn) {
         //Add to vector
         vector<Connection::Movies> movies = conn.getDetailMovie(); 
-        vector<Connection::Food> moviesfoodDetail = conn.getDetailFood(); 
+        vector<Connection::Food> foods = conn.getDetailFood(); 
 
         //Transfer Connection::Movies to Recommendation::Movie since they are from
         //different classes. So I dont have to use Connection:: Connection:: Connection::
@@ -35,7 +35,25 @@ namespace cosc345
         }
 
         //Do it for food as well
-        //coming soon
+        for (const cosc345::Connection::Food& f00d : foods)
+        {
+            //Initialise food
+            Recommendation::Food food;
+            //Transfer data into food
+            food.title = f00d.title;
+            food.directions = f00d.directions;
+            food.ingredients = f00d.ingredients;
+            food.NER = f00d.NER;
+            food.food_type = f00d.food_type;
+
+            //Append to either sweet or savoury food list
+            if (food.food_type == "Savory") {
+                savouryFoodList.push_back(food);
+            }
+            else if (food.food_type == "Sweet") {
+                sweetFoodList.push_back(food);
+            }
+        }
     }
 
     vector<string> Recommendation::getGenres() const {
@@ -98,10 +116,20 @@ namespace cosc345
         return moviesList[0];
     }
 
-    Recommendation::Food Recommendation::randomFoodSelect() {
-        Recommendation::Food food; //Return empty struct for now
+    Recommendation::Food Recommendation::savouryFoodSelect(vector<Food> foodlist) {
+        //shuffle savouryFoodList
+        shuffle(savouryFoodList.begin(), savouryFoodList.end(), default_random_engine());
 
-        return food;
+        //Return first index of shuffled list
+        return savouryFoodList[0];
+    }
+
+    Recommendation::Food Recommendation::sweetFoodSelect(vector<Food> foodlist) {
+        //shuffle sweetFoodList
+        shuffle(sweetFoodList.begin(), sweetFoodList.end(), default_random_engine());
+
+        //Return first index of shuffled list
+        return sweetFoodList[0];
     }
 }
 

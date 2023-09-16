@@ -55,11 +55,13 @@ namespace cosc345
             string ingredients;
             string directions;
             string NER;
+            string food_type;
         };
 
         // Vector to store all movies and food
         vector<Movie> moviesList;
-        vector<Food> foodList;
+        vector<Food> savouryFoodList;
+        vector<Food> sweetFoodList;
 
         /*!
          *@brief Default constructor of Recommendation
@@ -97,10 +99,16 @@ namespace cosc345
         Movie randomMovieSelect();
 
         /*!
-        *@brief Function to return a random food in the foodDetails vector
-        *@return food details in a random element in the foodDetails vector
+        *@brief Function to return a savoury food in the foodDetails vector
+        *@return food details of a savoury food in the foodDetails vector
         */
-        Food randomFoodSelect();
+        Food savouryFoodSelect(vector<Food> foodlist);
+
+        /*!
+        *@brief Function to return a sweet food in the foodDetails vector
+        *@return food details of a sweet food in the foodDetails vector
+        */
+        Food sweetFoodSelect(vector<Food> foodlist);
     };
 }
 
