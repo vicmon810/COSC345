@@ -55,6 +55,7 @@ namespace cosc345
             string ingredients;
             string directions;
             string NER;
+            string food_type;
         };
 
         // Vector to store all movies and food

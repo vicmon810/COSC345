@@ -68,6 +68,14 @@ vector<cosc345::Connection::Movies> getAllMovie()
     return movies;
 }
 
+vector<cosc345::Connection::Food> getAllFood()
+{
+    cosc345::Connection conn;
+    conn.est_conn();
+    vector<cosc345::Connection::Food> foods = conn.getDetailFood();
+    return foods;
+}
+
 int getAllSize()
 {
     cosc345::Connection conn;
@@ -148,6 +156,10 @@ int main(int argc, char **argv)
     vector<cosc345::Connection::Movies> movies = getAllMovie();
     shuffle(movies.begin(), movies.end(), default_random_engine());
     vector<cosc345::Connection::Movies> searchResult;
+
+    //Test food query
+    //vector<cosc345::Connection::Food> foods = getAllFood();
+    //cout << foods[0].title << endl;
 
     QMainWindow window;
     window.setWindowTitle("Movie and Food");
