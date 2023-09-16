@@ -29,7 +29,7 @@ void testSearching()
 void TestRecommendation()
 {
     cosc345::Connection con;
-    cosc345::Recommendation recommender(con);
+    cosc345::Recommendation recommender(con.getDetailMovie(), con.getDetailFood());
 
     vector<string> genres = recommender.getGenres();
     assert(!genres.empty() && "Genres list is empty");

@@ -8,37 +8,15 @@ namespace cosc345
     //Default constructor
     Recommendation::Recommendation() {}
 
-    Recommendation::Recommendation(Connection conn) {
+    Recommendation::Recommendation(vector<Connection::Movies> moviesList, vector<Connection::Food> foodList) {
         //Add to vector
-        vector<Connection::Movies> movies = conn.getDetailMovie(); 
-        vector<Connection::Food> foods = conn.getDetailFood(); 
-
-        //Transfer Connection::Movies to Recommendation::Movie since they are from
-        //different classes. So I dont have to use Connection:: Connection:: Connection::
-        //for everything I do in recommendation.cpp. Also the recommendation functions
-        //cant really return a Connection:: item in a Recommendation:: function, C++ is ass
-        for (const cosc345::Connection::Movies& mov : movies) 
-        {
-            //Initialise movie
-            Recommendation::Movie movie;
-            //Transfer data into movie
-            movie.genres = mov.genres;
-            movie.poster = mov.poster;
-            movie.imdb_id = mov.imdb_id;
-            movie.overview = mov.overview;
-            movie.release_date = mov.release_date;
-            movie.runtime = mov.runtime;
-            movie.title = mov.title;
-            movie.rating = mov.rating;
-
-            moviesList.push_back(movie);
-        }
+        this->moviesList = moviesList; 
 
         //Do it for food as well
-        for (const cosc345::Connection::Food& f00d : foods)
+        for (const cosc345::Connection::Food& f00d : foodList)
         {
             //Initialise food
-            Recommendation::Food food;
+            Connection::Food food;
             //Transfer data into food
             food.title = f00d.title;
             food.directions = f00d.directions;
@@ -60,9 +38,9 @@ namespace cosc345
         return this->genres;
     }
 
-    Recommendation::Movie Recommendation::movieSelect(vector<string> genres, double rating) {
+    Connection::Movies Recommendation::movieSelect(vector<string> genres, double rating) {
         //Create empty movie vector
-        vector<Recommendation::Movie> relevantMovies;
+        vector<Connection::Movies> relevantMovies;
         //genre count check to make sure movie matches respective genres
         int genre_count_check = genres.size();
         //Loop through movieList and add to rating close to list
@@ -108,7 +86,7 @@ namespace cosc345
 
     }
 
-    Recommendation::Movie Recommendation::randomMovieSelect() {
+    Connection::Movies Recommendation::randomMovieSelect() {
         //shuffle movieList
         shuffle(moviesList.begin(), moviesList.end(), default_random_engine());
 
@@ -116,7 +94,7 @@ namespace cosc345
         return moviesList[0];
     }
 
-    Recommendation::Food Recommendation::savouryFoodSelect(vector<Food> foodlist) {
+    Connection::Food Recommendation::savouryFoodSelect() {
         //shuffle savouryFoodList
         shuffle(savouryFoodList.begin(), savouryFoodList.end(), default_random_engine());
 
@@ -124,7 +102,7 @@ namespace cosc345
         return savouryFoodList[0];
     }
 
-    Recommendation::Food Recommendation::sweetFoodSelect(vector<Food> foodlist) {
+    Connection::Food Recommendation::sweetFoodSelect() {
         //shuffle sweetFoodList
         shuffle(sweetFoodList.begin(), sweetFoodList.end(), default_random_engine());
 

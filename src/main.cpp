@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <random>
 
+using namespace cosc345;
+
 /*! \mainpage Movie and Food
  *   \section intro Introduction
  *  Key Features:
@@ -68,7 +70,7 @@ vector<cosc345::Connection::Movies> getAllMovie()
     return movies;
 }
 
-vector<cosc345::Connection::Food> getFood()
+vector<cosc345::Connection::Food> getAllFood()
 {
     cosc345::Connection conn;
     conn.est_conn();
@@ -83,7 +85,8 @@ int getAllSize()
     return conn.getSizeMovie();
 }
 
-void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout)
+//this function produce movie poster
+void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
 {
     // Create and add 7800 items to the grid layout
     int size = movies.size();
@@ -118,7 +121,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
                              {
                                  // Code to execute when the label is clicked
                                  cosc345::clickHandler ch;
-                                 ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release);
+                                 ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release, rec);
                                  // qDebug()
                                  //     << "Label clicked!";
                              });
@@ -158,8 +161,10 @@ int main(int argc, char **argv)
     vector<cosc345::Connection::Movies> searchResult;
 
     //Test food query
-    //vector<cosc345::Connection::Food> foods = getAllFood();
-    //cout << foods[0].title << endl;
+    vector<cosc345::Connection::Food> foods = getAllFood();
+
+    //Create Recommendation class instance
+    Recommendation rec = Recommendation(movies, foods);
 
     QMainWindow window;
     window.setWindowTitle("Movie and Food");
@@ -182,7 +187,6 @@ int main(int argc, char **argv)
 
     // Create a File menu
     QMenu *fileMenu = menuBar->addMenu("File");
-
     // Create a custom widget for the search bar
     QWidget *searchWidget = new QWidget();
     QHBoxLayout *searchLayout = new QHBoxLayout(searchWidget);
@@ -239,7 +243,7 @@ int main(int argc, char **argv)
                              delete item->widget(); // Remove widget from layout
                              delete item;           // Delete layout item
                          }
-                         displayPoster(searchResult, gridLayout);
+                         displayPoster(searchResult, gridLayout, rec);
                          gridLayout->update();
                          // update main window poster with search resulte
                      });
@@ -255,7 +259,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        displayPoster(movies, gridLayout);
+        displayPoster(movies, gridLayout, rec);
     }
 
     window.setLayout(gridLayout);
