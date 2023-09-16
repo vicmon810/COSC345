@@ -28,6 +28,7 @@
 #include <QString>
 #include <random>
 #include <QWidgetAction>
+#include "Recommendation.h"
 
 namespace cosc345
 {
@@ -38,7 +39,7 @@ namespace cosc345
         *@note: Please delete this after using
         @return: random food from per-set
         */
-        void pop_food();
+        void pop_food(QString genres);
 
     public:
         /*!

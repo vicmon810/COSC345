@@ -69,7 +69,7 @@ vector<cosc345::Connection::Movies> getAllMovie()
     return movies;
 }
 
-vector<cosc345::Connection::Food> getAllFood()
+vector<cosc345::Connection::Food> getFood()
 {
     cosc345::Connection conn;
     conn.est_conn();

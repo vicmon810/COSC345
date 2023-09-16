@@ -3,7 +3,7 @@
 namespace cosc345
 {
 
-    void clickHandler::pop_food()
+    void clickHandler::pop_food(QString genres)
     {
 
         QMessageBox msgBox;
@@ -81,7 +81,7 @@ namespace cosc345
         layout->addWidget(titleButton);
 
         QObject::connect(titleButton, &QPushButton::clicked, [&]()
-                         { clickHandler::pop_food(); });
+                         { clickHandler::pop_food(genres); });
 
         dialog.setLayout(layout);
         dialog.setWindowTitle("Movie Details");
