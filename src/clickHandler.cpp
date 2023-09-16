@@ -5,7 +5,7 @@ namespace cosc345
 
     void clickHandler::pop_food(QString genres, Recommendation rec)
     {
-
+        cout << "Running!" << endl;
         QMessageBox msgBox;
         msgBox.setWindowTitle("Food Details");
 
@@ -26,15 +26,16 @@ namespace cosc345
             movieGenres.push_back(temp);
         }
 
-
         //Boolean check to be used
         bool check = false;
         //Loop through genres and check if its in savoury genres, if one is satisfied recommend savoury food
         for (auto& genre : movieGenres) {
             if (check) break;
             for (auto& savouryGenre : savouryGenres) {
-                if (genre == savouryGenre) check == true;
-                break;
+                if (genre == savouryGenre) {
+                    check = true;
+                    break;
+                }
             }
         }
         
@@ -53,7 +54,7 @@ namespace cosc345
             title = QString::fromStdString(food.title);
             type = QString::fromStdString(food.food_type);
         }
-
+        cout << title.toStdString() << endl;
         msgBox.setText(title + "\n" + type);
         msgBox.exec();
     }

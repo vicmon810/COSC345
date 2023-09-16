@@ -165,6 +165,8 @@ int main(int argc, char **argv)
 
     //Create Recommendation class instance
     Recommendation rec = Recommendation(movies, foods);
+    //Connection::Food food = rec.savouryFoodSelect();
+    //cout << food.title << endl;
 
     QMainWindow window;
     window.setWindowTitle("Movie and Food");

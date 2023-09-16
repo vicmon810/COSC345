@@ -12,8 +12,9 @@ namespace cosc345
         //Add to vector
         this->moviesList = moviesList; 
 
+
         //Do it for food as well
-        for (const cosc345::Connection::Food& f00d : foodList)
+        for (auto& f00d : foodList)
         {
             //Initialise food
             Connection::Food food;
@@ -23,15 +24,16 @@ namespace cosc345
             food.ingredients = f00d.ingredients;
             food.NER = f00d.NER;
             food.food_type = f00d.food_type;
-
+            cout << food.food_type << endl;
             //Append to either sweet or savoury food list
-            if (food.food_type == "Savory") {
-                savouryFoodList.push_back(food);
+            if (food.food_type == "\"Savory\"") {
+                this->savouryFoodList.push_back(food);
             }
-            else if (food.food_type == "Sweet") {
-                sweetFoodList.push_back(food);
+            else if (food.food_type == "\"Sweet\"") {
+                this->sweetFoodList.push_back(food); 
             }
         }
+
     }
 
     vector<string> Recommendation::getGenres() const {
