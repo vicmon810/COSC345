@@ -8,6 +8,7 @@ namespace cosc345
     // Default constructor
     Recommendation::Recommendation() {}
 
+<<<<<<< HEAD
     Recommendation::Recommendation(Connection conn)
     {
         // Add to vector
@@ -41,6 +42,18 @@ namespace cosc345
             // Initialise food
             Recommendation::Food food;
             // Transfer data into food
+=======
+    Recommendation::Recommendation(vector<Connection::Movies> moviesList, vector<Connection::Food> foodList) {
+        //Add to vector
+        this->moviesList = moviesList; 
+
+        //Do it for food as well
+        for (const cosc345::Connection::Food& f00d : foodList)
+        {
+            //Initialise food
+            Connection::Food food;
+            //Transfer data into food
+>>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
             food.title = f00d.title;
             food.directions = f00d.directions;
             food.ingredients = f00d.ingredients;
@@ -64,11 +77,18 @@ namespace cosc345
         return this->genres;
     }
 
+<<<<<<< HEAD
     Recommendation::Movie Recommendation::movieSelect(vector<string> genres, double rating)
     {
         // Create empty movie vector
         vector<Recommendation::Movie> relevantMovies;
         // genre count check to make sure movie matches respective genres
+=======
+    Connection::Movies Recommendation::movieSelect(vector<string> genres, double rating) {
+        //Create empty movie vector
+        vector<Connection::Movies> relevantMovies;
+        //genre count check to make sure movie matches respective genres
+>>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
         int genre_count_check = genres.size();
         // Loop through movieList and add to rating close to list
         for (auto &mov : moviesList)
@@ -122,27 +142,42 @@ namespace cosc345
         return relevantMovies[0];
     }
 
+<<<<<<< HEAD
     Recommendation::Movie Recommendation::randomMovieSelect()
     {
         // shuffle movieList
+=======
+    Connection::Movies Recommendation::randomMovieSelect() {
+        //shuffle movieList
+>>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
         shuffle(moviesList.begin(), moviesList.end(), default_random_engine());
 
         // Return first index of shuffled list
         return moviesList[0];
     }
 
+<<<<<<< HEAD
     Recommendation::Food Recommendation::savouryFoodSelect(vector<Food> foodlist)
     {
         // shuffle savouryFoodList
+=======
+    Connection::Food Recommendation::savouryFoodSelect() {
+        //shuffle savouryFoodList
+>>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
         shuffle(savouryFoodList.begin(), savouryFoodList.end(), default_random_engine());
 
         // Return first index of shuffled list
         return savouryFoodList[0];
     }
 
+<<<<<<< HEAD
     Recommendation::Food Recommendation::sweetFoodSelect(vector<Food> foodlist)
     {
         // shuffle sweetFoodList
+=======
+    Connection::Food Recommendation::sweetFoodSelect() {
+        //shuffle sweetFoodList
+>>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
         shuffle(sweetFoodList.begin(), sweetFoodList.end(), default_random_engine());
 
         // Return first index of shuffled list

@@ -30,37 +30,11 @@ namespace cosc345
                                  "Music", "Western"};
 
     public:
-        /*!
-         *@brief Movie Struct to store movie details
-         */
-        struct Movie
-        {
-            string genres;
-            string imdb_id;
-            string overview;
-            string release_date;
-            string runtime;
-            string title;
-            string rating;
-            string poster;
-        };
-
-        /*!
-         *@brief Food Struct to store food details
-         */
-        struct Food
-        {
-            string title;
-            string ingredients;
-            string directions;
-            string NER;
-            string food_type;
-        };
 
         // Vector to store all movies and food
-        vector<Movie> moviesList;
-        vector<Food> savouryFoodList;
-        vector<Food> sweetFoodList;
+        vector<Connection::Movies> moviesList;
+        vector<Connection::Food> savouryFoodList;
+        vector<Connection::Food> sweetFoodList;
 
         /*!
          *@brief Default constructor of Recommendation
@@ -68,6 +42,7 @@ namespace cosc345
         Recommendation();
 
         /*!
+<<<<<<< HEAD
          * @brief Constructor of Recommendation that takes in
          * @param Connection object conn
          */
@@ -96,18 +71,48 @@ namespace cosc345
          * @return movie struct containing movie details
          */
         Movie randomMovieSelect();
+=======
+        * @brief Constructor of Recommendation that takes in 
+        * @param Connection object conn
+        */
+        Recommendation(vector<Connection::Movies> moviesList, vector<Connection::Food> foodList);
+
+        /*!
+        * @brief Accessor for the genres vector for the Recommendation class. Could set to public but I don't like having all the variables
+        * public. Might not even be used.
+        * @return genres vector of genre strings
+        */
+        vector<string> getGenres() const;
+
+        /*!
+        * @brief Function to return movie struct from moviesList vector that matches
+        * genres and rating parameters
+        * @param genres String vector of genres
+        * @param rating rating of movie in a double type
+        * @return movie struct containing movie details
+        */
+        Connection::Movies movieSelect(vector<string> genres, double rating); 
+
+        /*!
+        * @brief Function to return a random movie struct from moviesList vector
+        * @param genres String vector of genres
+        * @param rating rating of movie in a double type
+        * @return movie struct containing movie details
+        */
+        Connection::Movies randomMovieSelect();
+>>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
 
         /*!
         *@brief Function to return a savoury food in the foodDetails vector
         *@return food details of a savoury food in the foodDetails vector
         */
-        Food savouryFoodSelect(vector<Food> foodlist);
+        Connection::Food savouryFoodSelect();
 
         /*!
         *@brief Function to return a sweet food in the foodDetails vector
         *@return food details of a sweet food in the foodDetails vector
         */
-        Food sweetFoodSelect(vector<Food> foodlist);
+        Connection::Food sweetFoodSelect();
     };
 }
 

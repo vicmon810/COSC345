@@ -3,44 +3,65 @@
 namespace cosc345
 {
 
-    void clickHandler::pop_food(QString genres)
+    void clickHandler::pop_food(QString genres, Recommendation rec)
     {
 
         QMessageBox msgBox;
         msgBox.setWindowTitle("Message");
 
-        // Use HTML to set a bigger font size for the message
-        QString message1 = "<font size='5'>Monster Drink!!!</font>";
-        QString message2 = "<font size='5'>Pop Corn!!!</font> ";
-        QString message3 = "<font size='5'>Ice Cream</font>";
-        QString message4 = "<font size='5'>Ice </font>";
-        std::srand(std::time(nullptr));
+        //Set savoury genres (why is it here? Lmao idgaf)
+        vector<string> savouryGenres = { "Action", "Adventure",
+                                         "Crime", "Drama",
+                                         "Horror",  "Thriller",
+                                         "War", "Documentary", "Mystery"};
 
-        // Generate a random number from 0 to 3 to select the RNG
-        int rngChoice = std::rand() % 4;
-        qDebug() << rngChoice;
+        //Qstring to split string whatever thing
+        string tempGenres = genres.toStdString();
+        //get vector of genres
+        vector<string> movieGenres;
+        string temp;
+        stringstream ss(tempGenres);
 
-        // Depending on the value of rngChoice, select the RNG
-        switch (rngChoice)
-        {
-        case 0:
-            msgBox.setText(message1);
-            break;
-        case 1:
-            msgBox.setText(message2);
-            break;
-        case 2:
-            msgBox.setText(message3);
-            break;
-        case 3:
-            msgBox.setText(message4);
-            break;
+        while (getline(ss, temp, ' ')) {
+            movieGenres.push_back(temp);
         }
 
+<<<<<<< HEAD
+=======
+
+        //Boolean check to be used
+        bool check = false;
+        //Loop through genres and check if its in savoury genres, if one is satisfied recommend savoury food
+        for (auto& genre : movieGenres) {
+            if (check) break;
+            for (auto& savouryGenre : savouryGenres) {
+                if (genre == savouryGenre) check == true;
+                break;
+            }
+        }
+        
+        //Give savoury food recommendation
+        Connection::Food food;
+        QString title;
+        QString type;
+
+        if (check) {
+            food = rec.savouryFoodSelect();
+            title = QString::fromStdString(food.title);
+            type = QString::fromStdString(food.food_type);
+        }
+        else {
+            food = rec.sweetFoodSelect();
+            title = QString::fromStdString(food.title);
+            type = QString::fromStdString(food.food_type);
+        }
+
+        msgBox.setText(title + "\n" + type);
+>>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
         msgBox.exec();
     }
 
-    void clickHandler::handleItemClicked(QString title, QString genres, QString IMDB, QString overview, QString runtime, QString rating, QString release)
+    void clickHandler::handleItemClicked(QString title, QString genres, QString IMDB, QString overview, QString runtime, QString rating, QString release, Recommendation rec)
     {
         // Get the text (movie details) from the clicked item
         // QString movieDetails = item->text(QString title);
@@ -81,7 +102,7 @@ namespace cosc345
         layout->addWidget(titleButton);
 
         QObject::connect(titleButton, &QPushButton::clicked, [&]()
-                         { clickHandler::pop_food(genres); });
+                         { clickHandler::pop_food(genres, rec); });
 
         dialog.setLayout(layout);
         dialog.setWindowTitle("Movie Details");

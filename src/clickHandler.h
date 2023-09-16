@@ -39,13 +39,13 @@ namespace cosc345
         *@note: Please delete this after using
         @return: random food from per-set
         */
-        void pop_food(QString genres);
+        void pop_food(QString genres, Recommendation rec);
 
     public:
         /*!
          *@brief: Declaration of handleItemClicked function
          *@param item : QListWidgetItem
          */
-        void handleItemClicked(QString title, QString genres, QString IMDB, QString overview, QString runtime, QString rating, QString release);
+        void handleItemClicked(QString title, QString genres, QString IMDB, QString overview, QString runtime, QString rating, QString release, Recommendation rec);
     };
 }
