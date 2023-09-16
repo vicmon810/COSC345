@@ -60,10 +60,19 @@ namespace cosc345
         int maxDisplayLen = 25;
         if (overview.length() > maxDisplayLen)
         {
-            overview.truncate(maxDisplayLen);
-            overview += "...";
+            overview += '\n';
+            // overview += "...";
         }
+        std::string holder = overview.toStdString();
+        const int maxCharsPerLine = 25;
+        std::string resultString;
 
+        for (size_t i = 0; i < holder.length(); i += maxCharsPerLine)
+        {
+            // Append a substring of the input string with a newline character
+            resultString += holder.substr(i, maxCharsPerLine) + "\n";
+        }
+        overview = QString::fromStdString(resultString);
         overviewLabel->setText("Overview: " + overview);
         layout->addWidget(titleLabel);
         layout->addWidget(genresLabel);

@@ -90,6 +90,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
     int size = movies.size();
     if (size > 500)
         size = 500;
+
     const int numCols = 3;              // Number of rows
     const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
 
@@ -158,9 +159,9 @@ int main(int argc, char **argv)
 
     vector<cosc345::Connection::Movies> searchResult;
 
-    //Test food query
-    //vector<cosc345::Connection::Food> foods = getAllFood();
-    //cout << foods[0].title << endl;
+    // Test food query
+    // vector<cosc345::Connection::Food> foods = getAllFood();
+    // cout << foods[0].title << endl;
 
     QMainWindow window;
     window.setWindowTitle("Movie and Food");
@@ -230,10 +231,10 @@ int main(int argc, char **argv)
                              searchResult = conn.searching(searchText);
 
                              searchFigure = searchResult.size();
-                             qDebug() << searchFigure << "HER";
+                             //  qDebug() << searchFigure << "HER";
                              if (searchFigure != 0)
                              {
-                                 qDebug() << "sf";
+                                 //  qDebug() << "sf";
                                  // Empty current poster in main windows
                                  QLayoutItem *item;
                                  while ((item = gridLayout->takeAt(0)) != nullptr)
@@ -246,6 +247,11 @@ int main(int argc, char **argv)
                                  // update main window poster with search resulte
                                  gridLayout->update();
                              }
+                         }
+                         // Will return main page if string is empty
+                         if (searchText == "")
+                         {
+                             displayPoster(movies, gridLayout);
                          }
                          // formatting
                      });

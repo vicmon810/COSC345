@@ -12,7 +12,7 @@ namespace cosc345
      */
     void Connection::est_conn()
     {
-        //Read Movie Data
+        // Read Movie Data
         std::ifstream inputFile("Movies.csv");
         if (!inputFile.is_open())
         {
@@ -61,7 +61,7 @@ namespace cosc345
         size_movie = moviesDetail.size();
         inputFile.close();
 
-        //Read Food Data
+        // Read Food Data
         ifstream inputFile2("curated.txt");
         if (!inputFile2.is_open())
         {
@@ -82,11 +82,15 @@ namespace cosc345
             Food food;
             for (int i = 0; i < fields.size(); i++)
             {
-                //Noob way ahahahaha
-                if (i == 0) food.title = fields[0];
-                if (i == 1) food.ingredients = fields[1];
-                if (i == 2) food.NER = fields[2];
-                if (i == 3) food.food_type = fields[3];
+                // Noob way ahahahaha
+                if (i == 0)
+                    food.title = fields[0];
+                if (i == 1)
+                    food.ingredients = fields[1];
+                if (i == 2)
+                    food.NER = fields[2];
+                if (i == 3)
+                    food.food_type = fields[3];
             }
             foodDetail.push_back(food);
         }
@@ -132,34 +136,20 @@ namespace cosc345
     vector<Connection::Movies> Connection::searching(string key)
     {
         Connection::est_conn();
-<<<<<<< HEAD
         cout << "Searchin" << endl;
         transform(key.begin(), key.end(), key.begin(), ::tolower);
         for (int i = 0; i < moviesDetail.size(); i++)
-=======
-
-        vector<Connection::Movies>
-            totalMovie = Connection::getDetailMovie();
-
-        int sizeMovies = Connection::getSizeMovie();
-        cout << sizeMovies << endl;
-        for (int i = 0; i < sizeMovies; i++)
->>>>>>> 58de60cafff0400e65ef12a9e1752aa3fdd57e42
         {
-            string title = totalMovie[i].title;
+            string title = moviesDetail[i].title;
             transform(title.begin(), title.end(), title.begin(), ::tolower);
             // if (title == key)
             if (title.find(key) != std::string::npos)
             {
-                searchResult.push_back(totalMovie[i]);
+                searchResult.push_back(moviesDetail[i]);
                 // cout << searchResult[i].title << endl;
             }
         }
-        // cout << "search result: " << searchResult[0].title << endl;
-        // for (int c = 0; c < searchResult.size(); c++)
-        // {
-        //     cout << searchResult[c].title << endl;
-        // }
+
         return searchResult;
     }
 
