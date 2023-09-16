@@ -75,6 +75,61 @@ int getAllSize()
     return conn.getSizeMovie();
 }
 
+void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout)
+{
+    // Create and add 7800 items to the grid layout
+    int size = movies.size();
+    if (size > 500)
+        size = 500;
+    const int numCols = 3;              // Number of rows
+    const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
+
+    int i = 0;
+
+    for (int row = 0; row < numRows; ++row)
+    {
+
+        for (int col = 0; col < numCols; ++col)
+        {
+            // ClickableLabel imageLabel = new ClickableLabel();
+
+            QString name = QString::fromStdString(movies[i].title);
+            QString genres = QString::fromStdString(movies[i].genres);
+            QString IMDB = QString::fromStdString(movies[i].imdb_id);
+            QString overview = QString::fromStdString(movies[i].overview);
+            QString runtime = QString::fromStdString(movies[i].runtime);
+            QString rating = QString::fromStdString(movies[i].rating);
+            QString release = QString::fromStdString(movies[i].release_date);
+            QString URL = QString::fromStdString(movies[i].poster);
+
+            // Create a QLabel to display the image
+            // QLabel *imageLabel = new QLabel();
+            ClickableLabel *imageLabel = new ClickableLabel();
+
+            QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
+                             {
+                                 // Code to execute when the label is clicked
+                                 cosc345::clickHandler ch;
+                                 ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release);
+                                 // qDebug()
+                                 //     << "Label clicked!";
+                             });
+            // imageLabel->setFixedSize(128, 192);
+            gridLayout->addWidget(imageLabel, row, col);
+            // imageLabel->resize(128, 192);
+            // Create a QPushButton for the title
+            QPushButton *titleButton = new QPushButton((name));
+            // gridLayout->addWidget(titleButton, row, col);
+
+            // Create an ImageDownloadWorker to download and display the image
+            ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
+            QThreadPool::globalInstance()->start(imageWorker);
+
+            i++;
+        }
+    }
+}
+
 int main(int argc, char **argv)
 {
     string searchText = "";
@@ -166,55 +221,16 @@ int main(int argc, char **argv)
 
                          int resultSize = searchResult.size();
 
-                         // Create and add 7800 items to the grid layout
-                         const int numCols = 3;              // Number of rows
-                         const int numRows = resultSize / 3; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
-
-                         int i = 0;
-
-                         for (int row = 0; row < numRows; ++row)
+                         QLayoutItem *item;
+                         while ((item = gridLayout->takeAt(0)) != nullptr)
                          {
-
-                             for (int col = 0; col < numCols; ++col)
-                             {
-                                 // ClickableLabel imageLabel = new ClickableLabel();
-
-                                 QString name = QString::fromStdString(searchResult[i].title);
-                                 QString genres = QString::fromStdString(searchResult[i].genres);
-                                 QString IMDB = QString::fromStdString(searchResult[i].imdb_id);
-                                 QString overview = QString::fromStdString(searchResult[i].overview);
-                                 QString runtime = QString::fromStdString(searchResult[i].runtime);
-                                 QString rating = QString::fromStdString(searchResult[i].rating);
-                                 QString release = QString::fromStdString(searchResult[i].release_date);
-                                 QString URL = QString::fromStdString(searchResult[i].poster);
-
-                                 // Create a QLabel to display the image
-                                 // QLabel *imageLabel = new QLabel();
-                                 ClickableLabel *imageLabel = new ClickableLabel();
-
-                                 QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
-                                                  {
-                                                      // Code to execute when the label is clicked
-                                                      cosc345::clickHandler ch;
-                                                      ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release);
-                                                      // qDebug()
-                                                      //     << "Label clicked!";
-                                                  });
-                                 // imageLabel->setFixedSize(128, 192);
-                                 gridLayout->addWidget(imageLabel, row, col);
-                                 // imageLabel->resize(128, 192);
-                                 // Create a QPushButton for the title
-                                 QPushButton *titleButton = new QPushButton((name));
-                                 // gridLayout->addWidget(titleButton, row, col);
-
-                                 // Create an ImageDownloadWorker to download and display the image
-                                 ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
-                                 QThreadPool::globalInstance()->start(imageWorker);
-
-                                 i++;
-                             }
+                             delete item->widget(); // Remove widget from layout
+                             delete item;           // Delete layout item
                          }
-                         gridLayout->update(); });
+                         displayPoster(searchResult, gridLayout);
+                         gridLayout->update();
+                         // update main window poster with search resulte
+                     });
 
     // Create a grid layout
     // return all movies size
@@ -227,54 +243,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        // Create and add 7800 items to the grid layout
-        const int numCols = 3;          // Number of rows
-        const int numRows = size / 200; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
-
-        int i = 0;
-
-        for (int row = 0; row < numRows; ++row)
-        {
-
-            for (int col = 0; col < numCols; ++col)
-            {
-                // ClickableLabel imageLabel = new ClickableLabel();
-
-                QString name = QString::fromStdString(movies[i].title);
-                QString genres = QString::fromStdString(movies[i].genres);
-                QString IMDB = QString::fromStdString(movies[i].imdb_id);
-                QString overview = QString::fromStdString(movies[i].overview);
-                QString runtime = QString::fromStdString(movies[i].runtime);
-                QString rating = QString::fromStdString(movies[i].rating);
-                QString release = QString::fromStdString(movies[i].release_date);
-                QString URL = QString::fromStdString(movies[i].poster);
-
-                // Create a QLabel to display the image
-                // QLabel *imageLabel = new QLabel();
-                ClickableLabel *imageLabel = new ClickableLabel();
-
-                QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
-                                 {
-                                     // Code to execute when the label is clicked
-                                     cosc345::clickHandler ch;
-                                     ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release);
-                                     // qDebug()
-                                     //     << "Label clicked!";
-                                 });
-                // imageLabel->setFixedSize(128, 192);
-                gridLayout->addWidget(imageLabel, row, col);
-                // imageLabel->resize(128, 192);
-                // Create a QPushButton for the title
-                QPushButton *titleButton = new QPushButton((name));
-                // gridLayout->addWidget(titleButton, row, col);
-
-                // Create an ImageDownloadWorker to download and display the image
-                ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
-                QThreadPool::globalInstance()->start(imageWorker);
-
-                i++;
-            }
-        }
+        displayPoster(movies, gridLayout);
     }
 
     window.setLayout(gridLayout);

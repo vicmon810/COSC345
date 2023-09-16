@@ -51,10 +51,13 @@ target_link_libraries(MovieAndFood PRIVATE
 
 add_executable(UnitTest 
     test/TestMain.cpp
+    test/test.h
     test/test.cpp
     # test/GUITest.cpp
     src/connection.h   # Include the header file
     src/Connection.cpp # Include the source file
+    src/Recommendation.h
+    src/Recommendation.cpp
     )
 target_link_libraries(UnitTest PRIVATE 
     Qt5::Test)
