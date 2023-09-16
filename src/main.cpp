@@ -65,6 +65,7 @@ vector<cosc345::Connection::Movies> getAllMovie()
     cosc345::Connection conn;
     conn.est_conn();
     vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
+    conn.shuffling();
     return movies;
 }
 
@@ -146,7 +147,7 @@ int main(int argc, char **argv)
 
     // Back-end work, query data
     vector<cosc345::Connection::Movies> movies = getAllMovie();
-    shuffle(movies.begin(), movies.end(), default_random_engine());
+
     vector<cosc345::Connection::Movies> searchResult;
 
     QMainWindow window;
@@ -174,7 +175,6 @@ int main(int argc, char **argv)
     // Create a custom widget for the search bar
     QWidget *searchWidget = new QWidget();
     QHBoxLayout *searchLayout = new QHBoxLayout(searchWidget);
-
     QLineEdit *searchBar = new QLineEdit();
     searchBar->setClearButtonEnabled(true);
     QIcon searchIcon("searchIcon.png");
@@ -209,42 +209,36 @@ int main(int argc, char **argv)
     // Connect the returnPressed() signal of QLineEdit to a slot
     QObject::connect(searchBar, &QLineEdit::returnPressed, [&]()
                      {
+                         // Conver user's enter to local string
                          searchText = searchBar->text().toStdString();
-                         transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
-                         // Print the contents to the console
-                         // std::cout << "Search Text: " << searchText << std::endl;
-                         cosc345::Connection conn;
-
-                         searchResult = conn.searching(searchText);
-                         cout << searchResult.size() << endl;
-                         searchFigure = searchResult.size();
-
-                         int resultSize = searchResult.size();
-
-                         QLayoutItem *item;
-                         while ((item = gridLayout->takeAt(0)) != nullptr)
+                         if (searchText.length() > 1)
                          {
-                             delete item->widget(); // Remove widget from layout
-                             delete item;           // Delete layout item
+                             cosc345::Connection conn;
+                             // Passing local string to back_end server
+                             searchResult = conn.searching(searchText);
+
+                             searchFigure = searchResult.size();
+                             qDebug() << searchFigure << "HER";
+                             if (searchFigure != 0)
+                             {
+                                 qDebug() << "sf";
+                                 // Empty current poster in main windows
+                                 QLayoutItem *item;
+                                 while ((item = gridLayout->takeAt(0)) != nullptr)
+                                 {
+                                     delete item->widget(); // Remove widget from layout
+                                     delete item;           // Delete layout item
+                                 }
+                                 // append search result to emptied gridLayout
+                                 displayPoster(searchResult, gridLayout);
+                                 // update main window poster with search resulte
+                                 gridLayout->update();
+                             }
                          }
-                         displayPoster(searchResult, gridLayout);
-                         gridLayout->update();
-                         // update main window poster with search resulte
+                         // formatting
                      });
 
-    // Create a grid layout
-    // return all movies size
-    int size = getAllSize();
-    // cout << searchResult.size() << end;
-    if (searchFigure != 0)
-    {
-        qDebug() << "test";
-        cout << "test" << endl;
-    }
-    else
-    {
-        displayPoster(movies, gridLayout);
-    }
+    displayPoster(movies, gridLayout);
 
     window.setLayout(gridLayout);
     // Show the main window

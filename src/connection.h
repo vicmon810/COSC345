@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <unordered_map>
+
 #include <random>
 using namespace std;
 
@@ -99,6 +99,11 @@ namespace cosc345
          *@return movie list by order
          */
         vector<Movies> sorting(string rating);
+        /*!
+         *@brief: Shuffle current list
+         *@return shuffled list
+         */
+        void shuffling();
     };
 }
 

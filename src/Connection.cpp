@@ -56,7 +56,7 @@ namespace cosc345
             }
             moviesDetail.push_back(movie);
         }
-
+        shuffle(moviesDetail.begin(), moviesDetail.end(), default_random_engine());
         size_movie = moviesDetail.size();
         inputFile.close();
     }
@@ -98,6 +98,7 @@ namespace cosc345
     vector<Connection::Movies> Connection::searching(string key)
     {
         Connection::est_conn();
+        cout << "Searchin" << endl;
         transform(key.begin(), key.end(), key.begin(), ::tolower);
         for (int i = 0; i < moviesDetail.size(); i++)
         {
@@ -118,5 +119,10 @@ namespace cosc345
     {
 
         return moviesDetail;
+    }
+
+    void Connection::shuffling()
+    {
+        shuffle(this->moviesDetail.begin(), this->moviesDetail.end(), default_random_engine());
     }
 }
