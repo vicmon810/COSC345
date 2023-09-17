@@ -10,6 +10,10 @@ find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Test REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+find_package(Catch2 REQUIRED)
+include(Catch)
+
 
 file(COPY ${CMAKE_SOURCE_DIR}/data/Movies.csv DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/data/Food.csv DESTINATION ${CMAKE_BINARY_DIR})
@@ -40,7 +44,7 @@ target_sources(MovieAndFood PRIVATE ${CMAKE_BINARY_DIR}/myStyles.qss)
 
 
 set_target_properties(MovieAndFood PROPERTIES AUTOMOC ON)
-set_target_properties(MovieAndFood PROPERTIES AUTOUIC ON)
+
 
 target_link_libraries(MovieAndFood PRIVATE 
     Qt5::Core
@@ -56,20 +60,15 @@ add_executable(UnitTest
    test/TestMain.cpp
     test/testBackend.h
     test/testBackend.cpp
-    test/TestFrontend.h
-    test/TestFrontend.cpp
     src/connection.h
     src/Connection.cpp
     src/Recommendation.h
     src/Recommendation.cpp
-    src/imageDownload.h
-    src/imageDownload.cpp
-    src/clickImage.h
-    src/clickImage.cpp
-    src/clickHandler.h
-    src/clickHandler.cpp
 
 )
+
+
+
 
 target_link_libraries(UnitTest PRIVATE 
     Qt5::Core
@@ -80,12 +79,14 @@ target_link_libraries(UnitTest PRIVATE
 )
 
 
+
+
+
 set_target_properties(UnitTest PROPERTIES AUTOMOC ON)
-set_source_files_properties(test/TestFrontend.cpp PROPERTIES SKIP_AUTOMOC ON)
+
 
 
 target_link_libraries(UnitTest PRIVATE  Qt5::Test)
 
 
-# Include Catch2 test discovery
-include(CTest)
+

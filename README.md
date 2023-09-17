@@ -3,6 +3,13 @@
 [![codecov](https://codecov.io/gh/vicmon810/COSC345/graph/badge.svg?token=P25HQT144Q)](https://codecov.io/gh/vicmon810/COSC345)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/db37ffc37f4b44fdb96f0b6e863c1410)](https://app.codacy.com/gh/vicmon810/COSC345/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
+# TEST CASE(Currently we didn't figure out how to test GUI thought code, therefore just a simple user test instead) :
+|Test Case | Test Summary | Test Start | Test result | Test Status|
+|:---------|:-------------|:-----------|:------------|:-----------|
+| 1  | Image clickable | Press mouse on movie poster| Pop up new dialog display all full movie's details| OK|
+| 2  | Recommanding food | Right click on "Recommanding Food" button a few times| Pop out a new dialog, each time recommanding different food | OK|
+| 3 | Searching Movies | Enter key words to search Movies| return all movies that contains key words| OK|
+
 ![CI memes](CI%20meme.png)
 
 # Movies and Food:
