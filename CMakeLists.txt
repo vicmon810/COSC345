@@ -50,18 +50,41 @@ target_link_libraries(MovieAndFood PRIVATE
     Qt5::Test
     )
 
-add_executable(UnitTest 
-    test/TestMain.cpp
-    test/test.h
-    test/test.cpp
-    # test/GUITest.cpp
-    src/connection.h   # Include the header file
-    src/Connection.cpp # Include the source file
+
+
+add_executable(UnitTest
+   test/TestMain.cpp
+    test/testBackend.h
+    test/testBackend.cpp
+    test/TestFrontend.h
+    test/TestFrontend.cpp
+    src/connection.h
+    src/Connection.cpp
     src/Recommendation.h
     src/Recommendation.cpp
-    )
+    src/imageDownload.h
+    src/imageDownload.cpp
+    src/clickImage.h
+    src/clickImage.cpp
+    src/clickHandler.h
+    src/clickHandler.cpp
+
+)
+
 target_link_libraries(UnitTest PRIVATE 
-    Qt5::Test)
+    Qt5::Core
+    Qt5::Gui
+    Qt5::Widgets
+    Qt5::Network
+    Qt5::Test
+)
+
+
+set_target_properties(UnitTest PROPERTIES AUTOMOC ON)
+set_source_files_properties(test/TestFrontend.cpp PROPERTIES SKIP_AUTOMOC ON)
+
+
+target_link_libraries(UnitTest PRIVATE  Qt5::Test)
 
 
 # Include Catch2 test discovery

@@ -74,7 +74,7 @@ namespace cosc345
             stringstream ss(line2);
             string field;
             while (getline(ss, field, '\t'))
-            {
+            {   
                 fields.push_back(field);
             }
             int size = fields.size();
@@ -82,15 +82,12 @@ namespace cosc345
             Food food;
             for (int i = 0; i < fields.size(); i++)
             {
-                // Noob way ahahahaha
-                if (i == 0)
-                    food.title = fields[0];
-                if (i == 1)
-                    food.ingredients = fields[1];
-                if (i == 2)
-                    food.NER = fields[2];
-                if (i == 3)
-                    food.food_type = fields[3];
+                //Noob way ahahahaha
+                if (i == 0) food.title = fields[0];
+                if (i == 1) food.ingredients = fields[1];
+                if (i == 2) food.directions = fields[2];
+                if (i == 3) food.NER = fields[3];
+                if (i == 4) food.food_type = fields[4];
             }
             foodDetail.push_back(food);
         }

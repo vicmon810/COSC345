@@ -1,4 +1,0 @@
-// class ClickableLabel : public QLabel
-// {
-
-// }

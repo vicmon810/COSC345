@@ -20,8 +20,8 @@ using namespace std;
 namespace cosc345
 {
     /*!
-     *@class Connection
-     *@brief read csv file from local file
+     * @class Connection
+     * @brief Represents a connection for reading data from a CSV file.
      */
     class Connection
     {

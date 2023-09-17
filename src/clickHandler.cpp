@@ -5,7 +5,6 @@ namespace cosc345
 
     void clickHandler::pop_food(QString genres, Recommendation rec)
     {
-
         QMessageBox msgBox;
         msgBox.setWindowTitle("Message");
 
@@ -37,32 +36,31 @@ namespace cosc345
             for (auto &savouryGenre : savouryGenres)
             {
                 if (genre == savouryGenre)
-                    check == true;
-                break;
+                {
+                    check = true;
+                    break;
+                }
             }
         }
         qDebug() << "lll";
         // Give savoury food recommendation
         Connection::Food food;
-        
+
         QString title;
         QString type;
 
         if (check)
         {
-            qDebug() << "here";
             food = rec.savouryFoodSelect();
-            cout << food.title << endl;
         }
         else
         {
             food = rec.sweetFoodSelect();
         }
+
         title = QString::fromStdString(food.title);
         type = QString::fromStdString(food.food_type);
-        qDebug() << title;
-        qDebug() << type;
-        msgBox.setText(title + "\n" + type);
+        msgBox.setText("Title: " + title + "\n" + "Type: " + type);
         msgBox.exec();
     }
 
@@ -90,7 +88,7 @@ namespace cosc345
             // overview += "...";
         }
         std::string holder = overview.toStdString();
-        const int maxCharsPerLine = 25;
+        const int maxCharsPerLine = 50;
         std::string resultString;
 
         for (size_t i = 0; i < holder.length(); i += maxCharsPerLine)

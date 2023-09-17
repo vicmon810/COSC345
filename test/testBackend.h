@@ -2,9 +2,14 @@
 #include <cassert>
 #include "../src/connection.h"
 #include "../src/Recommendation.h"
-namespace std
+using namespace std;
+
+namespace cosc345
 {
-    class testConnection
+    /*!
+    @brief: Back_end testing class, using Unit test method.
+    */
+    class testBackend
     {
     public:
         /*!
@@ -18,9 +23,6 @@ namespace std
         /*!
          *@brief: Testing for getFoddSzie method
          */
-        void TestRecommendation();
-        /*!
-         *@brief:Testign
-         */
+        void testRecommendation();
     };
 }
