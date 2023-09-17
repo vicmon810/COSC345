@@ -69,7 +69,7 @@ private:
 /**
 * Function to display movie posters on GUI
 */
-void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
+void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, const Recommendation rec)
 {
     // Create and add 7800 items to the grid layout
     int size = movies.size();
@@ -80,7 +80,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
 
     int i = 0;
 
-    //If movie posters havent been downloaded
+    cout << "Acquiring movie posters...." << endl;
 
     for (int row = 0; row < numRows; ++row)
         {
@@ -123,6 +123,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
                 i++;
         }
     }
+    cout << "Movie posters acquired!...." << endl;
 }
 
 /**

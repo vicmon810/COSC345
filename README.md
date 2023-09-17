@@ -13,7 +13,7 @@ For our COSC345 Team Project: We are developing an application that recommends m
 [Tommy Light](https://github.com/tlite4) 1589489 <br>
 
 ## Assignment submission
-### [A3 beta]<br>
+### [A3 beta]
 For our beta version of the application, we can display a list of movie posters with a gridlayout format. You can click on the movie poster to 
 see more movie details. A food pairing button is available and once clicked, a food recipe details would be shown
 providing the name of the food, ingredients list and directions to make the food.
@@ -31,7 +31,7 @@ CMake installed and building it in the Visual Studio IDE.
 
 For our Questionnaire for user feedback, it can be assessed [here](https://forms.office.com/r/13M44QcMks)
 
-Currently we could not figure out how to test GUI thought code by simulating mouse clicks without the entire CI crashing.
+Currently we could not figure out how to test the GUI code by simulating mouse clicks without the entire CI failing.
 Therefore, we resulted to a simple user test below:
 
 |Test Case | Test Summary | Test Start | Test result | Test Status|
@@ -50,9 +50,9 @@ Read description of Assignment submission.
 [qt open source software](https://www.qt.io/)
 
 ## References:
-*  [Food recipes lists](https://www.kaggle.com/datasets/paultimothymooney/recipenlg/code?resource=download)
-*  [Food Ingredients](https://www.kaggle.com/datasets/pes12017000148/food-ingredients-and-recipe-dataset-with-images)
-*  [Movies lists](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset)
-*  [Qt with CMake](https://doc.qt.io/qt-6/cmake-get-started.html#building-a-c-console-application)
-*  [Qt called by main class](https://stackoverflow.com/questions/17450039/qt-c-gui-call-from-another-class)
+  * [Food recipes lists](https://www.kaggle.com/datasets/paultimothymooney/recipenlg/code?resource=download)
+  * [Food Ingredients](https://www.kaggle.com/datasets/pes12017000148/food-ingredients-and-recipe-dataset-with-images)
+  * [Movies lists](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset)
+  * [Qt with CMake](https://doc.qt.io/qt-6/cmake-get-started.html#building-a-c-console-application)
+  * [Qt called by main class](https://stackoverflow.com/questions/17450039/qt-c-gui-call-from-another-class)
 

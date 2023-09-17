@@ -84,7 +84,6 @@ namespace cosc345
             {   
                 fields.push_back(field);
             }
-            int size = fields.size();
 
             Food food;
             for (int i = 0; i < fields.size(); i++)
@@ -136,7 +135,7 @@ namespace cosc345
         return foodDetail;
     }
 
-    vector<Connection::Movies> Connection::searching(string key)
+    vector<Connection::Movies> Connection::searching(const string key)
     {
         //Initialise vectors 
         vector<Movies> totalMovie = Connection::getDetailMovie(); //to not mess with original movie list
@@ -161,9 +160,9 @@ namespace cosc345
         return searchResult;
     }
 
-    vector<Connection::Movies> Connection::sorting(string rating)
+    vector<Connection::Movies> Connection::sorting(const string rating)
     {
-
+        //UHH not used so it doesnt have to be working LOL
         return moviesDetail;
     }
 }

@@ -8,7 +8,7 @@ namespace cosc345
     // Default constructor
     Recommendation::Recommendation() {}
 
-    Recommendation::Recommendation(vector<Connection::Movies> moviesList, vector<Connection::Food> foodList)
+    Recommendation::Recommendation(const vector<Connection::Movies> moviesList, const vector<Connection::Food> foodList)
     {
         // Add to vector
         this->moviesList = moviesList;
