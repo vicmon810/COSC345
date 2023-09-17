@@ -169,8 +169,8 @@ namespace cosc345
         return moviesDetail;
     }
 
-    void Connection::shuffling()
-    {
-        shuffle(this->moviesDetail.begin(), this->moviesDetail.end(), default_random_engine());
-    }
+    // void Connection::shuffling()
+    // {
+    //     shuffle(this->moviesDetail.begin(), this->moviesDetail.end(), default_random_engine());
+    // }
 }

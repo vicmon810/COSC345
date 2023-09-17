@@ -6,6 +6,7 @@ int main()
     // Call the test functions
     test1.testGetSizeMovies();
     test1.testSearching();
+    test1.testGetFoodSize();
     test1.testRecommendation();
 
     // If no assertion errors occurred, tests passed

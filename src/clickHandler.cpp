@@ -42,7 +42,7 @@ namespace cosc345
                 }
             }
         }
-        qDebug() << "lll";
+
         // Give savoury food recommendation
         Connection::Food food;
 

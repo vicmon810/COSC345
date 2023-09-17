@@ -13,9 +13,8 @@ namespace cosc345
         // Add to vector
         this->moviesList = moviesList;
 
-
-        //Do it for food as well
-        for (auto& f00d : foodList)
+        // Do it for food as well
+        for (auto &f00d : foodList)
         {
             // Initialise food
             Connection::Food food;
@@ -25,15 +24,18 @@ namespace cosc345
             food.ingredients = f00d.ingredients;
             food.NER = f00d.NER;
             food.food_type = f00d.food_type;
-            //Append to either sweet or savoury food list
-            if (food.food_type == "Savoury") {
+            // Append to either sweet or savoury food list
+            if (food.food_type == "Savoury")
+            {
+                cout << "testign" << endl;
                 this->savouryFoodList.push_back(food);
             }
-            else if (food.food_type == "Sweet") {
-                this->sweetFoodList.push_back(food); 
+            else if (food.food_type == "Sweet")
+            {
+                cout << "TESTING" << endl;
+                this->sweetFoodList.push_back(food);
             }
         }
-
     }
 
     vector<string> Recommendation::getGenres() const
@@ -108,27 +110,29 @@ namespace cosc345
         return moviesList[0];
     }
 
-    Connection::Food Recommendation::savouryFoodSelect() {
+    Connection::Food Recommendation::savouryFoodSelect()
+    {
         unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-        //Randomiser
+        // Randomiser
         default_random_engine generator(seed);
         uniform_int_distribution<int> distribution(0, savouryFoodList.size());
-        //shuffle savouryFoodList
-        //shuffle(savouryFoodList.begin(), savouryFoodList.end(), default_random_engine());
+        // shuffle savouryFoodList
+        // shuffle(savouryFoodList.begin(), savouryFoodList.end(), default_random_engine());
 
-        //Return first index of shuffled list
+        // Return first index of shuffled list
         return savouryFoodList[distribution(generator)];
     }
 
-    Connection::Food Recommendation::sweetFoodSelect() {
+    Connection::Food Recommendation::sweetFoodSelect()
+    {
         unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-        //Randomiser
+        // Randomiser
         default_random_engine generator(seed);
         uniform_int_distribution<int> distribution(0, sweetFoodList.size());
-        //shuffle sweetFoodList
-        //shuffle(sweetFoodList.begin(), sweetFoodList.end(), default_random_engine());
+        // shuffle sweetFoodList
+        // shuffle(sweetFoodList.begin(), sweetFoodList.end(), default_random_engine());
 
-        //Return first index of shuffled list
+        // Return first index of shuffled list
         return sweetFoodList[distribution(generator)];
     }
 }

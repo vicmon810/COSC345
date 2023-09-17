@@ -21,8 +21,12 @@ namespace cosc345
          */
         void testSearching();
         /*!
-         *@brief: Testing for getFoddSzie method
+         *@brief: Testing for Recommendation method
          */
         void testRecommendation();
+        /*!
+        @brief: Testing for getFoodSize method
+        */
+        void testGetFoodSize();
     };
 }
