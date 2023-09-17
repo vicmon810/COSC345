@@ -62,30 +62,7 @@ private:
     QLabel *m_imageLabel;
 };
 
-vector<cosc345::Connection::Movies> getAllMovie()
-{
-    cosc345::Connection conn;
-    conn.est_conn();
-    vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
-    return movies;
-}
-
-vector<cosc345::Connection::Food> getAllFood()
-{
-    cosc345::Connection conn;
-    conn.est_conn();
-    vector<cosc345::Connection::Food> foods = conn.getDetailFood();
-    return foods;
-}
-
-int getAllSize()
-{
-    cosc345::Connection conn;
-    conn.est_conn();
-    return conn.getSizeMovie();
-}
-
-//this function produce movie poster
+//this function produces movie posters
 void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
 {
     // Create and add 7800 items to the grid layout
@@ -156,17 +133,18 @@ int main(int argc, char **argv)
     app.setStyleSheet(style);
 
     // Back-end work, query data
-    vector<cosc345::Connection::Movies> movies = getAllMovie();
+    cosc345::Connection conn; 
+    conn.est_conn(); 
+    vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
+    //Create searchResult movies
     shuffle(movies.begin(), movies.end(), default_random_engine());
     vector<cosc345::Connection::Movies> searchResult;
 
     //Test food query
-    vector<cosc345::Connection::Food> foods = getAllFood();
+    vector<cosc345::Connection::Food> foods = conn.getDetailFood();
 
     //Create Recommendation class instance
     Recommendation rec = Recommendation(movies, foods);
-    //Connection::Food food = rec.savouryFoodSelect();
-    //cout << food.title << endl;
 
     QMainWindow window;
     window.setWindowTitle("Movie and Food");
@@ -231,7 +209,6 @@ int main(int argc, char **argv)
                          transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
                          // Print the contents to the console
                          // std::cout << "Search Text: " << searchText << std::endl;
-                         cosc345::Connection conn;
 
                          searchResult = conn.searching(searchText);
                          cout << searchResult.size() << endl;
@@ -252,7 +229,7 @@ int main(int argc, char **argv)
 
     // Create a grid layout
     // return all movies size
-    int size = getAllSize();
+    int size = conn.getSizeFood();
     // cout << searchResult.size() << end;
     if (searchFigure != 0)
     {

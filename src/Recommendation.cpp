@@ -25,10 +25,10 @@ namespace cosc345
             food.NER = f00d.NER;
             food.food_type = f00d.food_type;
             //Append to either sweet or savoury food list
-            if (food.food_type == "\"Savory\"") {
+            if (food.food_type == "Savoury") {
                 this->savouryFoodList.push_back(food);
             }
-            else if (food.food_type == "\"Sweet\"") {
+            else if (food.food_type == "Sweet") {
                 this->sweetFoodList.push_back(food); 
             }
         }
