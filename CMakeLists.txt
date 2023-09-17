@@ -10,10 +10,6 @@ find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Test REQUIRED)
-find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
-
-
-
 
 file(COPY ${CMAKE_SOURCE_DIR}/data/Movies.csv DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/data/Food.csv DESTINATION ${CMAKE_BINARY_DIR})
@@ -44,7 +40,7 @@ target_sources(MovieAndFood PRIVATE ${CMAKE_BINARY_DIR}/myStyles.qss)
 
 
 set_target_properties(MovieAndFood PROPERTIES AUTOMOC ON)
-
+set_target_properties(MovieAndFood PROPERTIES AUTOUIC ON)
 
 target_link_libraries(MovieAndFood PRIVATE 
     Qt5::Core
@@ -64,11 +60,7 @@ add_executable(UnitTest
     src/Connection.cpp
     src/Recommendation.h
     src/Recommendation.cpp
-
 )
-
-
-
 
 target_link_libraries(UnitTest PRIVATE 
     Qt5::Core
@@ -79,50 +71,12 @@ target_link_libraries(UnitTest PRIVATE
 )
 
 
-
-
-
 set_target_properties(UnitTest PROPERTIES AUTOMOC ON)
-
+set_source_files_properties(test/TestFrontend.cpp PROPERTIES SKIP_AUTOMOC ON)
 
 
 target_link_libraries(UnitTest PRIVATE  Qt5::Test)
 
-#Testing for clickImage class
-add_executable(testClickImage
-    test/testClickImage.cpp
-    src/clickImage.h
-    src/clickImage.cpp
-    src/clickHandler.h
-    src/clickHandler.cpp
-    src/Recommendation.h
-    src/Recommendation.cpp
-)
 
-target_link_libraries(testClickImage PRIVATE
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets
-    Qt5::Network
-    Qt5::Test
-)
-
-#Testing for clickHandler class
-add_executable(testClickHandler
-    test/testClickHandler.cpp
-    src/Recommendation.h
-    src/Recommendation.cpp
-)
-
-target_link_libraries(testClickHandler PRIVATE
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets
-    Qt5::Network
-    Qt5::Test
-    Catch2::Catch2
-)
-
-
-
-
+# Include Catch2 test discovery
+include(CTest)
