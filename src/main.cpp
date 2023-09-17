@@ -2,7 +2,6 @@
 #include "connection.h"
 #include "clickImage.h"
 #include "clickHandler.h"
-#include <QApplication>
 #include <algorithm>
 #include <random>
 
@@ -63,38 +62,13 @@ private:
     QLabel *m_imageLabel;
 };
 
-vector<cosc345::Connection::Movies> getAllMovie()
-{
-    cosc345::Connection conn;
-    conn.est_conn();
-    vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
-    conn.shuffling();
-    return movies;
-}
-
-vector<cosc345::Connection::Food> getAllFood()
-{
-    cosc345::Connection conn;
-    conn.est_conn();
-    vector<cosc345::Connection::Food> foods = conn.getDetailFood();
-    return foods;
-}
-
-int getAllSize()
-{
-    cosc345::Connection conn;
-    conn.est_conn();
-    return conn.getSizeMovie();
-}
-
-// this function produce movie poster
+// this function produces movie posters
 void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
 {
     // Create and add 7800 items to the grid layout
     int size = movies.size();
     if (size > 500)
         size = 500;
-
     const int numCols = 3;              // Number of rows
     const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
 
@@ -159,17 +133,18 @@ int main(int argc, char **argv)
     app.setStyleSheet(style);
 
     // Back-end work, query data
-    vector<cosc345::Connection::Movies> movies = getAllMovie();
-
+    cosc345::Connection conn;
+    conn.est_conn();
+    vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
+    // Create searchResult movies
+    shuffle(movies.begin(), movies.end(), default_random_engine());
     vector<cosc345::Connection::Movies> searchResult;
 
     // Test food query
-    vector<cosc345::Connection::Food> foods = getAllFood();
+    vector<cosc345::Connection::Food> foods = conn.getDetailFood();
 
     // Create Recommendation class instance
     Recommendation rec = Recommendation(movies, foods);
-    // Connection::Food food = rec.savouryFoodSelect();
-    // cout << food.title << endl;
 
     QMainWindow window;
     window.setWindowTitle("Movie and Food");
@@ -195,6 +170,7 @@ int main(int argc, char **argv)
     // Create a custom widget for the search bar
     QWidget *searchWidget = new QWidget();
     QHBoxLayout *searchLayout = new QHBoxLayout(searchWidget);
+
     QLineEdit *searchBar = new QLineEdit();
     searchBar->setClearButtonEnabled(true);
     QIcon searchIcon("searchIcon.png");
@@ -229,55 +205,29 @@ int main(int argc, char **argv)
     // Connect the returnPressed() signal of QLineEdit to a slot
     QObject::connect(searchBar, &QLineEdit::returnPressed, [&]()
                      {
-                         // Conver user's enter to local string
                          searchText = searchBar->text().toStdString();
-                         if (searchText.length() > 1)
-                         {
-                             cosc345::Connection conn;
-                             // Passing local string to back_end server
-                             searchResult = conn.searching(searchText);
+                         transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
+                         // Print the contents to the console
+                         // std::cout << "Search Text: " << searchText << std::endl;
 
-                             searchFigure = searchResult.size();
-                             //  qDebug() << searchFigure << "HER";
-                             if (searchFigure != 0)
-                             {
-                                 //  qDebug() << "sf";
-                                 // Empty current poster in main windows
-                                 QLayoutItem *item;
-                                 while ((item = gridLayout->takeAt(0)) != nullptr)
-                                 {
-                                     delete item->widget(); // Remove widget from layout
-                                     delete item;           // Delete layout item
-                                 }
-                                 // append search result to emptied gridLayout
-                                 displayPoster(searchResult, gridLayout, rec);
-                                 // update main window poster with search resulte
-                                 gridLayout->update();
-                             }
-                         }
-                         // Will return main page if string is empty
-                         if (searchText == "")
+                         searchResult = conn.searching(searchText);
+                         cout << searchResult.size() << endl;
+                         searchFigure = searchResult.size();
+
+                         int resultSize = searchResult.size();
+
+                         QLayoutItem *item;
+                         while ((item = gridLayout->takeAt(0)) != nullptr)
                          {
-                             displayPoster(movies, gridLayout, rec);
+                             delete item->widget(); // Remove widget from layout
+                             delete item;           // Delete layout item
                          }
                          displayPoster(searchResult, gridLayout, rec);
                          gridLayout->update();
                          // update main window poster with search resulte
                      });
 
-    // Create a grid layout
-    // return all movies size
-    int size = getAllSize();
-    // cout << searchResult.size() << end;
-    if (searchFigure != 0)
-    {
-        qDebug() << "test";
-        cout << "test" << endl;
-    }
-    else
-    {
-        displayPoster(movies, gridLayout, rec);
-    }
+    displayPoster(movies, gridLayout, rec);
 
     window.setLayout(gridLayout);
     // Show the main window

@@ -61,8 +61,8 @@ namespace cosc345
         size_movie = moviesDetail.size();
         inputFile.close();
 
-        // Read Food Data
-        ifstream inputFile2("curated.txt");
+        //Read Food Data
+        ifstream inputFile2("curated2.txt");
         if (!inputFile2.is_open())
         {
             cerr << "Failed to open Food file." << endl;
@@ -91,7 +91,7 @@ namespace cosc345
             }
             foodDetail.push_back(food);
         }
-
+        cout << "Conn was run here" << endl;
         size_food = foodDetail.size();
         inputFile2.close();
     }
@@ -132,10 +132,13 @@ namespace cosc345
 
     vector<Connection::Movies> Connection::searching(string key)
     {
-        Connection::est_conn();
-        cout << "Searchin" << endl;
-        transform(key.begin(), key.end(), key.begin(), ::tolower);
-        for (int i = 0; i < moviesDetail.size(); i++)
+
+        vector<Connection::Movies>
+            totalMovie = Connection::getDetailMovie();
+
+        int sizeMovies = Connection::getSizeMovie();
+        cout << sizeMovies << endl;
+        for (int i = 0; i < sizeMovies; i++)
         {
             string title = moviesDetail[i].title;
             transform(title.begin(), title.end(), title.begin(), ::tolower);

@@ -1,6 +1,6 @@
 #ifndef CLICK_HANDLER_H
 #define CLICK_HANDLER_H
-
+#include <QApplication>
 #include <QPushButton>
 #include <QMenu>
 #include <QObject>
