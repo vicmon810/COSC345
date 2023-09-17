@@ -86,7 +86,7 @@ int getAllSize()
     return conn.getSizeMovie();
 }
 
-//this function produce movie poster
+// this function produce movie poster
 void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
 {
     // Create and add 7800 items to the grid layout
@@ -162,17 +162,11 @@ int main(int argc, char **argv)
 
     vector<cosc345::Connection::Movies> searchResult;
 
-<<<<<<< HEAD
     // Test food query
-    // vector<cosc345::Connection::Food> foods = getAllFood();
-    // cout << foods[0].title << endl;
-=======
-    //Test food query
     vector<cosc345::Connection::Food> foods = getAllFood();
 
-    //Create Recommendation class instance
+    // Create Recommendation class instance
     Recommendation rec = Recommendation(movies, foods);
->>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
 
     QMainWindow window;
     window.setWindowTitle("Movie and Food");
@@ -253,7 +247,7 @@ int main(int argc, char **argv)
                                      delete item;           // Delete layout item
                                  }
                                  // append search result to emptied gridLayout
-                                 displayPoster(searchResult, gridLayout);
+                                 displayPoster(searchResult, gridLayout, rec);
                                  // update main window poster with search resulte
                                  gridLayout->update();
                              }
@@ -261,14 +255,8 @@ int main(int argc, char **argv)
                          // Will return main page if string is empty
                          if (searchText == "")
                          {
-                             displayPoster(movies, gridLayout);
+                             displayPoster(movies, gridLayout, rec);
                          }
-<<<<<<< HEAD
-                         // formatting
-                     });
-
-    displayPoster(movies, gridLayout);
-=======
                          displayPoster(searchResult, gridLayout, rec);
                          gridLayout->update();
                          // update main window poster with search resulte
@@ -287,7 +275,6 @@ int main(int argc, char **argv)
     {
         displayPoster(movies, gridLayout, rec);
     }
->>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
 
     window.setLayout(gridLayout);
     // Show the main window

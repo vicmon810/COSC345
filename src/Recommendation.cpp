@@ -8,52 +8,17 @@ namespace cosc345
     // Default constructor
     Recommendation::Recommendation() {}
 
-<<<<<<< HEAD
-    Recommendation::Recommendation(Connection conn)
+    Recommendation::Recommendation(vector<Connection::Movies> moviesList, vector<Connection::Food> foodList)
     {
         // Add to vector
-        vector<Connection::Movies> movies = conn.getDetailMovie();
-        vector<Connection::Food> foods = conn.getDetailFood();
-
-        // Transfer Connection::Movies to Recommendation::Movie since they are from
-        // different classes. So I dont have to use Connection:: Connection:: Connection::
-        // for everything I do in recommendation.cpp. Also the recommendation functions
-        // cant really return a Connection:: item in a Recommendation:: function, C++ is ass
-        for (const cosc345::Connection::Movies &mov : movies)
-        {
-            // Initialise movie
-            Recommendation::Movie movie;
-            // Transfer data into movie
-            movie.genres = mov.genres;
-            movie.poster = mov.poster;
-            movie.imdb_id = mov.imdb_id;
-            movie.overview = mov.overview;
-            movie.release_date = mov.release_date;
-            movie.runtime = mov.runtime;
-            movie.title = mov.title;
-            movie.rating = mov.rating;
-
-            moviesList.push_back(movie);
-        }
+        this->moviesList = moviesList;
 
         // Do it for food as well
-        for (const cosc345::Connection::Food &f00d : foods)
+        for (const cosc345::Connection::Food &f00d : foodList)
         {
             // Initialise food
-            Recommendation::Food food;
-            // Transfer data into food
-=======
-    Recommendation::Recommendation(vector<Connection::Movies> moviesList, vector<Connection::Food> foodList) {
-        //Add to vector
-        this->moviesList = moviesList; 
-
-        //Do it for food as well
-        for (const cosc345::Connection::Food& f00d : foodList)
-        {
-            //Initialise food
             Connection::Food food;
-            //Transfer data into food
->>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
+            // Transfer data into food
             food.title = f00d.title;
             food.directions = f00d.directions;
             food.ingredients = f00d.ingredients;
@@ -77,18 +42,11 @@ namespace cosc345
         return this->genres;
     }
 
-<<<<<<< HEAD
-    Recommendation::Movie Recommendation::movieSelect(vector<string> genres, double rating)
+    Connection::Movies Recommendation::movieSelect(vector<string> genres, double rating)
     {
         // Create empty movie vector
-        vector<Recommendation::Movie> relevantMovies;
-        // genre count check to make sure movie matches respective genres
-=======
-    Connection::Movies Recommendation::movieSelect(vector<string> genres, double rating) {
-        //Create empty movie vector
         vector<Connection::Movies> relevantMovies;
-        //genre count check to make sure movie matches respective genres
->>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
+        // genre count check to make sure movie matches respective genres
         int genre_count_check = genres.size();
         // Loop through movieList and add to rating close to list
         for (auto &mov : moviesList)
@@ -142,42 +100,27 @@ namespace cosc345
         return relevantMovies[0];
     }
 
-<<<<<<< HEAD
-    Recommendation::Movie Recommendation::randomMovieSelect()
+    Connection::Movies Recommendation::randomMovieSelect()
     {
         // shuffle movieList
-=======
-    Connection::Movies Recommendation::randomMovieSelect() {
-        //shuffle movieList
->>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
         shuffle(moviesList.begin(), moviesList.end(), default_random_engine());
 
         // Return first index of shuffled list
         return moviesList[0];
     }
 
-<<<<<<< HEAD
-    Recommendation::Food Recommendation::savouryFoodSelect(vector<Food> foodlist)
+    Connection::Food Recommendation::savouryFoodSelect()
     {
         // shuffle savouryFoodList
-=======
-    Connection::Food Recommendation::savouryFoodSelect() {
-        //shuffle savouryFoodList
->>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
         shuffle(savouryFoodList.begin(), savouryFoodList.end(), default_random_engine());
 
         // Return first index of shuffled list
         return savouryFoodList[0];
     }
 
-<<<<<<< HEAD
-    Recommendation::Food Recommendation::sweetFoodSelect(vector<Food> foodlist)
+    Connection::Food Recommendation::sweetFoodSelect()
     {
         // shuffle sweetFoodList
-=======
-    Connection::Food Recommendation::sweetFoodSelect() {
-        //shuffle sweetFoodList
->>>>>>> 320d0b371b010dea09e3ef26217be3785200e657
         shuffle(sweetFoodList.begin(), sweetFoodList.end(), default_random_engine());
 
         // Return first index of shuffled list
