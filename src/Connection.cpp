@@ -135,7 +135,7 @@ namespace cosc345
         return foodDetail;
     }
 
-    vector<Connection::Movies> Connection::searching(const string key)
+    vector<Connection::Movies> Connection::searching(string key)
     {
         //Initialise vectors 
         vector<Movies> totalMovie = Connection::getDetailMovie(); //to not mess with original movie list
@@ -160,7 +160,7 @@ namespace cosc345
         return searchResult;
     }
 
-    vector<Connection::Movies> Connection::sorting(const string rating)
+    vector<Connection::Movies> Connection::sorting(string rating)
     {
         //UHH not used so it doesnt have to be working LOL
         return moviesDetail;

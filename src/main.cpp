@@ -69,7 +69,7 @@ private:
 /**
 * Function to display movie posters on GUI
 */
-void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, const Recommendation rec)
+void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
 {
     // Create and add 7800 items to the grid layout
     int size = movies.size();

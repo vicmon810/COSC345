@@ -50,9 +50,9 @@ Read description of Assignment submission.
 [qt open source software](https://www.qt.io/)
 
 ## References:
-  * [Food recipes lists](https://www.kaggle.com/datasets/paultimothymooney/recipenlg/code?resource=download)
-  * [Food Ingredients](https://www.kaggle.com/datasets/pes12017000148/food-ingredients-and-recipe-dataset-with-images)
-  * [Movies lists](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset)
-  * [Qt with CMake](https://doc.qt.io/qt-6/cmake-get-started.html#building-a-c-console-application)
-  * [Qt called by main class](https://stackoverflow.com/questions/17450039/qt-c-gui-call-from-another-class)
+1. [Food recipes lists](https://www.kaggle.com/datasets/paultimothymooney/recipenlg/code?resource=download)
+2. [Food Ingredients](https://www.kaggle.com/datasets/pes12017000148/food-ingredients-and-recipe-dataset-with-images)
+3. [Movies lists](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset)
+4. [Qt with CMake](https://doc.qt.io/qt-6/cmake-get-started.html#building-a-c-console-application)
+5. [Qt called by main class](https://stackoverflow.com/questions/17450039/qt-c-gui-call-from-another-class)
 
