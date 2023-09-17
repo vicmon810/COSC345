@@ -47,21 +47,21 @@ void cosc345::testBackend::testRecommendation()
     cosc345::Connection con;
     vector<Connection::Movies> moviesList;
     vector<Connection::Food> foodList;
+    con.est_conn();
     moviesList = con.getDetailMovie();
     foodList = con.getDetailFood();
     // Initialize your moviesList and foodList with test data
-
+    cout << foodList[0].title << endl;
     // Create a Recommendation object for testing
     cosc345::Recommendation rec = cosc345::Recommendation(moviesList, foodList);
 
-    cout << "Here" << endl;
     // cout << recommender.savouryFoodList[0].title << endl;
     // Test getGenres()
     vector<string>
         genres = rec.getGenres();
     assert(!genres.empty() && "Genres list is empty");
-    assert(rec.savouryFoodList.empty());
-    assert(rec.sweetFoodList.empty());
+    assert(!rec.savouryFoodList.empty());
+    assert(!rec.sweetFoodList.empty());
     vector<string>
         selectedGenres;
     selectedGenres.push_back("Drama");
@@ -69,18 +69,17 @@ void cosc345::testBackend::testRecommendation()
 
     double selectedRating = 7.0;
 
-    // Connection::Movies selectedMovie = recommender.movieSelect(selectedGenres, selectedRating);
+    // Connection::Movies selectedMovie = rec.movieSelect(selectedGenres, selectedRating);
     // assert(!selectedMovie.title.empty() && "No movie selected");
 
-    // Test randomMovieSelect()
-    // Connection::Movies randomSelectedMovie = recommender.randomMovieSelect();
-    // assert(!randomSelectedMovie.title.empty() && "No random movie selected");
+    Connection::Movies randomSelectedMovie = rec.randomMovieSelect();
+    assert(!randomSelectedMovie.title.empty() && "No random movie selected");
 
-    // // Test savouryFoodSelect()
-    // Connection::Food savouryFood = rec.savouryFoodSelect();
-    // assert(savouryFood.title.empty() && "No savoury food selected");
+    // Test savouryFoodSelect()
+    Connection::Food savouryFood = rec.savouryFoodSelect();
+    assert(!savouryFood.title.empty() && "No savoury food selected");
 
-    // // Test sweetFoodSelect()
-    // Connection::Food sweetFood = rec.sweetFoodSelect();
-    // assert(sweetFood.title.empty() && "No sweet food selected");
+    // Test sweetFoodSelect()
+    Connection::Food sweetFood = rec.sweetFoodSelect();
+    assert(!sweetFood.title.empty() && "No sweet food selected");
 }
