@@ -59,6 +59,13 @@ namespace cosc345
         }
 
         size_movie = moviesDetail.size();
+
+        //Shuffle movies in moviesDetail vector
+        unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+        //Randomiser
+        default_random_engine generator(seed);
+        shuffle(moviesDetail.begin(), moviesDetail.end(), generator);
+
         inputFile.close();
 
         //Read Food Data
@@ -132,28 +139,27 @@ namespace cosc345
 
     vector<Connection::Movies> Connection::searching(string key)
     {
-
-        vector<Connection::Movies>
-            totalMovie = Connection::getDetailMovie();
-
+        //Initialise vectors 
+        vector<Movies> totalMovie = Connection::getDetailMovie(); //to not mess with original movie list
+        vector<Movies> searchResult; 
         int sizeMovies = Connection::getSizeMovie();
         cout << sizeMovies << endl;
+
+        //If key is blank, return totalmovie
+        if (key == "") {
+            cout << "blank lmao" << endl;
+            return totalMovie;
+        }
+        //Else loop through and find relevant movies
         for (int i = 0; i < sizeMovies; i++)
         {
             string title = totalMovie[i].title;
             transform(title.begin(), title.end(), title.begin(), ::tolower);
-            // if (title == key)
             if (title.find(key) != std::string::npos)
             {
                 searchResult.push_back(totalMovie[i]);
-                // cout << searchResult[i].title << endl;
             }
         }
-        // cout << "search result: " << searchResult[0].title << endl;
-        // for (int c = 0; c < searchResult.size(); c++)
-        // {
-        //     cout << searchResult[c].title << endl;
-        // }
         return searchResult;
     }
 

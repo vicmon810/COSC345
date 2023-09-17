@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <random>
+#include <chrono>
 using namespace std;
 
 /*!
@@ -60,7 +61,6 @@ namespace cosc345
 
         // Vector to store all movies and food
         vector<Movies> moviesDetail;
-        vector<Movies> searchResult;
         vector<Food> foodDetail;
         /*!
          *@brief Default constructor for the Connection class.
