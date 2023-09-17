@@ -137,7 +137,6 @@ int main(int argc, char **argv)
     conn.est_conn();
     vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
     // Create searchResult movies
-    shuffle(movies.begin(), movies.end(), default_random_engine());
     vector<cosc345::Connection::Movies> searchResult;
 
     // Test food query
@@ -166,7 +165,7 @@ int main(int argc, char **argv)
     QMenuBar *menuBar = new QMenuBar();
 
     // Create a File menu
-    QMenu *fileMenu = menuBar->addMenu("File");
+    // QMenu *fileMenu = menuBar->addMenu("File");
     // Create a custom widget for the search bar
     QWidget *searchWidget = new QWidget();
     QHBoxLayout *searchLayout = new QHBoxLayout(searchWidget);

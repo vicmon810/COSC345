@@ -22,8 +22,8 @@ void cosc345::testBackend::testSearching()
 
     string searchTerm2 = "not_existing_movies";
     vector<cosc345::Connection::Movies> searchResult2 = con.searching(searchTerm2);
-    cout << searchResult2.empty() << endl;
-    assert(searchResult2.empty() == 0 && "Unexpected results found for NonExistentMovie");
+    cout << searchResult2.empty() << endl;cd
+    assert(searchResult2.empty() && "Unexpected results found for NonExistentMovie");
     cout << "Test for searching with" << searchTerm2 << " Passed." << endl;
 }
 
