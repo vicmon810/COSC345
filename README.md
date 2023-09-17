@@ -29,6 +29,10 @@ The code coverage has improved over the alpha version
 For testing, please run UnitTest.exe instead of MovieAndFood.exe when running the project on Visual Studio. This would require the project to be built first which can be done by having 
 CMake installed and building it in the Visual Studio IDE.
 
+Codacy states that there are issues with the readme indent but it looks fine, plus its a readme. The information is visible to the reader
+and it is sufficient. It also states that certain function parameters should be passed by const but by not passing in const, it produces less warnings from codacy.
+Therefore, the warning is ignored.
+
 For our Questionnaire for user feedback, it can be assessed [here](https://forms.office.com/r/13M44QcMks)
 
 Currently we could not figure out how to test the GUI code by simulating mouse clicks without the entire CI failing.
