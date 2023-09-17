@@ -12,6 +12,7 @@ namespace cosc345
      */
     void Connection::est_conn()
     {
+        cout << "Establishing conn" << endl;
         // Read Movie Data
         std::ifstream inputFile("Movies.csv");
         if (!inputFile.is_open())
@@ -98,7 +99,6 @@ namespace cosc345
             }
             foodDetail.push_back(food);
         }
-        cout << "Conn was run here" << endl;
         size_food = foodDetail.size();
         inputFile2.close();
     }
@@ -147,7 +147,6 @@ namespace cosc345
 
         //If key is blank, return totalmovie
         if (key == "") {
-            cout << "blank lmao" << endl;
             return totalMovie;
         }
         //Else loop through and find relevant movies
@@ -168,9 +167,4 @@ namespace cosc345
 
         return moviesDetail;
     }
-
-    // void Connection::shuffling()
-    // {
-    //     shuffle(this->moviesDetail.begin(), this->moviesDetail.end(), default_random_engine());
-    // }
 }

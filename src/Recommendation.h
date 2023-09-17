@@ -55,15 +55,6 @@ namespace cosc345
         vector<string> getGenres() const;
 
         /*!
-         * @brief Function to return movie struct from moviesList vector that matches
-         * genres and rating parameters
-         * @param genres String vector of genres
-         * @param rating rating of movie in a double type
-         * @return movie struct containing movie details
-         */
-        Connection::Movies movieSelect(vector<string> genres, double rating);
-
-        /*!
          * @brief Function to return a random movie struct from moviesList vector
          * @param genres String vector of genres
          * @param rating rating of movie in a double type

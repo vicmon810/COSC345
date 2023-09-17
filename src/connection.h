@@ -100,11 +100,7 @@ namespace cosc345
          *@return movie list by order
          */
         vector<Movies> sorting(string rating);
-        /*!
-         *@brief: Shuffle current list
-         *@return shuffled list
-         */
-        void shuffling();
+
     };
 }
 

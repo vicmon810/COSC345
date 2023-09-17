@@ -6,7 +6,7 @@ namespace cosc345
     void clickHandler::pop_food(QString genres, Recommendation rec)
     {
         QMessageBox msgBox;
-        msgBox.setWindowTitle("Message");
+        msgBox.setWindowTitle("Food Recommendation");
 
         // Set savoury genres (why is it here? Lmao idgaf)
         vector<string> savouryGenres = {"Action", "Adventure",
@@ -45,10 +45,6 @@ namespace cosc345
 
         // Give savoury food recommendation
         Connection::Food food;
-
-        QString title;
-        QString type;
-
         if (check)
         {
             food = rec.savouryFoodSelect();
@@ -57,10 +53,45 @@ namespace cosc345
         {
             food = rec.sweetFoodSelect();
         }
+        //Get message components
+        QString title = QString::fromStdString(food.title); 
+        QString type = QString::fromStdString(food.food_type);
 
-        title = QString::fromStdString(food.title);
-        type = QString::fromStdString(food.food_type);
-        msgBox.setText("Title: " + title + "\n" + "Type: " + type);
+        QString directions;
+        int maxDisplayLen = 20;
+        if (food.directions.length() > maxDisplayLen)
+        {
+            food.directions += '\n';
+            // overview += "...";
+        }
+        string holder = food.directions;
+        const int maxCharsPerLine = 40;
+        string resultString;
+
+        for (size_t i = 0; i < holder.length(); i += maxCharsPerLine)
+        {
+            // Append a substring of the input string with a newline character
+            resultString += holder.substr(i, maxCharsPerLine) + "\n";
+        }
+        directions = QString::fromStdString(resultString);
+
+        QString ingredients;
+        if (food.ingredients.length() > maxDisplayLen)
+        {
+            food.ingredients += '\n';
+            // overview += "...";
+        }
+        string holder2 = food.ingredients;
+        string resultString2; 
+
+        for (size_t i = 0; i < holder2.length(); i += maxCharsPerLine)
+        {
+            // Append a substring of the input string with a newline character
+            resultString2 += holder2.substr(i, maxCharsPerLine) + "\n"; 
+        }
+        ingredients = QString::fromStdString(resultString2);
+
+        msgBox.setText("Title: " + title + "\n" + "\n" + "Ingredients: " + ingredients + "\n" + "Directions: " + directions); //Noob way lmao
         msgBox.exec();
     }
 
@@ -72,7 +103,7 @@ namespace cosc345
         // Create a custom dialog to show the full movie details
         QDialog dialog;
         QVBoxLayout *layout = new QVBoxLayout;
-        QPushButton *titleButton = new QPushButton(("Recommending food"));
+        QPushButton *titleButton = new QPushButton(("Food Pairing"));
         // Display the full movie details in QLabel
         QLabel *titleLabel = new QLabel();
         QLabel *genresLabel = new QLabel();
