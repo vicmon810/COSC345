@@ -31,7 +31,6 @@ namespace cosc345
                 // cout << "Field: " << field << endl;
                 fields.push_back(field);
             }
-            int size = fields.size();
             // cout << size << endl;
             // genres	poster  imdb_id	overview rating	release_date	runtime	title
             // 0        1           2       x         x-4         x-3             x-2     x-1

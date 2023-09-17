@@ -10,7 +10,7 @@ int main()
     test1.testRecommendation();
 
     // If no assertion errors occurred, tests passed
-    std::cout << "All tests passed!\n";
+    std::cout << "\nAll tests passed!\n";
 
     return 0;
 }

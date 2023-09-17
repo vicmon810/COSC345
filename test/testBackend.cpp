@@ -67,8 +67,6 @@ void cosc345::testBackend::testRecommendation()
     selectedGenres.push_back("Drama");
     selectedGenres.push_back("Action");
 
-    double selectedRating = 7.0;
-
     // Connection::Movies selectedMovie = rec.movieSelect(selectedGenres, selectedRating);
     // assert(!selectedMovie.title.empty() && "No movie selected");
 
