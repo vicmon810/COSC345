@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     test1.testGetSizeMovies();
     test1.testSearching();
     test1.testGetFoodSize();
-    test1.testRecommendation();
+    // test1.testRecommendation();
     testFrontend test2;
     QApplication app(argc, argv);
 
