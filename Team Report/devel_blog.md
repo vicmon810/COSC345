@@ -1,11 +1,10 @@
 # Stage report:
 
-### 17/Aug/2023
-- Version : A 0.7 
-- structure: Full stack interaction Application, using mongodb as database, mongo-cxx-driver for back-end data query tool. Qt base on C++ for front-end interaction. 
-- current feature: able to view full list of movie dataset on GUI interface. 
-- TODO: <br>- currently using Qtable to display datalist, should change it asap. <br>
-        - Apply search function on GUI<br>
-        - update algorithm<br>
+### 17/Sep/2023
+Version : A 0.9
+
+structure: GUI interface using QT5 library. Data read in from csv and txt files in data folder 
+
+current feature: able to view list of movies on GUI interface. User can click on the movie posters to view movie details. A separate button can be clicked to access the food pairing for the movie.
 
 ![example](A_0.7.png)

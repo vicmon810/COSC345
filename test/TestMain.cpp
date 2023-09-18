@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     mainWindow.show();
 
     // If no assertion errors occurred, tests passed
-    std::cout << "All tests passed!\n";
+    std::cout << "\nAll tests passed!\n";
 
     return app.exec();
 }

@@ -15,7 +15,9 @@ using namespace cosc345;
  *2: Food Pairing Suggestions: In addition to movie recommendations, the app will suggest suitable food options that complement the user's selected movie. It will provide recipes based on the movie chosen.
  */
 
-// Function to download an image synchronously
+/**
+*  Function to download an image synchronously
+*/
 QPixmap downloadImage(const QString &imageUrl)
 {
     QNetworkAccessManager manager;
@@ -40,7 +42,9 @@ QPixmap downloadImage(const QString &imageUrl)
     }
 }
 
-// Image download worker class
+/**
+*  Image download worker class
+*/
 class ImageDownloadWorker : public QRunnable
 {
 public:
@@ -62,7 +66,9 @@ private:
     QLabel *m_imageLabel;
 };
 
-// this function produces movie posters
+/**
+* Function to display movie posters on GUI
+*/
 void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
 {
     // Create and add 7800 items to the grid layout
@@ -74,7 +80,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
 
     int i = 0;
 
-    //If movie posters havent been downloaded
+    cout << "Acquiring movie posters...." << endl;
 
     for (int row = 0; row < numRows; ++row)
         {
@@ -117,8 +123,12 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
                 i++;
         }
     }
+    cout << "Movie posters acquired!...." << endl;
 }
 
+/**
+* MAIN FUNCTION
+*/
 int main(int argc, char **argv)
 {
     string searchText = "";
