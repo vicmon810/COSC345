@@ -42,14 +42,13 @@ namespace cosc345
     class clickHandler
     {
     private:
+        public:
         /*!
          * @brief This private function generates and displays food recommendations based on movie genres.
          * @param genres The genres of the selected movie.
          * @param rec An instance of the Recommendation class for recommendation data.
          */
         void pop_food(QString genres, Recommendation rec);
-
-    public:
         /*!
          * @brief Handles the click event on a movie item.
          *

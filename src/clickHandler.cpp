@@ -53,8 +53,8 @@ namespace cosc345
         {
             food = rec.sweetFoodSelect();
         }
-        //Get message components
-        QString title = QString::fromStdString(food.title); 
+        // Get message components
+        QString title = QString::fromStdString(food.title);
         QString type = QString::fromStdString(food.food_type);
 
         QString directions;
@@ -82,16 +82,16 @@ namespace cosc345
             // overview += "...";
         }
         string holder2 = food.ingredients;
-        string resultString2; 
+        string resultString2;
 
         for (size_t i = 0; i < holder2.length(); i += maxCharsPerLine)
         {
             // Append a substring of the input string with a newline character
-            resultString2 += holder2.substr(i, maxCharsPerLine) + "\n"; 
+            resultString2 += holder2.substr(i, maxCharsPerLine) + "\n";
         }
         ingredients = QString::fromStdString(resultString2);
 
-        msgBox.setText("Title: " + title + "\n" + "\n" + "Ingredients: " + ingredients + "\n" + "Directions: " + directions); //Noob way lmao
+        msgBox.setText("Title: " + title + "\n" + "\n" + "Ingredients: " + ingredients + "\n" + "Directions: " + directions); // Noob way lmao
         msgBox.exec();
     }
 

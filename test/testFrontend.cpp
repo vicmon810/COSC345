@@ -23,7 +23,7 @@ void testFrontend::testClickHandler()
 
     // Act: Call the method you want to test.
     handler.handleItemClicked("Test Title", "Test Genres", "Test IMDB", "Test Overview", "Test Runtime", "Test Rating", "Test Release", rec);
-
+    handler.pop_food("Adventure", rec);
     cout << "test click handler finished!" << endl;
 
     // Use a QTimer to delay the exit for a few seconds (adjust the timeout value as needed)
