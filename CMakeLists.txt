@@ -56,10 +56,14 @@ add_executable(UnitTest
    test/TestMain.cpp
     test/testBackend.h
     test/testBackend.cpp
+    test/TestFrontend.h
+    test/TestFrontend.cpp
     src/connection.h
     src/Connection.cpp
     src/Recommendation.h
     src/Recommendation.cpp
+    src/clickHandler.h
+    src/clickHandler.cpp
 )
 
 target_link_libraries(UnitTest PRIVATE 

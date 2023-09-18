@@ -51,7 +51,7 @@ void cosc345::testBackend::testRecommendation()
     moviesList = con.getDetailMovie();
     foodList = con.getDetailFood();
     // Initialize your moviesList and foodList with test data
-    cout << foodList[0].title << endl;
+    // cout << foodList[0].title << endl;
     // Create a Recommendation object for testing
     cosc345::Recommendation rec = cosc345::Recommendation(moviesList, foodList);
 
