@@ -13,29 +13,21 @@ int main(int argc, char *argv[])
     test1.testSearching();
     test1.testGetFoodSize();
     test1.testRecommendation();
+
     testFrontend test2;
     QApplication app(argc, argv);
 
-    // Create the main window
-    QWidget mainWindow;
-    mainWindow.setWindowTitle("Auto Clicker Example");
-    mainWindow.setGeometry(100, 100, 400, 200);
-
-    // Create an "Exit" button
-
-    QTimer timer;
-    timer.setSingleShot(true); // Run only once
-    QObject::connect(&timer, &QTimer::timeout, [&]()
+    // Start a QTimer to exit the application after 2 seconds (2000 ms)
+    QTimer exitTimer;
+    exitTimer.setSingleShot(true);
+    QObject::connect(&exitTimer, &QTimer::timeout, [&]()
                      {
-                         cout << "Test" << endl;
-                        test2.testClickHandler();
-                        app.quit(); });
-    timer.start(1000); // 1000 ms = 1 second
+                         std::cout << "\nAll tests passed!\n";
+                         app.quit(); // Quit the application after tests are done
+                     });
+    exitTimer.start(2000); // 2000 ms = 2 seconds
 
-    mainWindow.show();
+    test2.testClickHandler();
 
-    // If no assertion errors occurred, tests passed
-    std::cout << "\nAll tests passed!\n";
-
-    // return app.exec();
+    return app.exec(); // Start the Qt event loop
 }
