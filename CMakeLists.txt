@@ -56,8 +56,8 @@ add_executable(UnitTest
    test/TestMain.cpp
     test/testBackend.h
     test/testBackend.cpp
-    test/TestFrontend.h
-    test/TestFrontend.cpp
+    test/testFrontend.h
+    test/testFrontend.cpp
     src/connection.h
     src/Connection.cpp
     src/Recommendation.h
