@@ -16,8 +16,8 @@ using namespace cosc345;
  */
 
 /**
-*  Function to download an image synchronously
-*/
+ *  Function to download an image synchronously
+ */
 QPixmap downloadImage(const QString &imageUrl)
 {
     QNetworkAccessManager manager;
@@ -43,8 +43,8 @@ QPixmap downloadImage(const QString &imageUrl)
 }
 
 /**
-*  Image download worker class
-*/
+ *  Image download worker class
+ */
 class ImageDownloadWorker : public QRunnable
 {
 public:
@@ -67,8 +67,8 @@ private:
 };
 
 /**
-* Function to display movie posters on GUI
-*/
+ * Function to display movie posters on GUI
+ */
 void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
 {
     // Create and add 7800 items to the grid layout
@@ -83,52 +83,52 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
     cout << "Acquiring movie posters...." << endl;
 
     for (int row = 0; row < numRows; ++row)
-        {
+    {
         for (int col = 0; col < numCols; ++col)
         {
-                // ClickableLabel imageLabel = new ClickableLabel();
+            // ClickableLabel imageLabel = new ClickableLabel();
 
-                QString name = QString::fromStdString(movies[i].title);
-                QString genres = QString::fromStdString(movies[i].genres);
-                QString IMDB = QString::fromStdString(movies[i].imdb_id);
-                QString overview = QString::fromStdString(movies[i].overview);
-                QString runtime = QString::fromStdString(movies[i].runtime);
-                QString rating = QString::fromStdString(movies[i].rating);
-                QString release = QString::fromStdString(movies[i].release_date);
-                QString URL = QString::fromStdString(movies[i].poster);
+            QString name = QString::fromStdString(movies[i].title);
+            QString genres = QString::fromStdString(movies[i].genres);
+            QString IMDB = QString::fromStdString(movies[i].imdb_id);
+            QString overview = QString::fromStdString(movies[i].overview);
+            QString runtime = QString::fromStdString(movies[i].runtime);
+            QString rating = QString::fromStdString(movies[i].rating);
+            QString release = QString::fromStdString(movies[i].release_date);
+            QString URL = QString::fromStdString(movies[i].poster);
 
-                // Create a QLabel to display the image
-                // QLabel *imageLabel = new QLabel();
-                ClickableLabel* imageLabel = new ClickableLabel();
+            // Create a QLabel to display the image
+            // QLabel *imageLabel = new QLabel();
+            ClickableLabel *imageLabel = new ClickableLabel();
 
-                QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
-                    {
-                        // Code to execute when the label is clicked
-                        cosc345::clickHandler ch;
-                        ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release, rec);
-                        // qDebug()
-                        //     << "Label clicked!";
-                    });
-                // imageLabel->setFixedSize(128, 192);
-                gridLayout->addWidget(imageLabel, row, col);
+            QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
+                             {
+                                 // Code to execute when the label is clicked
+                                 cosc345::clickHandler ch;
+                                 ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release, rec);
+                                 // qDebug()
+                                 //     << "Label clicked!";
+                             });
+            // imageLabel->setFixedSize(128, 192);
+            gridLayout->addWidget(imageLabel, row, col);
 
-                // imageLabel->resize(128, 192);
-                // Create a QPushButton for the title
-                QPushButton* titleButton = new QPushButton((name));
-                // gridLayout->addWidget(titleButton, row, col);
+            // imageLabel->resize(128, 192);
+            // Create a QPushButton for the title
+            QPushButton *titleButton = new QPushButton((name));
+            // gridLayout->addWidget(titleButton, row, col);
 
-                // Create an ImageDownloadWorker to download and display the image
-                ImageDownloadWorker* imageWorker = new ImageDownloadWorker(URL, imageLabel);
-                QThreadPool::globalInstance()->start(imageWorker);
-                i++;
+            // Create an ImageDownloadWorker to download and display the image
+            ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
+            QThreadPool::globalInstance()->start(imageWorker);
+            i++;
         }
     }
     cout << "Movie posters acquired!...." << endl;
 }
 
 /**
-* MAIN FUNCTION
-*/
+ * MAIN FUNCTION
+ */
 int main(int argc, char **argv)
 {
     string searchText = "";
@@ -139,9 +139,17 @@ int main(int argc, char **argv)
     QString executablePath = QCoreApplication::applicationDirPath();
     QString qssFilePath = executablePath + "/myStyles.qss";
     QFile styleFile(qssFilePath);
-    styleFile.open(QFile::ReadOnly);
+    if (!styleFile.open(QFile::ReadOnly | QFile::Text))
+    {
+        qDebug() << "Failed to open QSS file: " << styleFile.errorString();
+        return -1;
+    }
     QString style = QLatin1String(styleFile.readAll());
+    styleFile.close();
+
+    // Set the application's style sheet
     app.setStyleSheet(style);
+    qDebug() << "Loaded QSS content:" << style;
 
     // Back-end work, query data
     cosc345::Connection conn;
@@ -212,8 +220,8 @@ int main(int argc, char **argv)
 
     QGridLayout *gridLayout = new QGridLayout(scrollWidget);
 
-    //Auto runs displayPoster when app is launched to give grid layout of movie posters
-    displayPoster(movies, gridLayout, rec); 
+    // Auto runs displayPoster when app is launched to give grid layout of movie posters
+    displayPoster(movies, gridLayout, rec);
 
     // Connect the returnPressed() signal of QLineEdit to a slot
     // For input to searchbar
@@ -230,14 +238,14 @@ int main(int argc, char **argv)
 
                          int resultSize = searchResult.size();
 
-                         QLayoutItem* item;
+                         QLayoutItem *item;
                          while ((item = gridLayout->takeAt(0)) != nullptr)
                          {
                              delete item->widget(); // Remove widget from layout
                              delete item;           // Delete layout item
                          }
                          displayPoster(searchResult, gridLayout, rec);
-                         gridLayout->update();// update main window poster with search results
+                         gridLayout->update(); // update main window poster with search results
                      });
 
     window.setLayout(gridLayout);

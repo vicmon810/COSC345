@@ -1,9 +1,103 @@
+/* This is a comment */
 
+/* Global styling for all widgets */
+QWidget {
+    background-color: #F0F0F0;
+    /* Background color for all widgets */
+    color: #333333;
+    /* Text color for all widgets */
+    font-family: Arial, sans-serif;
+    /* Font family for all widgets */
+}
 
-QButton::titleButton{
-    background-color: aqua;
-};
+/* Push button styling */
+QPushButton {
+    background-color: #337AB7;
+    /* Background color for push buttons */
+    color: #FFFFFF;
+    /* Text color for push buttons */
+    border: none;
+    /* Remove the button border */
+    padding: 5px 15px;
+    /* Add padding to the button */
+    border-radius: 3px;
+    /* Rounded corners for the button */
+}
 
-QLable{
-background-color: rgb(17, 172, 143);
-};
+QPushButton:hover {
+    background-color: #23527C;
+    /* Background color when hovering */
+    color: #FFFFFF;
+    /* Text color when hovering */
+}
+
+/* Line edit (input field) styling */
+QLineEdit {
+    background-color: #FFFFFF;
+    /* Background color for input fields */
+    border: 1px solid #CCCCCC;
+    /* Add a border to the input field */
+    padding: 5px;
+    /* Add padding to the input field */
+    border-radius: 3px;
+    /* Rounded corners for the input field */
+}
+
+/* Label styling */
+QLabel {
+    color: #333333;
+    /* Text color for labels */
+    font-size: 14px;
+    /* Font size for labels */
+}
+
+/* Scroll area styling */
+QScrollArea {
+    border: 1px solid #CCCCCC;
+    /* Add a border to the scroll area */
+    border-radius: 3px;
+    /* Rounded corners for the scroll area */
+}
+
+/* Menu bar styling */
+QMenuBar {
+    background-color: #F0F0F0;
+    /* Background color for the menu bar */
+    color: #333333;
+    /* Text color for the menu bar */
+}
+
+/* Menu styling */
+QMenu {
+    background-color: #FFFFFF;
+    /* Background color for menus */
+    color: #333333;
+    /* Text color for menus */
+    border: 1px solid #CCCCCC;
+    /* Add a border to menus */
+    padding: 5px;
+    /* Add padding to menus */
+    border-radius: 3px;
+    /* Rounded corners for menus */
+}
+
+/* Menu item styling */
+QMenu::item {
+    background-color: transparent;
+    /* Transparent background for menu items */
+    color: #ff0202;
+    /*Border color */
+    /* Text color for menu items */
+    padding: 5px 20px;
+    /* Add padding to menu items */
+}
+
+QMenu::item:selected {
+    background-color: #337AB7;
+    /* Background color for selected menu items */
+    color: #FFFFFF;
+    /* Text color for selected menu items */
+    border-radius: 1%;
+}
+
+/* Add more styling rules as needed */
