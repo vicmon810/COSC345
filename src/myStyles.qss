@@ -2,40 +2,44 @@
 
 /* Global styling for all widgets */
 QWidget {
-    background-color: #F0F0F0;
+    background-color: #3c8784;
     /* Background color for all widgets */
-    color: #333333;
+    color: #9a5454;
     /* Text color for all widgets */
     font-family: Arial, sans-serif;
     /* Font family for all widgets */
 }
-
+QWidget:hover{
+    background-color: #5bc4ba;
+    border-radius: 15%;
+    border: #bf0909;
+}
 /* Push button styling */
 QPushButton {
-    background-color: #337AB7;
+    background-color: #5bc4ba;
     /* Background color for push buttons */
-    color: #FFFFFF;
+    color: #0c7547;
     /* Text color for push buttons */
-    border: none;
+    border: 2px #26d897;
     /* Remove the button border */
     padding: 5px 15px;
     /* Add padding to the button */
-    border-radius: 3px;
+    border-radius: 15px;
     /* Rounded corners for the button */
 }
 
 QPushButton:hover {
-    background-color: #23527C;
+    background-color: #732dc9;
     /* Background color when hovering */
-    color: #FFFFFF;
+    color: #6b1111;
     /* Text color when hovering */
 }
 
 /* Line edit (input field) styling */
 QLineEdit {
-    background-color: #FFFFFF;
+    background-color: #265586;
     /* Background color for input fields */
-    border: 1px solid #CCCCCC;
+    border: 10px solid #000000;
     /* Add a border to the input field */
     padding: 5px;
     /* Add padding to the input field */
@@ -49,13 +53,15 @@ QLabel {
     /* Text color for labels */
     font-size: 14px;
     /* Font size for labels */
+    border: #c35757;
 }
 
 /* Scroll area styling */
 QScrollArea {
-    border: 1px solid #CCCCCC;
+    border: 1px solid #bf0909;
     /* Add a border to the scroll area */
-    border-radius: 3px;
+    border-radius: 15px;
+    background-color: antiquewhite;
     /* Rounded corners for the scroll area */
 }
 
@@ -83,21 +89,23 @@ QMenu {
 
 /* Menu item styling */
 QMenu::item {
-    background-color: transparent;
+    background-color: bisque;
     /* Transparent background for menu items */
     color: #ff0202;
     /*Border color */
     /* Text color for menu items */
     padding: 5px 20px;
+    border: yellow;
     /* Add padding to menu items */
 }
 
-QMenu::item:selected {
+QWidget::item:selected {
     background-color: #337AB7;
     /* Background color for selected menu items */
     color: #FFFFFF;
+    border: #ff0202;
     /* Text color for selected menu items */
-    border-radius: 1%;
+    border-radius: 15%;
 }
 
 /* Add more styling rules as needed */

@@ -4,8 +4,13 @@
 #include "clickHandler.h"
 #include <algorithm>
 #include <random>
+#include <map>
 
 using namespace cosc345;
+using namespace std;
+
+// Declare the imageMap as a global variable
+map<QString, QPixmap> imageMap;
 
 /*! \mainpage Movie and Food
  *   \section intro Introduction
@@ -14,6 +19,8 @@ using namespace cosc345;
  *
  *2: Food Pairing Suggestions: In addition to movie recommendations, the app will suggest suitable food options that complement the user's selected movie. It will provide recipes based on the movie chosen.
  */
+
+// typedef QMap<QString, QPixmap> posterMap;
 
 /**
  *  Function to download an image synchronously
@@ -71,10 +78,15 @@ private:
  */
 void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
 {
+    if (imageMap.empty())
+    {
+        cout << "not empty!!" << endl;
+    }
     // Create and add 7800 items to the grid layout
     int size = movies.size();
-    if (size > 500)
-        size = 500;
+    if (size > 200)
+        size = 200;
+    cout << size << endl;
     const int numCols = 3;              // Number of rows
     const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
 
@@ -87,7 +99,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
         for (int col = 0; col < numCols; ++col)
         {
             // ClickableLabel imageLabel = new ClickableLabel();
-
+            cout << i << endl;
             QString name = QString::fromStdString(movies[i].title);
             QString genres = QString::fromStdString(movies[i].genres);
             QString IMDB = QString::fromStdString(movies[i].imdb_id);
@@ -119,11 +131,32 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
 
             // Create an ImageDownloadWorker to download and display the image
             ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
+
             QThreadPool::globalInstance()->start(imageWorker);
             i++;
         }
     }
     cout << "Movie posters acquired!...." << endl;
+}
+
+void downloadImages(vector<cosc345::Connection::Movies> movies)
+{
+    for (const auto &movie : movies)
+    {
+        // cout << "Loading....." << endl;
+        QString URL = QString::fromStdString(movie.poster);
+        QString IMDB = QString::fromStdString(movie.imdb_id);
+
+        // Download the image
+        QPixmap posterPixmap = downloadImage(URL);
+
+        if (!posterPixmap.isNull())
+        {
+            // Store the downloaded image in the map using IMDB ID as the key
+            imageMap[IMDB] = posterPixmap;
+        }
+    }
+    // cout << "Loading finished!!" << endl;
 }
 
 /**
@@ -133,6 +166,7 @@ int main(int argc, char **argv)
 {
     string searchText = "";
     int searchFigure = 0;
+
     QApplication app(argc, argv);
 
     // Load QSS style sheet
@@ -219,6 +253,11 @@ int main(int argc, char **argv)
     scrollArea->setWidget(scrollWidget);
 
     QGridLayout *gridLayout = new QGridLayout(scrollWidget);
+    // create an empty map to streo the downloaded images
+    // map<QString, QPixmap> imageMap;
+    // Download image and stroe them in the map to reduce amount of time for loading
+
+    // Will delete!! to test wheater image is been stored
 
     // Auto runs displayPoster when app is launched to give grid layout of movie posters
     displayPoster(movies, gridLayout, rec);
@@ -245,12 +284,13 @@ int main(int argc, char **argv)
                              delete item;           // Delete layout item
                          }
                          displayPoster(searchResult, gridLayout, rec);
+                         cout << "test" << endl;
                          gridLayout->update(); // update main window poster with search results
                      });
 
     window.setLayout(gridLayout);
     // Show the main window
     window.show();
-
+    downloadImages(movies);
     return app.exec();
 }

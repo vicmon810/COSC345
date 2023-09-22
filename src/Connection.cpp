@@ -141,7 +141,7 @@ namespace cosc345
         vector<Movies> totalMovie = Connection::getDetailMovie(); //to not mess with original movie list
         vector<Movies> searchResult; 
         int sizeMovies = Connection::getSizeMovie();
-        cout << sizeMovies << endl;
+        cout << key << endl;
 
         //If key is blank, return totalmovie
         if (key == "") {
