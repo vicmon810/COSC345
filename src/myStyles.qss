@@ -14,19 +14,21 @@ QWidget::ClickLabeLabel:checked{
 
 /* Push button styling */
 QPushButton {
-    background-color: #9e9e9e;
-    color: #700101;
+    background-color: #535b5a;
+    color: #ffffff;
     font-size: medium;
     border-radius: 15px;
 }
 
-QPushButton:hover {
-    background-color: #42041c;
-    font-size: medium;
-    color: #6b1111;
+
+
+/* Line edit (input field) styling */
+QLineEdit {
+    background-color: #070707;
+    border: 1px solid #afa6a6;
+    border-radius: 3px;
+    color: #afa6a6
 }
-
-
 
 /* Label styling */
 QLabel {
@@ -36,7 +38,8 @@ QLabel {
 }
 
 /* Scroll area styling */
-QScrollArea {
+QScrollArea ::ClickableLabel{
+    border: 10px solid #ff0000;
     border-radius: 15px;
     background-color: antiquewhite;
 }

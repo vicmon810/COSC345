@@ -84,7 +84,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
     if (size > max_page)
         size = max_page;
 
-    const int numCols = 3;      // Number of rows
+    const int numCols = 3;              // Number of rows
     const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
     int i = 0;
 
@@ -165,7 +165,7 @@ int main(int argc, char **argv)
     cosc345::Connection conn;
     conn.est_conn();
 
-    //Original movies vector
+    // Original movies vector
     vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
     // Create searchResult movies
     vector<cosc345::Connection::Movies> searchResult = movies;
@@ -199,14 +199,14 @@ int main(int argc, char **argv)
     QWidget *searchWidget = new QWidget();
     QHBoxLayout *searchLayout = new QHBoxLayout(searchWidget);
 
-    // Variables for page number 
+    // Variables for page number
     int page1 = 1;
     int page2 = 2;
 
     // Boolean check for updating page numbers
     bool pageCheck = false;
 
-    //Next page of movies
+    // Next page of movies
     QPushButton pageNum1("<< 1");
     QPushButton pageNum2("2 >>");
 
@@ -217,7 +217,7 @@ int main(int argc, char **argv)
 
     searchBar->setPlaceholderText("Search...");
 
-    // Add the search bar and buttons to the search widget 
+    // Add the search bar and buttons to the search widget
     searchLayout->addWidget(&pageNum1);
     searchLayout->addWidget(searchBar);
     searchLayout->addWidget(&pageNum2);
@@ -245,45 +245,53 @@ int main(int argc, char **argv)
     displayPoster(movies, gridLayout, rec);
 
     // Connect the returnPressed() signal of QLineEdit to a slot
-        // For input to searchbar
+    // For input to searchbar
     QObject::connect(searchBar, &QLineEdit::returnPressed, [&]()
-        {
-            //To reset page numbers
-            pageCheck = true;
-            searchText = searchBar->text().toStdString();
-            transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
-            // Print the contents to the console
-            // std::cout << "Search Text: " << searchText << std::endl;
+                     {
+                         // To reset page numbers
+                         pageCheck = true;
+                         searchText = searchBar->text().toStdString();
+                         transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
+                         // Print the contents to the console
+                         // std::cout << "Search Text: " << searchText << std::endl;
 
-            searchResult = conn.searching(searchText);
-            cout << searchResult.size() << endl;
-            searchFigure = searchResult.size();
+                         searchResult = conn.searching(searchText);
+                         cout << searchResult.size() << endl;
+                         searchFigure = searchResult.size();
 
-            int resultSize = searchResult.size();
+                         int resultSize = searchResult.size();
 
-            QLayoutItem* item;
-            while ((item = gridLayout->takeAt(0)) != nullptr)
-            {
-                delete item->widget(); // Remove widget from layout
-                delete item;// Delete layout item
-            }
-            displayPoster(searchResult, gridLayout, rec);
+                         QLayoutItem *item;
+                         if (resultSize == movies.size())
+                         {
+                             qDebug() << "test";
+                         }
+                         else
+                         {
+                             while ((item = gridLayout->takeAt(0)) != nullptr)
+                             {
+                                 delete item->widget(); // Remove widget from layout
+                                 delete item;           // Delete layout item
+                             }
+                             displayPoster(searchResult, gridLayout, rec);
+                         }
 
-            //Update button texts if needed
-            if (pageCheck) {
-                page1 = 1;
-                page2 = 2;
-                pageNum1.setText("<< " + QString::number(page1));
-                pageNum2.setText(QString::number(page2) + " >>");
-                pageCheck = false;
-            }
+                         // Update button texts if needed
+                         if (pageCheck)
+                         {
+                             page1 = 1;
+                             page2 = 2;
+                             pageNum1.setText("<< " + QString::number(page1));
+                             pageNum2.setText(QString::number(page2) + " >>");
+                             pageCheck = false;
+                         }
 
-            gridLayout->update(); // update main window poster with search results
-        });
+                         gridLayout->update(); // update main window poster with search results
+                     });
 
-    //connect for the buttons
+    // connect for the buttons
     QObject::connect(&pageNum1, &QPushButton::clicked, [&]()
-        {
+                     {
             if (page1 == 1) { 
                 //do nothing
             } 
@@ -298,11 +306,10 @@ int main(int argc, char **argv)
                 vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * 50) - 1, searchResult.end());
                 displayPoster(tempResult, gridLayout, rec);
                 gridLayout->update();
-            }
-        });
+            } });
 
     QObject::connect(&pageNum2, &QPushButton::clicked, [&]()
-        {
+                     {
             if (page2 == (searchResult.size() / 50)) {
                 //do nothing
             }
@@ -316,8 +323,7 @@ int main(int argc, char **argv)
                 vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * 50) - 1, searchResult.end());
                 displayPoster(tempResult, gridLayout, rec);
                 gridLayout->update();
-            }
-        });
+            } });
 
     window.setLayout(gridLayout);
 
