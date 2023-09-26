@@ -141,26 +141,6 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
 
     cout << "Movie posters acquired!...." << endl;
 }
-// Downloading images async
-void downloadImages(vector<cosc345::Connection::Movies> movies)
-{
-    for (const auto &movie : movies)
-    {
-        // cout << "Loading....." << endl;
-        QString URL = QString::fromStdString(movie.poster);
-        QString IMDB = QString::fromStdString(movie.imdb_id);
-
-        // Download the image
-        QPixmap posterPixmap = downloadImage(URL);
-
-        if (!posterPixmap.isNull())
-        {
-            // Store the downloaded image in the map using IMDB ID as the key
-            imageMap[IMDB] = posterPixmap;
-        }
-    }
-    // cout << "Loading finished!!" << endl;
-}
 
 /**
  * MAIN FUNCTION
@@ -186,14 +166,15 @@ int main(int argc, char **argv)
 
     // Set the application's style sheet
     app.setStyleSheet(style);
-    qDebug() << "Loaded QSS content:" << style;
 
     // Back-end work, query data
     cosc345::Connection conn;
     conn.est_conn();
+
+    //Original movies vector
     vector<cosc345::Connection::Movies> movies = conn.getDetailMovie();
     // Create searchResult movies
-    vector<cosc345::Connection::Movies> searchResult;
+    vector<cosc345::Connection::Movies> searchResult = movies;
 
     // Test food query
     vector<cosc345::Connection::Food> foods = conn.getDetailFood();
@@ -217,15 +198,21 @@ int main(int argc, char **argv)
     // Create a layout for the menu bar and search bar
     QVBoxLayout *menuAndSearchLayout = new QVBoxLayout(menuAndSearchContainer);
 
-    // Create a menu bar
-    // QMenuBar *menuBar = new QMenuBar();
-
-    // Create a File menu
-    // QMenu *fileMenu = menuBar->addMenu("File");
     // Create a custom widget for the search bar
     QPushButton pageNum("Page Numbers");
     QWidget *searchWidget = new QWidget();
     QHBoxLayout *searchLayout = new QHBoxLayout(searchWidget);
+
+    // Variables for page number 
+    int page1 = 1;
+    int page2 = 2;
+
+    // Boolean check for updating page numbers
+    bool pageCheck = false;
+
+    //Next page of movies
+    QPushButton pageNum1("<< 1");
+    QPushButton pageNum2("2 >>");
 
     QLineEdit *searchBar = new QLineEdit();
     searchBar->setClearButtonEnabled(true);
@@ -234,11 +221,10 @@ int main(int argc, char **argv)
 
     searchBar->setPlaceholderText("Search...");
 
-    // Add the search bar to the search widget
+    // Add the search bar and buttons to the search widget 
+    searchLayout->addWidget(&pageNum1);
     searchLayout->addWidget(searchBar);
-    searchLayout->addWidget(&pageNum);
-    // Add the menu bar to the menu and search layout
-    // menuAndSearchLayout->addWidget(menuBar);
+    searchLayout->addWidget(&pageNum2);
 
     // Add the search widget to the menu and search layout
     menuAndSearchLayout->addWidget(searchWidget);
@@ -258,49 +244,88 @@ int main(int argc, char **argv)
     scrollArea->setWidget(scrollWidget);
 
     QGridLayout *gridLayout = new QGridLayout(scrollWidget);
-    // create an empty map to streo the downloaded images
-    // map<QString, QPixmap> imageMap;
-    // Download image and stroe them in the map to reduce amount of time for loading
-
-    // Will delete!! to test wheater image is been stored
 
     // Auto runs displayPoster when app is launched to give grid layout of movie posters
     displayPoster(movies, gridLayout, rec);
 
     // Connect the returnPressed() signal of QLineEdit to a slot
-    // For input to searchbar
+        // For input to searchbar
     QObject::connect(searchBar, &QLineEdit::returnPressed, [&]()
-                     {
-                         searchText = searchBar->text().toStdString();
-                         transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
-                         // Print the contents to the console
-                         // std::cout << "Search Text: " << searchText << std::endl;
+        {
+            //To reset page numbers
+            pageCheck = true;
+            searchText = searchBar->text().toStdString();
+            transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
+            // Print the contents to the console
+            // std::cout << "Search Text: " << searchText << std::endl;
 
-                         searchResult = conn.searching(searchText);
-                         cout << searchResult.size() << endl;
-                         searchFigure = searchResult.size();
+            searchResult = conn.searching(searchText);
+            cout << searchResult.size() << endl;
+            searchFigure = searchResult.size();
 
-                         int resultSize = searchResult.size();
+            int resultSize = searchResult.size();
 
-                         QLayoutItem *item;
-                         while ((item = gridLayout->takeAt(0)) != nullptr)
-                         {
-                             delete item->widget(); // Remove widget from layout
-                             delete item;           // Delete layout item
-                         }
-                         displayPoster(searchResult, gridLayout, rec);
-                         cout << "test" << endl;
-                         gridLayout->update(); // update main window poster with search results
-                     });
-    QVBoxLayout layout;
+            QLayoutItem* item;
+            while ((item = gridLayout->takeAt(0)) != nullptr)
+            {
+                delete item->widget(); // Remove widget from layout
+                delete item;// Delete layout item
+            }
+            displayPoster(searchResult, gridLayout, rec);
 
-    // layout.addWidget(&pageNum);
-    // gridLayout->setLayout(layout);
+            //Update button texts if needed
+            if (pageCheck) {
+                page1 = 1;
+                page2 = 2;
+                pageNum1.setText("<< " + QString::number(page1));
+                pageNum2.setText(QString::number(page2) + " >>");
+                pageCheck = false;
+            }
+
+            gridLayout->update(); // update main window poster with search results
+        });
+
+    //connect for the buttons
+    QObject::connect(&pageNum1, &QPushButton::clicked, [&]()
+        {
+            if (page1 == 1) { 
+                //do nothing
+            } 
+            else {
+                //Update button text
+                page1--;
+                page2--;
+                pageNum1.setText("<< " + QString::number(page1));
+                pageNum2.setText(QString::number(page2) + " >>");
+
+                //update gridLayout with subset of searchResult
+                vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * 50) - 1, searchResult.end());
+                displayPoster(tempResult, gridLayout, rec);
+                gridLayout->update();
+            }
+        });
+
+    QObject::connect(&pageNum2, &QPushButton::clicked, [&]()
+        {
+            if (page2 == (searchResult.size() / 50)) {
+                //do nothing
+            }
+            else {
+                page1++;
+                page2++;
+                pageNum1.setText("<< " + QString::number(page1));
+                pageNum2.setText(QString::number(page2) + " >>");
+
+                //update gridLayout with subset of searchResult
+                vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * 50) - 1, searchResult.end());
+                displayPoster(tempResult, gridLayout, rec);
+                gridLayout->update();
+            }
+        });
 
     window.setLayout(gridLayout);
 
     // Show the main window
     window.show();
-    downloadImages(movies);
     return app.exec();
 }
