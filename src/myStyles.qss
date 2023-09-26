@@ -1,13 +1,13 @@
 /* Global styling for all widgets */
 QWidget {
-    background-color: #000000;
+    background-color: #A9A9A9;
     font-family: Arial, sans-serif;
 }
 QWidget::ClickLabeLabel:checked{
-    background-color: #3c3c3c;
+    background-color: #A9A9A9;
 }
 /* QWidget:hover {
-    background-color: #3c3c3c;
+    background-color: #A9A9A9;
     border-radius: 15%;
     border: #bf0909;
 } */
@@ -26,11 +26,9 @@ QPushButton:hover {
     color: #6b1111;
 }
 
-
-
 /* Label styling */
 QLabel {
-    color: #c67575;
+    color: #FFFFFF;
     font-size: 14px;
     border: #3e1010;
 }
@@ -43,7 +41,7 @@ QScrollArea {
 
 /* Menu bar styling */
 QMenuBar {
-    background-color: #F0F0F0;
+    background-color: #DCDCDC;
     color: #333333;
 }
 
