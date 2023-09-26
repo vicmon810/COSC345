@@ -101,7 +101,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
         for (int col = 0; col < numCols; ++col)
         {
             // ClickableLabel imageLabel = new ClickableLabel();
-            cout << i << endl;
+            // cout << i << endl;
             QString name = QString::fromStdString(movies[i].title);
             QString genres = QString::fromStdString(movies[i].genres);
             QString IMDB = QString::fromStdString(movies[i].imdb_id);
