@@ -11,9 +11,6 @@
 using namespace cosc345;
 using namespace std;
 
-// Declare the imageMap as a global variable
-map<QString, QPixmap> imageMap;
-
 /*! \mainpage Movie and Food
  *   \section intro Introduction
  *  Key Features:
@@ -88,7 +85,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
     if (size > max_page)
         size = max_page;
 
-    const int numCols = suit_size;      // Number of rows
+    const int numCols = 3;      // Number of rows
     const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
     int i = 0;
 
@@ -148,7 +145,6 @@ int main(int argc, char **argv)
 {
     string searchText = "";
     int searchFigure = 0;
-    suit_size = 3;
     QApplication app(argc, argv);
 
     // Load QSS style sheet
