@@ -2,6 +2,8 @@
 #include "connection.h"
 #include "clickImage.h"
 #include "clickHandler.h"
+
+#include "PagingStyle.h"
 #include <algorithm>
 #include <random>
 #include <map>
@@ -84,8 +86,8 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
     }
     // Create and add 7800 items to the grid layout
     int size = movies.size();
-    if (size > 200)
-        size = 200;
+    if (size > 50)
+        size = 50;
     cout << size << endl;
     const int numCols = 3;              // Number of rows
     const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
@@ -136,9 +138,10 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
             i++;
         }
     }
+
     cout << "Movie posters acquired!...." << endl;
 }
-
+// Downloading images async
 void downloadImages(vector<cosc345::Connection::Movies> movies)
 {
     for (const auto &movie : movies)
@@ -215,11 +218,12 @@ int main(int argc, char **argv)
     QVBoxLayout *menuAndSearchLayout = new QVBoxLayout(menuAndSearchContainer);
 
     // Create a menu bar
-    QMenuBar *menuBar = new QMenuBar();
+    // QMenuBar *menuBar = new QMenuBar();
 
     // Create a File menu
     // QMenu *fileMenu = menuBar->addMenu("File");
     // Create a custom widget for the search bar
+    QPushButton pageNum("Page Numbers");
     QWidget *searchWidget = new QWidget();
     QHBoxLayout *searchLayout = new QHBoxLayout(searchWidget);
 
@@ -227,13 +231,14 @@ int main(int argc, char **argv)
     searchBar->setClearButtonEnabled(true);
     QIcon searchIcon("searchIcon.png");
     searchBar->addAction(searchIcon, QLineEdit::LeadingPosition);
+
     searchBar->setPlaceholderText("Search...");
 
     // Add the search bar to the search widget
     searchLayout->addWidget(searchBar);
-
+    searchLayout->addWidget(&pageNum);
     // Add the menu bar to the menu and search layout
-    menuAndSearchLayout->addWidget(menuBar);
+    // menuAndSearchLayout->addWidget(menuBar);
 
     // Add the search widget to the menu and search layout
     menuAndSearchLayout->addWidget(searchWidget);
@@ -287,8 +292,13 @@ int main(int argc, char **argv)
                          cout << "test" << endl;
                          gridLayout->update(); // update main window poster with search results
                      });
+    QVBoxLayout layout;
+
+    // layout.addWidget(&pageNum);
+    // gridLayout->setLayout(layout);
 
     window.setLayout(gridLayout);
+
     // Show the main window
     window.show();
     downloadImages(movies);
