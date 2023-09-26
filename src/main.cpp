@@ -7,13 +7,14 @@
 #include <algorithm>
 #include <random>
 #include <map>
+#include <QResizeEvent>
 
 using namespace cosc345;
 using namespace std;
-
-// Declare the imageMap as a global variable
-map<QString, QPixmap> imageMap;
-
+// Declare a member variable to store the window size
+QSize windowSize;
+// Declare a int variable to store suitest image layout
+int suit_size;
 /*! \mainpage Movie and Food
  *   \section intro Introduction
  *  Key Features:
@@ -21,8 +22,6 @@ map<QString, QPixmap> imageMap;
  *
  *2: Food Pairing Suggestions: In addition to movie recommendations, the app will suggest suitable food options that complement the user's selected movie. It will provide recipes based on the movie chosen.
  */
-
-// typedef QMap<QString, QPixmap> posterMap;
 
 /**
  *  Function to download an image synchronously
@@ -47,7 +46,8 @@ QPixmap downloadImage(const QString &imageUrl)
     else
     {
         qDebug() << "Failed to download image:" << reply->errorString();
-        return QPixmap(); // Return an empty pixmap in case of an error
+        QPixmap defaultImage("no-image-icon.png");
+        return defaultImage; // Return an empty pixmap in case of an error
     }
 }
 
@@ -63,6 +63,7 @@ public:
     void run() override
     {
         QPixmap posterPixmap = downloadImage(m_imageUrl);
+        // qDebug() << posterPixmap.size();
         if (!posterPixmap.isNull())
         {
             // Set the downloaded image as the pixmap of the QLabel
@@ -80,18 +81,16 @@ private:
  */
 void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
 {
-    if (imageMap.empty())
-    {
-        cout << "not empty!!" << endl;
-    }
+
     // Create and add 7800 items to the grid layout
     int size = movies.size();
-    if (size > 50)
-        size = 50;
-    cout << size << endl;
-    const int numCols = 3;              // Number of rows
-    const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
+    int max_page = 50;
+    // if it's greater that max_pager then cut off
+    if (size > max_page)
+        size = max_page;
 
+    const int numCols = suit_size;      // Number of rows
+    const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
     int i = 0;
 
     cout << "Acquiring movie posters...." << endl;
@@ -100,6 +99,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
     {
         for (int col = 0; col < numCols; ++col)
         {
+
             // ClickableLabel imageLabel = new ClickableLabel();
             // cout << i << endl;
             QString name = QString::fromStdString(movies[i].title);
@@ -113,8 +113,9 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
 
             // Create a QLabel to display the image
             // QLabel *imageLabel = new QLabel();
+            QPixmap presetImage("no-image-icon.png");
             ClickableLabel *imageLabel = new ClickableLabel();
-
+            imageLabel->setPixmap(presetImage);
             QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
                              {
                                  // Code to execute when the label is clicked
@@ -124,13 +125,12 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
                                  //     << "Label clicked!";
                              });
             // imageLabel->setFixedSize(128, 192);
-            gridLayout->addWidget(imageLabel, row, col);
 
             // imageLabel->resize(128, 192);
             // Create a QPushButton for the title
             QPushButton *titleButton = new QPushButton((name));
             // gridLayout->addWidget(titleButton, row, col);
-
+            gridLayout->addWidget(imageLabel, row, col);
             // Create an ImageDownloadWorker to download and display the image
             ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
 
@@ -141,26 +141,6 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
 
     cout << "Movie posters acquired!...." << endl;
 }
-// Downloading images async
-void downloadImages(vector<cosc345::Connection::Movies> movies)
-{
-    for (const auto &movie : movies)
-    {
-        // cout << "Loading....." << endl;
-        QString URL = QString::fromStdString(movie.poster);
-        QString IMDB = QString::fromStdString(movie.imdb_id);
-
-        // Download the image
-        QPixmap posterPixmap = downloadImage(URL);
-
-        if (!posterPixmap.isNull())
-        {
-            // Store the downloaded image in the map using IMDB ID as the key
-            imageMap[IMDB] = posterPixmap;
-        }
-    }
-    // cout << "Loading finished!!" << endl;
-}
 
 /**
  * MAIN FUNCTION
@@ -169,7 +149,7 @@ int main(int argc, char **argv)
 {
     string searchText = "";
     int searchFigure = 0;
-
+    suit_size = 3;
     QApplication app(argc, argv);
 
     // Load QSS style sheet
@@ -186,7 +166,7 @@ int main(int argc, char **argv)
 
     // Set the application's style sheet
     app.setStyleSheet(style);
-    qDebug() << "Loaded QSS content:" << style;
+    // qDebug() << "Loaded QSS content:" << style;
 
     // Back-end work, query data
     cosc345::Connection conn;
@@ -201,7 +181,9 @@ int main(int argc, char **argv)
     // Create Recommendation class instance
     Recommendation rec = Recommendation(movies, foods);
 
+    // QMainWindow window;
     QMainWindow window;
+
     window.setWindowTitle("Movie and Food");
     // Create a central widget for the main window
     QWidget *centralWidget = new QWidget();
@@ -292,15 +274,11 @@ int main(int argc, char **argv)
                          cout << "test" << endl;
                          gridLayout->update(); // update main window poster with search results
                      });
-    QVBoxLayout layout;
-
-    // layout.addWidget(&pageNum);
-    // gridLayout->setLayout(layout);
 
     window.setLayout(gridLayout);
 
     // Show the main window
     window.show();
-    downloadImages(movies);
+    // downloadImages(movies);
     return app.exec();
 }
