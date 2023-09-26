@@ -28,10 +28,6 @@ add_executable(MovieAndFood
     src/clickImage.cpp
     src/clickHandler.h
     src/clickHandler.cpp
-    src/PagingUtil.h
-    src/PagingUtil.cpp
-    src/PagingStyle.h
-    src/PagingStyle.cpp
     src/main.cpp 
     )
 

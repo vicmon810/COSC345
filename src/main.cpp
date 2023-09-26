@@ -3,7 +3,6 @@
 #include "clickImage.h"
 #include "clickHandler.h"
 
-#include "PagingStyle.h"
 #include <algorithm>
 #include <random>
 #include <map>
