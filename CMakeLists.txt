@@ -12,7 +12,6 @@ find_package(Qt5Network REQUIRED)
 find_package(Qt5Test REQUIRED)
 
 file(COPY ${CMAKE_SOURCE_DIR}/data/Movies.csv DESTINATION ${CMAKE_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/data/Food.csv DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/data/curated2.txt DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/src/searchIcon.png DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/src/no-image-icon.png DESTINATION ${CMAKE_BINARY_DIR})
