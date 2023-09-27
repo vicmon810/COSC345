@@ -54,3 +54,20 @@ QMenu {
     padding: 5px;
     border-radius: 3px;
 }
+
+QDialog {
+    background-color: #d90b0b;
+    /* Background color for the dialog */
+    font-style: normal;
+    
+    color :blue;
+    border-radius: 5px;
+    /* Rounded corners */
+    padding: 10px;
+    /* Padding inside the dialog */
+}
+
+QMessageBox{
+    background-color: #42041c;
+    color: blue;
+}
