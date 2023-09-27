@@ -303,14 +303,17 @@ int main(int argc, char **argv)
                 pageNum2.setText(QString::number(page2) + " >>");
 
                 //update gridLayout with subset of searchResult
-                vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * 50) - 1, searchResult.end());
-                displayPoster(tempResult, gridLayout, rec);
-                gridLayout->update();
-            } });
+                if (searchResult.size() >= 50) {
+                    vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * 50) - 1, searchResult.end());
+                    displayPoster(tempResult, gridLayout, rec);
+                    gridLayout->update();
+                }
+            }
+        });
 
     QObject::connect(&pageNum2, &QPushButton::clicked, [&]()
-                     {
-            if (page2 == (searchResult.size() / 50)) {
+        {
+            if (page2 == (searchResult.size() / 50) || searchResult.size() < 50) {
                 //do nothing
             }
             else {
@@ -320,10 +323,13 @@ int main(int argc, char **argv)
                 pageNum2.setText(QString::number(page2) + " >>");
 
                 //update gridLayout with subset of searchResult
-                vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * 50) - 1, searchResult.end());
-                displayPoster(tempResult, gridLayout, rec);
-                gridLayout->update();
-            } });
+                if (searchResult.size() >= 50) { 
+                    vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * 50) - 1, searchResult.end());
+                    displayPoster(tempResult, gridLayout, rec); 
+                    gridLayout->update(); 
+                }
+            }
+        });
 
     window.setLayout(gridLayout);
 

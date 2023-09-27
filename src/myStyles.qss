@@ -3,8 +3,7 @@ QWidget {
     background-color: #A9A9A9;
     font-family: Arial, sans-serif;
 }
-
-QWidget::ClickLabeLabel:checked {
+QWidget::ClickLabeLabel:checked{
     background-color: #A9A9A9;
 }
 
