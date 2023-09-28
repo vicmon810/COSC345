@@ -109,6 +109,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
             QPixmap presetImage("no-image-icon.png");
             ClickableLabel *imageLabel = new ClickableLabel();
             imageLabel->setPixmap(presetImage);
+            
             QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
                              {
                                  // Code to execute when the label is clicked
@@ -117,13 +118,9 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
                                  // qDebug()
                                  //     << "Label clicked!";
                              });
-            // imageLabel->setFixedSize(128, 192);
 
-            // imageLabel->resize(128, 192);
-            // Create a QPushButton for the title
-            QPushButton *titleButton = new QPushButton((name));
-            // gridLayout->addWidget(titleButton, row, col);
-            gridLayout->addWidget(imageLabel, row, col);
+
+            gridLayout->addWidget(imageLabel, row, col); 
             // Create an ImageDownloadWorker to download and display the image
             ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
 
@@ -137,11 +134,13 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
 
 /**
  * MAIN FUNCTION
+ * if you were wondering why is all the GUI things in main, sounds like a programming noob?
+ * Nah coz u would need to fiddle with all the pointers just to put it in
+ * a separate file, I wanna make an app not fiddle with pointers, come sue me.
  */
 int main(int argc, char **argv)
-{
-    string searchText = "";
-    int searchFigure = 0;
+{   
+    //Initialise QApp
     QApplication app(argc, argv);
 
     // Load QSS style sheet
@@ -170,6 +169,9 @@ int main(int argc, char **argv)
 
     // Test food query
     vector<cosc345::Connection::Food> foods = conn.getDetailFood();
+
+    //store search string
+    string searchText = "";
 
     // Create Recommendation class instance
     Recommendation rec = Recommendation(movies, foods);
@@ -248,43 +250,43 @@ int main(int argc, char **argv)
         {
             // To reset page numbers
             pageCheck = true;
-            searchText = searchBar->text().toStdString();
-            transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
+            string newSearchText = searchBar->text().toStdString();
+            transform(newSearchText.begin(), newSearchText.end(), newSearchText.begin(), ::tolower);
             // Print the contents to the console
-            // std::cout << "Search Text: " << searchText << std::endl;
 
-            searchResult = conn.searching(searchText);
-            cout << searchResult.size() << endl;
-            searchFigure = searchResult.size();
-
-            int resultSize = searchResult.size();
-
-            QLayoutItem* item;
-            if (resultSize == movies.size())
-            {
-                qDebug() << "test";
+            if (newSearchText == searchText) {
+                //Do nothing
+                qDebug() << "same search string, did nothing";
             }
-            else
-            {
+            else {
+
+                searchResult = conn.searching(newSearchText);
+                cout << searchResult.size() << endl; //print size check
+
+                QLayoutItem* item;
+
+
                 while ((item = gridLayout->takeAt(0)) != nullptr)
                 {
                     delete item->widget(); // Remove widget from layout
                     delete item;           // Delete layout item
                 }
+                //Display new posters
                 displayPoster(searchResult, gridLayout, rec);
-            }
 
-            // Update button texts if needed
-            if (pageCheck)
-            {
-                page1 = 1;
-                page2 = 2;
-                pageNum1.setText("<< " + QString::number(page1));
-                pageNum2.setText(QString::number(page2) + " >>");
-                pageCheck = false;
-            }
+                // Update button texts if needed
+                if (pageCheck)
+                {
+                    page1 = 1;
+                    page2 = 2;
+                    pageNum1.setText("<< " + QString::number(page1));
+                    pageNum2.setText(QString::number(page2) + " >>");
+                    pageCheck = false;
+                }
 
-            gridLayout->update(); // update main window poster with search results
+                searchText = newSearchText; //update searchText variable
+                gridLayout->update(); // update main window poster with search results
+            }
         });
 
     // connect for the buttons

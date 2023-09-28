@@ -142,7 +142,7 @@ namespace cosc345
         int sizeMovies = Connection::getSizeMovie();
         cout << key << endl;
 
-        //If key is blank, return totalmovie
+        //If key is blank, return totalMovie
         if (key == "") {
             return totalMovie;
         }
