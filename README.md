@@ -13,42 +13,14 @@ For our COSC345 Team Project: We are developing an application that recommends m
 [Tommy Light](https://github.com/tlite4) 1589489 <br>
 
 ## Assignment submission
-### [A3 beta]
-For our beta version of the application, we can display a list of movie posters with a gridlayout format. You can click on the movie poster to 
-see more movie details. A food pairing button is available and once clicked, a food recipe details would be shown
-providing the name of the food, ingredients list and directions to make the food.
-
-The images below shows the current application.
-
-![app display](https://i.imgur.com/NLk3bU4.png)
-![app display2](https://i.imgur.com/dnbCD0k.png)
-
-For the assignment requirements, the CI, doxygen, codecov and codacy details can be assessed by clicking the hyperlinks on the badges on top of the README.md file.
-The code coverage has improved over the alpha version
-
-For testing, please run UnitTest.exe instead of MovieAndFood.exe when running the project on Visual Studio. This would require the project to be built first which can be done by having 
-CMake installed and building it in the Visual Studio IDE.
-
-Codacy states that there are issues with the readme indent but it looks fine, plus its a readme. The information is visible to the reader
-and it is sufficient. It also states that certain function parameters should be passed by const but by not passing in const, it produces less warnings from codacy.
-Therefore, the warning is ignored.
-
-For our Questionnaire for user feedback, it can be assessed [here](https://forms.office.com/r/13M44QcMks)
-
-Currently we could not figure out how to test the GUI code by simulating mouse clicks without the entire CI failing.
-Therefore, we resulted to a simple user test below:
-
-|Test Case | Test Summary | Test Start | Test result | Test Status|
-|:---------|:-------------|:-----------|:------------|:-----------|
-| 1  | Image is clickable | Click on movie poster| Pop up new dialog displaying specified movie's details| OK|
-| 2  | Recommending food | Click on "Food pairing" button a few times| Pops out a new dialog where it recommends a different food | OK|
-| 3 | Searchbar test | Enter key words to search Movies| return all movies that matches words in searchbar| OK|
+### [A4 final release]
+IN PROGRESS, OUT ON 6/10/23
 
 ## Project Overview:
 Our goal is to create a user-friendly app that provides personalized movie recommendations and food suggestions to enhance the user's entertainment experience.
 
 ## Current Implementation
-Read description of Assignment submission.
+Major overhaul? :)
 
 ## Sources Rquirement : 
 [qt open source software](https://www.qt.io/)

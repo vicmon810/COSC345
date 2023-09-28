@@ -57,7 +57,6 @@ namespace cosc345
             }
             moviesDetail.push_back(movie);
         }
-        shuffle(moviesDetail.begin(), moviesDetail.end(), default_random_engine());
         size_movie = moviesDetail.size();
 
         //Shuffle movies in moviesDetail vector

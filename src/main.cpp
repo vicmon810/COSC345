@@ -88,8 +88,6 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
     const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
     int i = 0;
 
-    cout << "Acquiring movie posters...." << endl;
-
     for (int row = 0; row < numRows; ++row)
     {
         for (int col = 0; col < numCols; ++col)
@@ -134,7 +132,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
         }
     }
 
-    cout << "Movie posters acquired!...." << endl;
+    cout << "Displaying Posters..." << endl;
 }
 
 /**
@@ -179,7 +177,7 @@ int main(int argc, char **argv)
     // QMainWindow window;
     QMainWindow window;
 
-    window.setWindowTitle("Movie and Food");
+    window.setWindowTitle("MovieandFood");
     // Create a central widget for the main window
     QWidget *centralWidget = new QWidget();
     window.setCentralWidget(centralWidget);
@@ -247,51 +245,51 @@ int main(int argc, char **argv)
     // Connect the returnPressed() signal of QLineEdit to a slot
     // For input to searchbar
     QObject::connect(searchBar, &QLineEdit::returnPressed, [&]()
-                     {
-                         // To reset page numbers
-                         pageCheck = true;
-                         searchText = searchBar->text().toStdString();
-                         transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
-                         // Print the contents to the console
-                         // std::cout << "Search Text: " << searchText << std::endl;
+        {
+            // To reset page numbers
+            pageCheck = true;
+            searchText = searchBar->text().toStdString();
+            transform(searchText.begin(), searchText.end(), searchText.begin(), ::tolower);
+            // Print the contents to the console
+            // std::cout << "Search Text: " << searchText << std::endl;
 
-                         searchResult = conn.searching(searchText);
-                         cout << searchResult.size() << endl;
-                         searchFigure = searchResult.size();
+            searchResult = conn.searching(searchText);
+            cout << searchResult.size() << endl;
+            searchFigure = searchResult.size();
 
-                         int resultSize = searchResult.size();
+            int resultSize = searchResult.size();
 
-                         QLayoutItem *item;
-                         if (resultSize == movies.size())
-                         {
-                             qDebug() << "test";
-                         }
-                         else
-                         {
-                             while ((item = gridLayout->takeAt(0)) != nullptr)
-                             {
-                                 delete item->widget(); // Remove widget from layout
-                                 delete item;           // Delete layout item
-                             }
-                             displayPoster(searchResult, gridLayout, rec);
-                         }
+            QLayoutItem* item;
+            if (resultSize == movies.size())
+            {
+                qDebug() << "test";
+            }
+            else
+            {
+                while ((item = gridLayout->takeAt(0)) != nullptr)
+                {
+                    delete item->widget(); // Remove widget from layout
+                    delete item;           // Delete layout item
+                }
+                displayPoster(searchResult, gridLayout, rec);
+            }
 
-                         // Update button texts if needed
-                         if (pageCheck)
-                         {
-                             page1 = 1;
-                             page2 = 2;
-                             pageNum1.setText("<< " + QString::number(page1));
-                             pageNum2.setText(QString::number(page2) + " >>");
-                             pageCheck = false;
-                         }
+            // Update button texts if needed
+            if (pageCheck)
+            {
+                page1 = 1;
+                page2 = 2;
+                pageNum1.setText("<< " + QString::number(page1));
+                pageNum2.setText(QString::number(page2) + " >>");
+                pageCheck = false;
+            }
 
-                         gridLayout->update(); // update main window poster with search results
-                     });
+            gridLayout->update(); // update main window poster with search results
+        });
 
     // connect for the buttons
     QObject::connect(&pageNum1, &QPushButton::clicked, [&]()
-                     {
+        {
             if (page1 == 1) { 
                 //do nothing
             } 
@@ -304,7 +302,15 @@ int main(int argc, char **argv)
 
                 //update gridLayout with subset of searchResult
                 if (searchResult.size() >= 50) {
-                    vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * 50) - 1, searchResult.end());
+                    vector<cosc345::Connection::Movies> tempResult;
+
+                    //Exception for page1 == 1
+                    if (page1 == 1) {
+                        tempResult = vector<cosc345::Connection::Movies>(searchResult.begin(), searchResult.end());
+                    }
+                    else {
+                        tempResult = vector<cosc345::Connection::Movies>(searchResult.begin() + (page1 * 50) - 1, searchResult.end());
+                    }
                     displayPoster(tempResult, gridLayout, rec);
                     gridLayout->update();
                 }
@@ -328,6 +334,7 @@ int main(int argc, char **argv)
                     displayPoster(tempResult, gridLayout, rec); 
                     gridLayout->update(); 
                 }
+
             }
         });
 
