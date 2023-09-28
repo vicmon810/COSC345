@@ -119,14 +119,26 @@ namespace cosc345
             overview += '\n';
             // overview += "...";
         }
-        std::string holder = overview.toStdString();
+        //Test code to fix line bug
+        string holder = overview.toStdString();
         const int maxCharsPerLine = 50;
-        std::string resultString;
+        string resultString;
+        size_t startPos = 0;
 
-        for (size_t i = 0; i < holder.length(); i += maxCharsPerLine)
-        {
-            // Append a substring of the input string with a newline character
-            resultString += holder.substr(i, maxCharsPerLine) + "\n";
+        while (startPos < holder.length()) {
+            // Find the position of the next space within the limit
+            size_t endPos = holder.find(' ', startPos + maxCharsPerLine);
+
+            // If no space is found, break the line at the maximum characters
+            if (endPos == string::npos) {
+                endPos = startPos + maxCharsPerLine;
+            }
+
+            // Append the substring to the result string with a newline character
+            resultString += holder.substr(startPos, endPos - startPos) + "\n";
+
+            // Update the starting position for the next iteration
+            startPos = endPos + 1;
         }
         overview = QString::fromStdString(resultString);
         overviewLabel->setText("Overview: " + overview);
