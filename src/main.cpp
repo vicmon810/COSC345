@@ -222,6 +222,17 @@ int main(int argc, char **argv)
     searchLayout->addWidget(searchBar);
     searchLayout->addWidget(&pageNum2);
 
+    menuAndSearchContainer->setObjectName("menuAndSearchContainer");
+    searchBar->setObjectName("searchBar");
+
+    // Create a QLabel for the title
+    QLabel *titleLabel = new QLabel("MOVIE + FOOD");
+    titleLabel->setAlignment(Qt::AlignCenter); // Center align the title
+    titleLabel->setObjectName("titleLabel");
+
+    // Add the title label to the layout
+    menuAndSearchLayout->addWidget(titleLabel);
+
     // Add the search widget to the menu and search layout
     menuAndSearchLayout->addWidget(searchWidget);
 

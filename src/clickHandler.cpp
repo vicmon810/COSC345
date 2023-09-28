@@ -103,9 +103,10 @@ namespace cosc345
         // Create a custom dialog to show the full movie details
         QDialog dialog;
         QVBoxLayout *layout = new QVBoxLayout;
-        QPushButton *titleButton = new QPushButton(("Food Pairing"));
+        QPushButton *titleButton = new QPushButton(("FOOD PAIRING"));
         // Display the full movie details in QLabel
         QLabel *titleLabel = new QLabel();
+        titleLabel->setObjectName("movieTitle");
         QLabel *genresLabel = new QLabel();
         QLabel *IMDBLabel = new QLabel();
         QLabel *overviewLabel = new QLabel();

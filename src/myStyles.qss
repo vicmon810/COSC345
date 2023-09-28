@@ -1,73 +1,101 @@
 /* Global styling for all widgets */
 QWidget {
-    background-color: #A9A9A9;
+    background-color: #ffffff;
     font-family: Arial, sans-serif;
 }
 QWidget::ClickLabeLabel:checked{
-    background-color: #A9A9A9;
+    background-color: #ffffff;
 }
 
 /* QWidget:hover {
-    background-color: #A9A9A9;
+    background-color: #ffffff;
     border-radius: 15%;
     border: #bf0909;
 } */
 
-/* Push button styling */
 QPushButton {
-    background-color: #9e9e9e;
-    color: #700101;
-    font-size: medium;
-    border-radius: 15px;
+    background-color: #4eeddb;
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 QPushButton:hover {
-    background-color: #42041c;
-    font-size: medium;
-    color: #6b1111;
+    background-color: #4e98ed;
+    color: #ffffff;
 }
 
-/* Label styling */
+#menuAndSearchContainer {
+    background-color: #4eeddb;
+}
+
+#searchBar {
+    background-color: #ffffff;
+    font-size: 20px;
+}
+
+/* Title style */
+#titleLabel {
+    font-size: 80px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #4eeddb;
+}
+
+/* Food recommendation box thingy (why the this different for the movie details??????) */
+QDialog {
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 20px;
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding inside the dialog */
+}
+
+/* Movie info style */
 QLabel {
-    color: #FFFFFF;
-    font-size: 14px;
-    border: #3e1010;
+    color: #000000;
+    font-size: 20px;
+}
+
+/* Movie info title style */
+#movieTitle {
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #4eeddb;
+    padding: 10px;
 }
 
 /* Scroll area styling */
 QScrollArea {
     border-radius: 15px;
-    background-color: antiquewhite;
 }
 
-/* Menu bar styling */
-QMenuBar {
-    background-color: #DCDCDC;
-    color: #333333;
+
+
+
+/* Scroll bar track */
+QScrollBar:vertical {
+    background: #EDEDED;
+    width: 20px;
 }
 
-/* Menu styling */
-QMenu {
-    background-color: #FFFFFF;
-    color: #333333;
-    border: 1px solid #CCCCCC;
-    padding: 5px;
-    border-radius: 3px;
+/* Scroll bar handle */
+QScrollBar::handle:vertical {
+    background: #4eeddb;
+    min-height: 15px;
 }
 
-QDialog {
-    background-color: #d90b0b;
-    /* Background color for the dialog */
-    font-style: normal;
-    
-    color :blue;
-    border-radius: 5px;
-    /* Rounded corners */
-    padding: 10px;
-    /* Padding inside the dialog */
+/* Scroll bar handle when hovered */
+QScrollBar::handle:vertical:hover {
+    background: #4e98ed; 
 }
 
-QMessageBox{
-    background-color: #42041c;
-    color: blue;
+/* Scroll bar page up and page down buttons */
+QScrollBar::sub-page:vertical, QScrollBar::add-page:vertical {
+    background: none; /* Background for the page buttons */
 }
+
+
+
+
