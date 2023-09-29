@@ -110,27 +110,35 @@ namespace cosc345
         QLabel *genresLabel = new QLabel();
         QLabel *IMDBLabel = new QLabel();
         QLabel *overviewLabel = new QLabel();
+        QLabel *RunTimeLabel = new QLabel();
+        QLabel *RatingLabel = new QLabel();
+        QLabel *RelatesLabel = new QLabel();
         titleLabel->setText("Title: " + title);
         genresLabel->setText("Genres: " + genres);
         IMDBLabel->setText("IMDB Number: " + IMDB);
+        RunTimeLabel->setText("Run time : " + runtime + " mints");
+        RatingLabel->setText("Rating: " + rating + "/5");
+        RelatesLabel->setText("Release date: " + release);
         int maxDisplayLen = 25;
         if (overview.length() > maxDisplayLen)
         {
             overview += '\n';
             // overview += "...";
         }
-        //Test code to fix line bug
+        // Test code to fix line bug
         string holder = overview.toStdString();
         const int maxCharsPerLine = 50;
         string resultString;
         size_t startPos = 0;
 
-        while (startPos < holder.length()) {
+        while (startPos < holder.length())
+        {
             // Find the position of the next space within the limit
             size_t endPos = holder.find(' ', startPos + maxCharsPerLine);
 
             // If no space is found, break the line at the maximum characters
-            if (endPos == string::npos) {
+            if (endPos == string::npos)
+            {
                 endPos = startPos + maxCharsPerLine;
             }
 
@@ -146,6 +154,9 @@ namespace cosc345
         layout->addWidget(genresLabel);
         layout->addWidget(IMDBLabel);
         layout->addWidget(overviewLabel);
+        layout->addWidget(RelatesLabel);
+        layout->addWidget(RatingLabel);
+        layout->addWidget(RunTimeLabel);
         layout->addWidget(titleButton);
 
         QObject::connect(titleButton, &QPushButton::clicked, [&]()

@@ -79,12 +79,14 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
 
     // Create and add 7800 items to the grid layout
     int size = movies.size();
+    int layout = 3;
     int max_page = 50;
     // if it's greater that max_pager then cut off
     if (size > max_page)
         size = max_page;
-
-    const int numCols = 3;              // Number of rows
+    if (size < layout)
+        layout = size;
+    const int numCols = layout;         // Number of rows
     const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
     int i = 0;
 
@@ -109,7 +111,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
             QPixmap presetImage("no-image-icon.png");
             ClickableLabel *imageLabel = new ClickableLabel();
             imageLabel->setPixmap(presetImage);
-            
+
             QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
                              {
                                  // Code to execute when the label is clicked
@@ -119,8 +121,7 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
                                  //     << "Label clicked!";
                              });
 
-
-            gridLayout->addWidget(imageLabel, row, col); 
+            gridLayout->addWidget(imageLabel, row, col);
             // Create an ImageDownloadWorker to download and display the image
             ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
 
@@ -139,8 +140,8 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
  * a separate file, I wanna make an app not fiddle with pointers, come sue me.
  */
 int main(int argc, char **argv)
-{   
-    //Initialise QApp
+{
+    // Initialise QApp
     QApplication app(argc, argv);
 
     // Load QSS style sheet
@@ -170,7 +171,7 @@ int main(int argc, char **argv)
     // Test food query
     vector<cosc345::Connection::Food> foods = conn.getDetailFood();
 
-    //store search string
+    // store search string
     string searchText = "";
 
     // Create Recommendation class instance
@@ -258,7 +259,7 @@ int main(int argc, char **argv)
     // Connect the returnPressed() signal of QLineEdit to a slot
     // For input to searchbar
     QObject::connect(searchBar, &QLineEdit::returnPressed, [&]()
-        {
+                     {
             // To reset page numbers
             pageCheck = true;
             string newSearchText = searchBar->text().toStdString();
@@ -297,12 +298,11 @@ int main(int argc, char **argv)
 
                 searchText = newSearchText; //update searchText variable
                 gridLayout->update(); // update main window poster with search results
-            }
-        });
+            } });
 
     // connect for the buttons
     QObject::connect(&pageNum1, &QPushButton::clicked, [&]()
-        {
+                     {
             if (page1 == 1) { 
                 //do nothing
             } 
@@ -327,11 +327,10 @@ int main(int argc, char **argv)
                     displayPoster(tempResult, gridLayout, rec);
                     gridLayout->update();
                 }
-            }
-        });
+            } });
 
     QObject::connect(&pageNum2, &QPushButton::clicked, [&]()
-        {
+                     {
             if (page2 == (searchResult.size() / 50) || searchResult.size() < 50) {
                 //do nothing
             }
@@ -348,8 +347,7 @@ int main(int argc, char **argv)
                     gridLayout->update(); 
                 }
 
-            }
-        });
+            } });
 
     window.setLayout(gridLayout);
 
