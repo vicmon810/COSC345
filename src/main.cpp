@@ -81,52 +81,56 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
     int size = movies.size();
     int layout = 3;
     int max_page = 50;
-    // if it's greater that max_pager then cut off
-    if (size > max_page)
-        size = max_page;
-    if (size < layout)
-        layout = size;
-    const int numCols = layout;         // Number of rows
-    const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
-    int i = 0;
-
-    for (int row = 0; row < numRows; ++row)
+    if (size != 0)
     {
-        for (int col = 0; col < numCols; ++col)
+        // if it's greater that max_pager then cut off
+        if (size > max_page)
+            size = max_page;
+        if (size < layout)
+            layout = size;
+
+        const int numCols = layout;         // Number of rows
+        const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
+        int i = 0;
+
+        for (int row = 0; row < numRows; ++row)
         {
+            for (int col = 0; col < numCols; ++col)
+            {
 
-            // ClickableLabel imageLabel = new ClickableLabel();
-            // cout << i << endl;
-            QString name = QString::fromStdString(movies[i].title);
-            QString genres = QString::fromStdString(movies[i].genres);
-            QString IMDB = QString::fromStdString(movies[i].imdb_id);
-            QString overview = QString::fromStdString(movies[i].overview);
-            QString runtime = QString::fromStdString(movies[i].runtime);
-            QString rating = QString::fromStdString(movies[i].rating);
-            QString release = QString::fromStdString(movies[i].release_date);
-            QString URL = QString::fromStdString(movies[i].poster);
+                // ClickableLabel imageLabel = new ClickableLabel();
+                // cout << i << endl;
+                QString name = QString::fromStdString(movies[i].title);
+                QString genres = QString::fromStdString(movies[i].genres);
+                QString IMDB = QString::fromStdString(movies[i].imdb_id);
+                QString overview = QString::fromStdString(movies[i].overview);
+                QString runtime = QString::fromStdString(movies[i].runtime);
+                QString rating = QString::fromStdString(movies[i].rating);
+                QString release = QString::fromStdString(movies[i].release_date);
+                QString URL = QString::fromStdString(movies[i].poster);
 
-            // Create a QLabel to display the image
-            // QLabel *imageLabel = new QLabel();
-            QPixmap presetImage("no-image-icon.png");
-            ClickableLabel *imageLabel = new ClickableLabel();
-            imageLabel->setPixmap(presetImage);
+                // Create a QLabel to display the image
+                // QLabel *imageLabel = new QLabel();
+                QPixmap presetImage("no-image-icon.png");
+                ClickableLabel *imageLabel = new ClickableLabel();
+                imageLabel->setPixmap(presetImage);
 
-            QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
-                             {
-                                 // Code to execute when the label is clicked
-                                 cosc345::clickHandler ch;
-                                 ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release, rec);
-                                 // qDebug()
-                                 //     << "Label clicked!";
-                             });
+                QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
+                                 {
+                                     // Code to execute when the label is clicked
+                                     cosc345::clickHandler ch;
+                                     ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release, rec);
+                                     // qDebug()
+                                     //     << "Label clicked!";
+                                 });
 
-            gridLayout->addWidget(imageLabel, row, col);
-            // Create an ImageDownloadWorker to download and display the image
-            ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
+                gridLayout->addWidget(imageLabel, row, col);
+                // Create an ImageDownloadWorker to download and display the image
+                ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
 
-            QThreadPool::globalInstance()->start(imageWorker);
-            i++;
+                QThreadPool::globalInstance()->start(imageWorker);
+                i++;
+            }
         }
     }
 

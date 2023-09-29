@@ -58,36 +58,53 @@ namespace cosc345
         QString type = QString::fromStdString(food.food_type);
 
         QString directions;
-        int maxDisplayLen = 20;
-        if (food.directions.length() > maxDisplayLen)
-        {
-            food.directions += '\n';
-            // overview += "...";
-        }
         string holder = food.directions;
-        const int maxCharsPerLine = 40;
+        const int maxCharsPerLine = 30;
         string resultString;
+        size_t startPos = 0;
 
-        for (size_t i = 0; i < holder.length(); i += maxCharsPerLine)
+        while (startPos < holder.length())
         {
-            // Append a substring of the input string with a newline character
-            resultString += holder.substr(i, maxCharsPerLine) + "\n";
+            // Find the position of the next space within the limit
+            size_t endPos = holder.find(' ', startPos + maxCharsPerLine);
+
+            // If no space is found, break the line at the maximum characters
+            if (endPos == string::npos)
+            {
+                endPos = startPos + maxCharsPerLine;
+            }
+
+            // Append the substring to the result string with a newline character
+            resultString += holder.substr(startPos, endPos - startPos) + "\n";
+
+            // Update the starting position for the next iteration
+            startPos = endPos + 1;
         }
+
         directions = QString::fromStdString(resultString);
 
         QString ingredients;
-        if (food.ingredients.length() > maxDisplayLen)
-        {
-            food.ingredients += '\n';
-            // overview += "...";
-        }
         string holder2 = food.ingredients;
         string resultString2;
 
-        for (size_t i = 0; i < holder2.length(); i += maxCharsPerLine)
+        startPos = 0;
+
+        while (startPos < holder2.length())
         {
-            // Append a substring of the input string with a newline character
-            resultString2 += holder2.substr(i, maxCharsPerLine) + "\n";
+            // Find the position of the next space within the limit
+            size_t endPos = holder2.find(' ', startPos + maxCharsPerLine);
+
+            // If no space is found, break the line at the maximum characters
+            if (endPos == string::npos)
+            {
+                endPos = startPos + maxCharsPerLine;
+            }
+
+            // Append the substring to the result string with a newline character
+            resultString2 += holder2.substr(startPos, endPos - startPos) + "\n";
+
+            // Update the starting position for the next iteration
+            startPos = endPos + 1;
         }
         ingredients = QString::fromStdString(resultString2);
 
@@ -127,7 +144,7 @@ namespace cosc345
         }
         // Test code to fix line bug
         string holder = overview.toStdString();
-        const int maxCharsPerLine = 50;
+        const int maxCharsPerLine = 30;
         string resultString;
         size_t startPos = 0;
 
