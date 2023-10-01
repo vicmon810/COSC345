@@ -76,25 +76,35 @@ private:
  */
 void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
 {
-
+    int max_page = 56;
     // Create and add 7800 items to the grid layout
     int size = movies.size();
-    int layout = 3;
-    int max_page = 50;
+    if (size > max_page)
+    {
+        size = max_page;
+    }
+
+    int layout = 3; // need to keep track if there is not enough item to display.
+    int remain = size % layout;
+    int _row = size / layout; // calculate row number in theory
+    int i = 0;
     if (size != 0)
     {
         // if it's greater that max_pager then cut off
-        if (size > max_page)
-            size = max_page;
+
         if (size < layout)
             layout = size;
 
-        const int numCols = layout;         // Number of rows
-        const int numRows = size / numCols; // Number of columns             CHANGE THIS FOR LIMITED LOAD TIMES
-        int i = 0;
+        const int numCols = layout; // Number of rows
+        int numRows;
+        if (remain == 0)
+            numRows = _row;
+        else
+            numRows = _row + 1;
 
-        for (int row = 0; row < numRows; ++row)
+        for (int row = 0; row <= numRows; ++row)
         {
+
             for (int col = 0; col < numCols; ++col)
             {
 
@@ -131,9 +141,50 @@ void displayPoster(vector<cosc345::Connection::Movies> movies, QGridLayout *grid
                 QThreadPool::globalInstance()->start(imageWorker);
                 i++;
             }
+            if (row == numRows && remain != 0)
+            {
+                cout << "Row ::" << row << endl;
+                cout << "test" << endl;
+                for (int col = 0; col < remain; ++col)
+                {
+                    cout << "here" << endl;
+                    // ClickableLabel imageLabel = new ClickableLabel();
+                    // cout << i << endl;
+                    QString name = QString::fromStdString(movies[i].title);
+                    QString genres = QString::fromStdString(movies[i].genres);
+                    QString IMDB = QString::fromStdString(movies[i].imdb_id);
+                    QString overview = QString::fromStdString(movies[i].overview);
+                    QString runtime = QString::fromStdString(movies[i].runtime);
+                    QString rating = QString::fromStdString(movies[i].rating);
+                    QString release = QString::fromStdString(movies[i].release_date);
+                    QString URL = QString::fromStdString(movies[i].poster);
+
+                    // Create a QLabel to display the image
+                    // QLabel *imageLabel = new QLabel();
+                    QPixmap presetImage("no-image-icon.png");
+                    ClickableLabel *imageLabel = new ClickableLabel();
+                    imageLabel->setPixmap(presetImage);
+
+                    QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
+                                     {
+                                         // Code to execute when the label is clicked
+                                         cosc345::clickHandler ch;
+                                         ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release, rec);
+                                         // qDebug()
+                                         //     << "Label clicked!";
+                                     });
+
+                    gridLayout->addWidget(imageLabel, row, col);
+                    // Create an ImageDownloadWorker to download and display the image
+                    ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
+
+                    QThreadPool::globalInstance()->start(imageWorker);
+                    i++;
+                }
+            }
         }
     }
-
+    cout << "count:" << i << " VS " << size << endl;
     cout << "Displaying Posters..." << endl;
 }
 
@@ -326,7 +377,7 @@ int main(int argc, char **argv)
                         tempResult = vector<cosc345::Connection::Movies>(searchResult.begin(), searchResult.end());
                     }
                     else {
-                        tempResult = vector<cosc345::Connection::Movies>(searchResult.begin() + (page1 * 50) - 1, searchResult.end());
+                        tempResult = vector<cosc345::Connection::Movies>(searchResult.begin() + (page1 * 56) - 1, searchResult.end());
                     }
                     displayPoster(tempResult, gridLayout, rec);
                     gridLayout->update();
@@ -335,7 +386,7 @@ int main(int argc, char **argv)
 
     QObject::connect(&pageNum2, &QPushButton::clicked, [&]()
                      {
-            if (page2 == (searchResult.size() / 50) || searchResult.size() < 50) {
+            if (page2 == (searchResult.size() / 56) || searchResult.size() < 56) {
                 //do nothing
             }
             else {
@@ -345,8 +396,8 @@ int main(int argc, char **argv)
                 pageNum2.setText(QString::number(page2) + " >>");
 
                 //update gridLayout with subset of searchResult
-                if (searchResult.size() >= 50) { 
-                    vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * 50) - 1, searchResult.end());
+                if (searchResult.size() >= 56) { 
+                    vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * 56) - 1, searchResult.end());
                     displayPoster(tempResult, gridLayout, rec); 
                     gridLayout->update(); 
                 }
