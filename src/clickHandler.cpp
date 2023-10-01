@@ -134,7 +134,18 @@ namespace cosc345
         genresLabel->setText("Genres: " + genres);
         IMDBLabel->setText("IMDB Number: " + IMDB);
         RunTimeLabel->setText("Run time : " + runtime + " mints");
-        RatingLabel->setText("Rating: " + rating + "/5");
+
+        // Convert the rating QString to a double
+        double ratingValue = rating.toDouble();
+
+        // Round the rating to 2 decimal places
+        ratingValue = qRound(ratingValue * 100) / 100.0;
+
+        // Convert the rounded rating back to a QString
+        QString roundedRating = QString::number(ratingValue, 'f', 2);
+
+        // Set the rounded rating in the QLabel
+        RatingLabel->setText("Rating: " + roundedRating + "/5");
         RelatesLabel->setText("Release date: " + release);
         int maxDisplayLen = 25;
         if (overview.length() > maxDisplayLen)
