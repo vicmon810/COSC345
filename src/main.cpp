@@ -251,6 +251,9 @@ int main(int argc, char **argv)
     centralWidget->setLayout(new QVBoxLayout());
     centralWidget->layout()->addWidget(scrollArea);
 
+    // Get the vertical scrollbar of the QScrollArea
+    QScrollBar* verticalScrollBar = scrollArea->verticalScrollBar();
+
     // Create a widget to hold the grid layout
     QWidget *scrollWidget = new QWidget();
     scrollArea->setWidget(scrollWidget);
@@ -317,6 +320,9 @@ int main(int argc, char **argv)
                 pageNum1.setText("<< " + QString::number(page1));
                 pageNum2.setText(QString::number(page2) + " >>");
 
+                // Set the position of the vertical scrollbar
+                verticalScrollBar->setValue(0);
+
                 //update gridLayout with subset of searchResult
                 if (searchResult.size() >= 50) {
                     vector<cosc345::Connection::Movies> tempResult;
@@ -343,6 +349,9 @@ int main(int argc, char **argv)
                 page2++;
                 pageNum1.setText("<< " + QString::number(page1));
                 pageNum2.setText(QString::number(page2) + " >>");
+
+                // Set the position of the vertical scrollbar
+                verticalScrollBar->setValue(0);
 
                 //update gridLayout with subset of searchResult
                 if (searchResult.size() >= 50) { 
