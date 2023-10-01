@@ -27,6 +27,8 @@ add_executable(MovieAndFood
     src/clickImage.cpp
     src/clickHandler.h
     src/clickHandler.cpp
+    src/MainWindow.h
+    src/MainWindow.cpp
     src/main.cpp 
     )
 
