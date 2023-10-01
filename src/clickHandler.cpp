@@ -179,6 +179,7 @@ namespace cosc345
         QObject::connect(titleButton, &QPushButton::clicked, [&]()
                          { clickHandler::pop_food(genres, rec); });
 
+        dialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
         dialog.setLayout(layout);
         dialog.setWindowTitle("Movie Details");
         dialog.exec();
