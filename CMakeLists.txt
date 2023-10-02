@@ -21,8 +21,6 @@ add_executable(MovieAndFood
     src/Connection.cpp
     src/Recommendation.h 
     src/Recommendation.cpp
-    src/imageDownload.h
-    src/imageDownload.cpp
     src/clickImage.h
     src/clickImage.cpp
     src/clickHandler.h

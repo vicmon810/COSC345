@@ -59,15 +59,15 @@ namespace cosc345
         }
         size_movie = moviesDetail.size();
 
-        //Shuffle movies in moviesDetail vector
+        // Shuffle movies in moviesDetail vector
         unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-        //Randomiser
+        // Randomiser
         default_random_engine generator(seed);
         shuffle(moviesDetail.begin(), moviesDetail.end(), generator);
 
         inputFile.close();
 
-        //Read Food Data
+        // Read Food Data
         ifstream inputFile2("curated2.txt");
         if (!inputFile2.is_open())
         {
@@ -80,19 +80,24 @@ namespace cosc345
             stringstream ss(line2);
             string field;
             while (getline(ss, field, '\t'))
-            {   
+            {
                 fields.push_back(field);
             }
 
             Food food;
             for (int i = 0; i < fields.size(); i++)
             {
-                //Noob way ahahahaha
-                if (i == 0) food.title = fields[0];
-                if (i == 1) food.ingredients = fields[1];
-                if (i == 2) food.directions = fields[2];
-                if (i == 3) food.NER = fields[3];
-                if (i == 4) food.food_type = fields[4];
+                // Noob way ahahahaha
+                if (i == 0)
+                    food.title = fields[0];
+                if (i == 1)
+                    food.ingredients = fields[1];
+                if (i == 2)
+                    food.directions = fields[2];
+                if (i == 3)
+                    food.NER = fields[3];
+                if (i == 4)
+                    food.food_type = fields[4];
             }
             foodDetail.push_back(food);
         }
@@ -136,32 +141,37 @@ namespace cosc345
 
     vector<Connection::Movies> Connection::searching(string key)
     {
-        //Initialise vectors 
-        vector<Movies> totalMovie = Connection::getDetailMovie(); //to not mess with original movie list
-        vector<Movies> searchResult; 
+        // Initialise vectors
+        vector<Movies> totalMovie = Connection::getDetailMovie(); // to not mess with original movie list
+        vector<Movies> searchResult;
         int sizeMovies = Connection::getSizeMovie();
         cout << key << endl;
 
-        //If key is blank, return totalMovie
-        if (key == "") {
+        // If key is blank, return totalMovie
+        if (key == "")
+        {
             return totalMovie;
         }
-        //Else loop through and find relevant movies
+        // Else loop through and find relevant movies
         for (int i = 0; i < sizeMovies; i++)
         {
             string title = moviesDetail[i].title;
             transform(title.begin(), title.end(), title.begin(), ::tolower);
-            if (title.find(key) != std::string::npos)
+            string genres = moviesDetail[i].genres;
+            transform(genres.begin(), genres.end(), genres.begin(), ::tolower);
+            // updated can search both title and genres
+            if (title.find(key) != std::string::npos || genres.find(key) != std::string::npos)
             {
                 searchResult.push_back(totalMovie[i]);
             }
         }
+        cout << searchResult.size() << endl;
         return searchResult;
     }
 
     vector<Connection::Movies> Connection::sorting(string rating)
     {
-        //UHH not used so it doesnt have to be working LOL
+        // UHH not used so it doesnt have to be working LOL
         return moviesDetail;
     }
 }

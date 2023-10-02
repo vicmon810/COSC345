@@ -56,6 +56,7 @@ private:
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    verticalScrollBar = nullptr;
     setupUI();
 }
 
@@ -90,6 +91,21 @@ void MainWindow::setupUI()
     // Create a layout for the central widget
     QVBoxLayout *centralLayout = new QVBoxLayout(centralWidget);
 
+    // Create a checkbox
+    // QCheckBox *action = new QCheckBox("Action", this);
+
+    // QCheckBox
+    //     checkBox->setChecked(false); // Default: unchecked
+
+    // // Create a label to display the checkbox state
+    // QLabel *label = new QLabel("Feature is disabled", this);
+
+    // Connect the checkbox stateChanged signal to a slot
+    // QObject::connect(checkBox, &QCheckBox::stateChanged, [&label](int state));
+
+    // Add the checkbox and label to the central layout
+    // centralLayout->addWidget(checkBox);
+    // centralLayout->addWidget(label);
     // Create a custom QWidget to hold both the menu bar and the search bar
     QWidget *menuAndSearchContainer = new QWidget();
 
@@ -113,7 +129,7 @@ void MainWindow::setupUI()
     QIcon searchIcon("searchIcon.png");
     searchBar->addAction(searchIcon, QLineEdit::LeadingPosition);
 
-    searchBar->setPlaceholderText("Search...");
+    searchBar->setPlaceholderText("Search Movie name or Genres ...");
 
     // Add the search bar and buttons to the search widget
     searchLayout->addWidget(pageNum1);
@@ -147,6 +163,8 @@ void MainWindow::setupUI()
     // Create a widget to hold the grid layout
     QWidget *scrollWidget = new QWidget();
     scrollArea->setWidget(scrollWidget);
+    // Get the vertical scrollbar of the QScrollArea
+    verticalScrollBar = scrollArea->verticalScrollBar();
     gridLayout = new QGridLayout(scrollWidget);
     // Auto runs displayPoster when app is launched to give grid layout of movie posters
     displayPosters(movies, gridLayout, rec);
@@ -231,7 +249,6 @@ void MainWindow::clearPosters()
 
 void MainWindow::handleSearch()
 {
-    qDebug() << "handleSearch called";
 
     // Get the search text from the searchBar
     string newSearchText = searchBar->text().toStdString();
@@ -251,11 +268,10 @@ void MainWindow::handleSearch()
 
 void MainWindow::handlePageNumber1()
 {
-    cout << "h1" << endl;
+
     if (page1 == 1)
     {
         // do nothing
-        cout << "t1" << endl;
     }
     else
     {
@@ -265,6 +281,16 @@ void MainWindow::handlePageNumber1()
         pageNum1->setText("<< " + QString::number(page1));
         pageNum2->setText(QString::number(page2) + " >>");
 
+        // Set the position of the vertical scrollbar to the top
+        if (verticalScrollBar)
+        {
+            cout << "ff" << endl;
+            verticalScrollBar->setValue(0);
+        }
+        else
+        {
+            cout << "Bro" << endl;
+        }
         // update gridLayout with subset of searchResult
         if (searchResult.size() >= maxPerPage)
         {
@@ -299,7 +325,11 @@ void MainWindow::handlePageNumber2()
         page2++;
         pageNum1->setText("<< " + QString::number(page1));
         pageNum2->setText(QString::number(page2) + " >>");
-
+        // Set the position of the vertical scrollbar to the top
+        if (verticalScrollBar)
+        {
+            verticalScrollBar->setValue(0);
+        }
         // update gridLayout with subset of searchResult
         if (searchResult.size() >= maxPerPage)
         {

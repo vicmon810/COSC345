@@ -72,7 +72,8 @@
         "concepts": "cpp",
         "algorithm": "cpp",
         "qicon": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "charconv": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "qml-debug.sortMembers": true
