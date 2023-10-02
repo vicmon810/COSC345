@@ -121,8 +121,8 @@ void MainWindow::setupUI()
     pageCheck = false;
 
     // Next page of movies
-    pageNum1 = new QPushButton("<< 1", this);
-    pageNum2 = new QPushButton("2 >>", this);
+    pageNum1 = new QPushButton("<< ", this);
+    pageNum2 = new QPushButton("Next >>", this);
 
     searchBar = new QLineEdit();
     searchBar->setClearButtonEnabled(true);
@@ -278,19 +278,21 @@ void MainWindow::handlePageNumber1()
         // Update button text
         page1--;
         page2--;
-        pageNum1->setText("<< " + QString::number(page1));
-        pageNum2->setText(QString::number(page2) + " >>");
+        if (page1 == 1)
+        {
+            pageNum1->setText("");
+            pageNum2->setText("Next >>");
+        }
+        pageNum1->setText("<< Prev");
+        pageNum2->setText("Next >>");
 
         // Set the position of the vertical scrollbar to the top
         if (verticalScrollBar)
         {
-            cout << "ff" << endl;
+
             verticalScrollBar->setValue(0);
         }
-        else
-        {
-            cout << "Bro" << endl;
-        }
+
         // update gridLayout with subset of searchResult
         if (searchResult.size() >= maxPerPage)
         {
@@ -303,6 +305,7 @@ void MainWindow::handlePageNumber1()
             }
             else
             {
+
                 tempResult = vector<cosc345::Connection::Movies>(searchResult.begin() + (page1 * maxPerPage) - 1, searchResult.end());
             }
             clearPosters();
@@ -323,8 +326,13 @@ void MainWindow::handlePageNumber2()
 
         page1++;
         page2++;
-        pageNum1->setText("<< " + QString::number(page1));
-        pageNum2->setText(QString::number(page2) + " >>");
+        if (page2 == movies.size() / 30)
+        {
+            pageNum1->setText("<< Pev");
+            pageNum2->setText("");
+        }
+        pageNum1->setText("<< Prev");
+        pageNum2->setText("Next >>");
         // Set the position of the vertical scrollbar to the top
         if (verticalScrollBar)
         {
