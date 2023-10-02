@@ -79,6 +79,17 @@ void MainWindow::backendInit()
     rec = Recommendation(movies, foods);
 
     homeList = movies;
+    // Calculate the initial tempResult based on maxPerPage
+    auto begin = movies.begin();
+    auto end = begin + maxPerPage;
+
+    // Ensure that end doesn't exceed the vector's size
+    if (end > movies.end())
+    {
+        end = movies.end();
+    }
+
+    tempResult = vector<cosc345::Connection::Movies>(begin, end);
 }
 
 void MainWindow::setupUI()
@@ -166,7 +177,7 @@ void MainWindow::setupUI()
     verticalScrollBar = scrollArea->verticalScrollBar();
     gridLayout = new QGridLayout(scrollWidget);
     // Auto runs displayPoster when app is launched to give grid layout of movie posters
-    displayPosters(movies, gridLayout, rec);
+    displayPosters(movies);
 
     // Connect signals to slots
     connect(home, &QPushButton::clicked, this, &MainWindow::handleHome);
@@ -176,7 +187,7 @@ void MainWindow::setupUI()
     connect(pageNum2, &QPushButton::clicked, this, &MainWindow::handlePageNumberNext);
 }
 
-void MainWindow::displayPosters(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
+void MainWindow::displayPosters(vector<cosc345::Connection::Movies> movies)
 {
     // clearPosters(gridLayout);
     // int maxPerPage = 51;
@@ -258,7 +269,7 @@ void MainWindow ::handleHome()
     pageNum2->setStyleSheet("background-color: #4eeddb;");
     movies = homeList;
     clearPosters();
-    displayPosters(movies, gridLayout, rec);
+    displayPosters(movies);
     if (verticalScrollBar)
     {
 
@@ -268,14 +279,15 @@ void MainWindow ::handleHome()
 
 void MainWindow::handleShuffle()
 {
+
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
     // Randomiser
     default_random_engine generator(seed);
     shuffle(tempResult.begin(), tempResult.end(), generator);
     searchBar->clear();
-
+    cout << tempResult.size() << endl;
     clearPosters();
-    displayPosters(tempResult, gridLayout, rec);
+    displayPosters(tempResult);
     if (verticalScrollBar)
     {
 
@@ -298,10 +310,28 @@ void MainWindow::handleSearch()
 
         defaultText = newSearchText;
         searchResult = conn.searching(newSearchText);
+        // if search reulst is less than maxPerpage directly pass it, other wise select first 30 to it.
+        if (searchResult.size() < maxPerPage)
+        {
+            tempResult = searchResult;
+        }
+        else
+        {
+            auto begin = movies.begin();
+            auto end = begin + maxPerPage;
+
+            // Ensure that end doesn't exceed the vector's size
+            if (end > movies.end())
+            {
+                end = movies.end();
+            }
+
+            tempResult = vector<cosc345::Connection::Movies>(begin, end);
+        }
         int pages = searchResult.size() / maxPerPage;
         int remain = searchResult.size() % maxPerPage;
         clearPosters();
-        displayPosters(searchResult, gridLayout, rec);
+        displayPosters(searchResult);
         // Set the position of the vertical scrollbar to the top
         if (verticalScrollBar)
         {
@@ -361,8 +391,6 @@ void MainWindow::handlePageNumberPrev()
         // update gridLayout with subset of searchResult
         if (searchResult.size() >= maxPerPage)
         {
-            // vector<cosc345::Connection::Movies> tempResult;
-
             // Exception for page1 == 1
             if (page1 == 1)
             {
@@ -375,7 +403,7 @@ void MainWindow::handlePageNumberPrev()
             }
 
             clearPosters();
-            displayPosters(tempResult, gridLayout, rec);
+            displayPosters(tempResult);
         }
     }
 }
@@ -422,10 +450,10 @@ void MainWindow::handlePageNumberNext()
         // update gridLayout with subset of searchResult
         if (searchResult.size() >= maxPerPage)
         {
-            vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * maxPerPage) - 1, searchResult.end());
-
+            // vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * maxPerPage) - 1, searchResult.end());
+            tempResult = vector<cosc345::Connection::Movies>(searchResult.begin() + (page1 * maxPerPage) - 1, searchResult.end());
             clearPosters();
-            displayPosters(tempResult, gridLayout, rec);
+            displayPosters(tempResult);
         }
     }
 }

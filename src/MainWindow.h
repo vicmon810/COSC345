@@ -84,7 +84,7 @@ private:
     vector<cosc345::Connection::Movies> searchResult; /**< Results of the movie search. */
     vector<cosc345::Connection::Movies> movies;       /**< List of movies. */
     vector<cosc345::Connection::Food> foods;          /**< List of foods. */
-    vector<cosc345::Connection::Movies> homeList;         /**< List of movies use for default home button. */
+    vector<cosc345::Connection::Movies> homeList;     /**< List of movies use for default home button. */
     vector<cosc345::Connection::Movies> tempResult;   /**< List of movies use for shuffle. */
     /*!
      * @brief Initialize the backend components of the application.
@@ -104,7 +104,7 @@ private:
      * @param gridLayout The grid layout where posters are displayed.
      * @param rec The recommendation engine for handling poster clicks.
      */
-    void displayPosters(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec);
+    void displayPosters(vector<cosc345::Connection::Movies> movies);
 
     /*!
      * @brief Clear all posters from the grid layout.
