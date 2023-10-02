@@ -274,6 +274,20 @@ void MainWindow::handleSearch()
 
             verticalScrollBar->setValue(0);
         }
+        if (searchResult.size() < maxPerPage)
+        {
+            pageNum1->setText("<<");
+            pageNum2->setText(">>");
+            pageNum1->setStyleSheet("background-color: grey;");
+            pageNum2->setStyleSheet("background-color: grey;");
+        }
+        else
+        {
+            pageNum1->setText("<<");
+            pageNum2->setText("Next >>");
+            pageNum1->setStyleSheet("background-color: grey;");
+            pageNum2->setStyleSheet("background-color: #4eeddb;");
+        }
     }
 }
 
@@ -361,6 +375,7 @@ void MainWindow::handlePageNumberNext()
         if (page2 == pages)
         {
             pageNum1->setText("<< Pev");
+            pageNum2->setStyleSheet("background-color: grey;");
             pageNum2->setText("");
         }
         pageNum1->setText("<< Prev");

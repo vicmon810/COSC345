@@ -124,12 +124,19 @@ namespace cosc345
         // Display the full movie details in QLabel
         QLabel *titleLabel = new QLabel();
         titleLabel->setObjectName("movieTitle");
+        titleLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
         QLabel *genresLabel = new QLabel();
+        genresLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
         QLabel *IMDBLabel = new QLabel();
+        IMDBLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
         QLabel *overviewLabel = new QLabel();
+        overviewLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
         QLabel *RunTimeLabel = new QLabel();
+        RunTimeLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
         QLabel *RatingLabel = new QLabel();
+        RatingLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
         QLabel *RelatesLabel = new QLabel();
+        RelatesLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
         titleLabel->setText("Title: " + title);
         genresLabel->setText("Genres: " + genres);
         IMDBLabel->setText("IMDB Number: " + IMDB);
