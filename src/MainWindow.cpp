@@ -1,14 +1,4 @@
 #include "MainWindow.h"
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QScrollArea>
-#include <QLabel>
-#include <QDebug>
-#include <QMessageBox>
 
 /**
  *  Function to download an image synchronously

@@ -24,6 +24,7 @@
 #include <QThreadPool>
 #include <QMainWindow>
 #include <QScrollArea>
+#include <QScrollBar>
 #include <QFile>
 #include <QPixmap>
 #include <QMenuBar>

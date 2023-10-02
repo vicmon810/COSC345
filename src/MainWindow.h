@@ -3,6 +3,16 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QLabel>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QScrollArea>
+#include <QLabel>
+#include <QDebug>
+#include <QMessageBox>
 #include "Recommendation.h"
 #include "connection.h"
 #include "clickImage.h"

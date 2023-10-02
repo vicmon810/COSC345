@@ -88,7 +88,7 @@ QScrollBar::handle:vertical {
 
 /* Scroll bar handle when hovered */
 QScrollBar::handle:vertical:hover {
-    background: #4e98ed; 
+    background: #4e98ed;
 }
 
 /* Scroll bar page up and page down buttons */
