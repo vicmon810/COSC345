@@ -59,6 +59,14 @@ private slots:
      * @brief Slot function to handle the navigation to the next page.
      */
     void handlePageNumberNext();
+    /*!
+     * @brief Slot fuction to return home page
+     */
+    void handleHome();
+    /*!
+     * @brief Slot function for re-shuffle current item
+     */
+    void handleShuffle();
 
 private:
     QGridLayout *gridLayout;                          /**< Grid layout for displaying movie posters. */
@@ -76,7 +84,8 @@ private:
     vector<cosc345::Connection::Movies> searchResult; /**< Results of the movie search. */
     vector<cosc345::Connection::Movies> movies;       /**< List of movies. */
     vector<cosc345::Connection::Food> foods;          /**< List of foods. */
-
+    vector<cosc345::Connection::Movies> homeList;         /**< List of movies use for default home button. */
+    vector<cosc345::Connection::Movies> tempResult;   /**< List of movies use for shuffle. */
     /*!
      * @brief Initialize the backend components of the application.
      *        (Database connection, movie and food data)

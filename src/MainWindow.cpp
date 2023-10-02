@@ -77,6 +77,8 @@ void MainWindow::backendInit()
     foods = conn.getDetailFood(); // Assign to the class member variable
 
     rec = Recommendation(movies, foods);
+
+    homeList = movies;
 }
 
 void MainWindow::setupUI()
@@ -91,22 +93,6 @@ void MainWindow::setupUI()
     // Create a layout for the central widget
     QVBoxLayout *centralLayout = new QVBoxLayout(centralWidget);
 
-    // Create a checkbox
-    // QCheckBox *action = new QCheckBox("Action", this);
-
-    // QCheckBox
-    //     checkBox->setChecked(false); // Default: unchecked
-
-    // // Create a label to display the checkbox state
-    // QLabel *label = new QLabel("Feature is disabled", this);
-
-    // Connect the checkbox stateChanged signal to a slot
-    // QObject::connect(checkBox, &QCheckBox::stateChanged, [&label](int state));
-
-    // Add the checkbox and label to the central layout
-    // centralLayout->addWidget(checkBox);
-    // centralLayout->addWidget(label);
-    // Create a custom QWidget to hold both the menu bar and the search bar
     QWidget *menuAndSearchContainer = new QWidget();
 
     // Create a layout for the menu bar and search bar
@@ -114,6 +100,17 @@ void MainWindow::setupUI()
 
     // Create a custom widget for the search bar
     QPushButton pageNum("Page Numbers");
+
+    // create a push button for home
+    QPushButton *home = new QPushButton(this);
+    QIcon homeIcon("home.png");
+    home->setIcon(homeIcon);
+
+    // Create a push button for shuffle
+    QPushButton *shuffle = new QPushButton(this);
+    QIcon shuffleIcon("reload.png");
+    shuffle->setIcon(shuffleIcon);
+
     QWidget *searchWidget = new QWidget();
     QHBoxLayout *searchLayout = new QHBoxLayout(searchWidget);
 
@@ -124,15 +121,16 @@ void MainWindow::setupUI()
     pageNum1 = new QPushButton("<< ", this);
     pageNum1->setStyleSheet("background-color: grey;");
     pageNum2 = new QPushButton("Next >>", this);
-
+    // Search bar
     searchBar = new QLineEdit();
     searchBar->setClearButtonEnabled(true);
     QIcon searchIcon("searchIcon.png");
     searchBar->addAction(searchIcon, QLineEdit::LeadingPosition);
-
     searchBar->setPlaceholderText("Search Movie name or Genres ...");
 
     // Add the search bar and buttons to the search widget
+    searchLayout->addWidget(home);
+    searchLayout->addWidget(shuffle);
     searchLayout->addWidget(pageNum1);
     searchLayout->addWidget(searchBar);
     searchLayout->addWidget(pageNum2);
@@ -171,6 +169,8 @@ void MainWindow::setupUI()
     displayPosters(movies, gridLayout, rec);
 
     // Connect signals to slots
+    connect(home, &QPushButton::clicked, this, &MainWindow::handleHome);
+    connect(shuffle, &QPushButton::clicked, this, &MainWindow::handleShuffle);
     connect(searchBar, &QLineEdit::returnPressed, this, &MainWindow::handleSearch);
     connect(pageNum1, &QPushButton::clicked, this, &MainWindow::handlePageNumberPrev);
     connect(pageNum2, &QPushButton::clicked, this, &MainWindow::handlePageNumberNext);
@@ -246,6 +246,40 @@ void MainWindow::clearPosters()
             delete widget;
         }
         delete item;
+    }
+}
+
+void MainWindow ::handleHome()
+{
+    searchBar->clear();
+    pageNum1->setText("<<");
+    pageNum2->setText("Next >>");
+    pageNum1->setStyleSheet("background-color: grey;");
+    pageNum2->setStyleSheet("background-color: #4eeddb;");
+    movies = homeList;
+    clearPosters();
+    displayPosters(movies, gridLayout, rec);
+    if (verticalScrollBar)
+    {
+
+        verticalScrollBar->setValue(0);
+    }
+}
+
+void MainWindow::handleShuffle()
+{
+    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+    // Randomiser
+    default_random_engine generator(seed);
+    shuffle(tempResult.begin(), tempResult.end(), generator);
+    searchBar->clear();
+
+    clearPosters();
+    displayPosters(tempResult, gridLayout, rec);
+    if (verticalScrollBar)
+    {
+
+        verticalScrollBar->setValue(0);
     }
 }
 
@@ -327,7 +361,7 @@ void MainWindow::handlePageNumberPrev()
         // update gridLayout with subset of searchResult
         if (searchResult.size() >= maxPerPage)
         {
-            vector<cosc345::Connection::Movies> tempResult;
+            // vector<cosc345::Connection::Movies> tempResult;
 
             // Exception for page1 == 1
             if (page1 == 1)
