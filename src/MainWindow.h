@@ -69,14 +69,18 @@ private slots:
     void handleShuffle();
 
 private:
-    QGridLayout *gridLayout;                          /**< Grid layout for displaying movie posters. */
-    QLineEdit *searchBar;                             /**< Text input for searching movies. */
-    QPushButton *pageNum1;                            /**< Button for navigating to the previous page. */
-    QPushButton *pageNum2;                            /**< Button for navigating to the next page. */
-    QScrollBar *verticalScrollBar;                    /**< Vertical scrollbar for the poster grid. */
-    int page1 = 1;                                    /**< Current page number. */
-    int page2 = 2;                                    /**< Next page number. */
-    int maxPerPage = 30;                              /**< Maximum number of posters per page. */
+    QGridLayout *gridLayout;       /**< Grid layout for displaying movie posters. */
+    QLineEdit *searchBar;          /**< Text input for searching movies. */
+    QPushButton *pageNum1;         /**< Button for navigating to the previous page. */
+    QPushButton *pageNum2;         /**< Button for navigating to the next page. */
+    QScrollBar *verticalScrollBar; /**< Vertical scrollbar for the poster grid. */
+    // Define a QLabel for page numbers
+    QLabel *pageNumberLabel;
+    int page1 = 1;       /**< Current page number. */
+    int page2 = 2;       /**< Next page number. */
+    int maxPerPage = 30; /**< Maximum number of posters per page. */
+    int pages;
+    int remain;
     bool pageCheck = false;                           /**< Flag for page number change. */
     string defaultText = "";                          /**< Default search text. */
     cosc345 ::Recommendation rec;                     /**< Recommendation engine. */

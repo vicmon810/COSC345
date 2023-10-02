@@ -189,15 +189,15 @@ void MainWindow::setupUI()
 
 void MainWindow::displayPosters(vector<cosc345::Connection::Movies> movies)
 {
-    // clearPosters(gridLayout);
-    // int maxPerPage = 51;
     const int layoutCols = 3; // Number of columns in your layout
-
-    // int pages = movies.size() / maxPerPage;
-
     int row = 0;
     int col = 0;
-
+    // check  pages
+    pages = searchResult.size() / maxPerPage;
+    remain = searchResult.size() % maxPerPage;
+    // if there is remain then add one more page for it
+    if (remain > 0)
+        pages++;
     for (const auto &movie : movies)
     {
 
@@ -243,6 +243,13 @@ void MainWindow::displayPosters(vector<cosc345::Connection::Movies> movies)
     }
 
     cout << "Displaying Posters..." << endl;
+    // GPT help
+    pageNumberLabel = new QLabel(this);
+    pageNumberLabel->setObjectName("pageNumberLabel");
+    pageNumberLabel->setAlignment(Qt::AlignCenter); // Center align the page number
+    pageNumberLabel->setText(QString("Page %1 of %2").arg(page1).arg(pages));
+    gridLayout->addWidget(pageNumberLabel);
+    pageNumberLabel->setStyleSheet("font-size: 14px; color: #333;");
 }
 
 void MainWindow::clearPosters()
@@ -410,13 +417,6 @@ void MainWindow::handlePageNumberPrev()
 
 void MainWindow::handlePageNumberNext()
 {
-    // check  pages
-    int pages = searchResult.size() / maxPerPage;
-    int remain = searchResult.size() % maxPerPage;
-
-    // if there is remain then add one more page for it
-    if (remain > 0)
-        pages++;
 
     if (page2 > pages || searchResult.size() < maxPerPage)
     {
