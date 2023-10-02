@@ -53,12 +53,12 @@ private slots:
     /*!
      * @brief Slot function to handle the navigation to the previous page.
      */
-    void handlePageNumber1();
+    void handlePageNumberPrev();
 
     /*!
      * @brief Slot function to handle the navigation to the next page.
      */
-    void handlePageNumber2();
+    void handlePageNumberNext();
 
 private:
     QGridLayout *gridLayout;                          /**< Grid layout for displaying movie posters. */

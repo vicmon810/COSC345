@@ -122,6 +122,7 @@ void MainWindow::setupUI()
 
     // Next page of movies
     pageNum1 = new QPushButton("<< ", this);
+    pageNum1->setStyleSheet("background-color: grey;");
     pageNum2 = new QPushButton("Next >>", this);
 
     searchBar = new QLineEdit();
@@ -171,8 +172,8 @@ void MainWindow::setupUI()
 
     // Connect signals to slots
     connect(searchBar, &QLineEdit::returnPressed, this, &MainWindow::handleSearch);
-    connect(pageNum1, &QPushButton::clicked, this, &MainWindow::handlePageNumber1);
-    connect(pageNum2, &QPushButton::clicked, this, &MainWindow::handlePageNumber2);
+    connect(pageNum1, &QPushButton::clicked, this, &MainWindow::handlePageNumberPrev);
+    connect(pageNum2, &QPushButton::clicked, this, &MainWindow::handlePageNumberNext);
 }
 
 void MainWindow::displayPosters(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
@@ -181,7 +182,8 @@ void MainWindow::displayPosters(vector<cosc345::Connection::Movies> movies, QGri
     // int maxPerPage = 51;
     const int layoutCols = 3; // Number of columns in your layout
 
-    movies.size();
+    // int pages = movies.size() / maxPerPage;
+
     int row = 0;
     int col = 0;
 
@@ -259,16 +261,24 @@ void MainWindow::handleSearch()
     }
     else
     {
+
         defaultText = newSearchText;
         searchResult = conn.searching(newSearchText);
+        int pages = searchResult.size() / maxPerPage;
+        int remain = searchResult.size() % maxPerPage;
         clearPosters();
         displayPosters(searchResult, gridLayout, rec);
+        // Set the position of the vertical scrollbar to the top
+        if (verticalScrollBar)
+        {
+
+            verticalScrollBar->setValue(0);
+        }
     }
 }
 
-void MainWindow::handlePageNumber1()
+void MainWindow::handlePageNumberPrev()
 {
-
     if (page1 == 1)
     {
         // do nothing
@@ -278,14 +288,21 @@ void MainWindow::handlePageNumber1()
         // Update button text
         page1--;
         page2--;
+
         if (page1 == 1)
         {
-            pageNum1->setText("");
+            pageNum1->setText("<<");
+            pageNum1->setStyleSheet("background-color: grey;");
+            // pageNum1->setStyleSheet()
             pageNum2->setText("Next >>");
         }
-        pageNum1->setText("<< Prev");
-        pageNum2->setText("Next >>");
+        else
+        {
 
+            pageNum1->setText("<< Prev");
+            pageNum1->setStyleSheet("background-color: #4eeddb;");
+            pageNum2->setText("Next >>");
+        }
         // Set the position of the vertical scrollbar to the top
         if (verticalScrollBar)
         {
@@ -308,25 +325,40 @@ void MainWindow::handlePageNumber1()
 
                 tempResult = vector<cosc345::Connection::Movies>(searchResult.begin() + (page1 * maxPerPage) - 1, searchResult.end());
             }
+
             clearPosters();
             displayPosters(tempResult, gridLayout, rec);
         }
     }
 }
 
-void MainWindow::handlePageNumber2()
+void MainWindow::handlePageNumberNext()
 {
+    // check  pages
+    int pages = searchResult.size() / maxPerPage;
+    int remain = searchResult.size() % maxPerPage;
 
-    if (page2 == (searchResult.size() / maxPerPage) || searchResult.size() < maxPerPage)
+    // if there is remain then add one more page for it
+    if (remain > 0)
+        pages++;
+
+    if (page2 > pages || searchResult.size() < maxPerPage)
     {
         // do nothing
+        // cout << page2 << endl;
+        // cout << (searchResult.size() / maxPerPage) << endl;
     }
     else
     {
 
         page1++;
+        if (page1 != 1)
+        {
+            pageNum1->setText("<< Prev");
+            pageNum1->setStyleSheet("background-color: #4eeddb;");
+        }
         page2++;
-        if (page2 == movies.size() / 30)
+        if (page2 == pages)
         {
             pageNum1->setText("<< Pev");
             pageNum2->setText("");
@@ -342,6 +374,7 @@ void MainWindow::handlePageNumber2()
         if (searchResult.size() >= maxPerPage)
         {
             vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * maxPerPage) - 1, searchResult.end());
+
             clearPosters();
             displayPosters(tempResult, gridLayout, rec);
         }
