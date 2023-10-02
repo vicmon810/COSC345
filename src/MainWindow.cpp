@@ -1,125 +1,321 @@
-// #include "MainWindow.h"
+#include "MainWindow.h"
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QScrollArea>
+#include <QLabel>
+#include <QDebug>
+#include <QMessageBox>
 
-// MainWindow::MainWindow(QWidget *parent)
-//     : QMainWindow(parent)
-// {
-//     setupUI();
-//     displayPosters();
-// }
+/**
+ *  Function to download an image synchronously
+ */
+QPixmap downloadImage(const QString &imageUrl)
+{
+    QNetworkAccessManager manager;
+    QNetworkRequest request(imageUrl);
+    QNetworkReply *reply = manager.get(request);
 
-// MainWindow::~MainWindow()
-// {
-// }
+    QEventLoop loop;
+    QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
 
-// void MainWindow::setupUI()
-// {
-//     QWidget *centralWidget = new QWidget(this);
-//     setCentralWidget(centralWidget);
+    if (reply->error() == QNetworkReply::NoError)
+    {
+        QByteArray data = reply->readAll();
+        QPixmap pixmap;
+        pixmap.loadFromData(data);
+        return pixmap;
+    }
+    else
+    {
+        qDebug() << "Failed to download image:" << reply->errorString();
+        QPixmap defaultImage("no-image-icon.png");
+        return defaultImage; // Return an empty pixmap in case of an error
+    }
+}
 
-//     // Create layouts for the central widget
-//     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
+/**
+ *  Image download worker class
+ */
+class ImageDownloadWorker : public QRunnable
+{
+public:
+    ImageDownloadWorker(const QString &imageUrl, QLabel *imageLabel)
+        : m_imageUrl(imageUrl), m_imageLabel(imageLabel) {}
 
-//     // Create search bar and buttons
-//     QHBoxLayout *searchBarLayout = new QHBoxLayout();
-//     QLineEdit *searchBar = new QLineEdit(this);
-//     QPushButton *searchButton = new QPushButton("Search", this);
-//     QPushButton *prevPageButton = new QPushButton("<< Prev Page", this);
-//     QPushButton *nextPageButton = new QPushButton("Next Page >>", this);
+    void run() override
+    {
+        QPixmap posterPixmap = downloadImage(m_imageUrl);
+        // qDebug() << posterPixmap.size();
+        if (!posterPixmap.isNull())
+        {
+            // Set the downloaded image as the pixmap of the QLabel
+            m_imageLabel->setPixmap(posterPixmap);
+        }
+    }
 
-//     searchBarLayout->addWidget(searchBar);
-//     searchBarLayout->addWidget(searchButton);
-//     searchBarLayout->addWidget(prevPageButton);
-//     searchBarLayout->addWidget(nextPageButton);
+private:
+    QString m_imageUrl;
+    QLabel *m_imageLabel;
+};
 
-//     // Create the grid layout for displaying posters
-//     gridLayout = new QGridLayout();
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+{
+    setupUI();
+}
 
-//     // Add widgets to the main layout
-//     mainLayout->addLayout(searchBarLayout);
-//     mainLayout->addLayout(gridLayout);
+MainWindow::~MainWindow()
+{
+}
 
-//     // Connect signals to slots
-//     connect(searchButton, SIGNAL(clicked()), this, SLOT(handleSearch()));
-//     connect(prevPageButton, SIGNAL(clicked()), this, SLOT(handlePageNumber1()));
-//     connect(nextPageButton, SIGNAL(clicked()), this, SLOT(handlePageNumber2()));
-// }
+void MainWindow::backendInit()
+{
+    // Back-end work, query data
+    conn.est_conn();
 
-// void MainWindow::displayPosters()
-// {
-//     // Clear any existing posters from the gridLayout
-//     clearPosters();
+    // Original movies vector
+    movies = conn.getDetailMovie(); // Assign to the class member variable
+    // Create searchResult movies
+    searchResult = movies;
+    // Test food query
+    foods = conn.getDetailFood(); // Assign to the class member variable
 
-//     // Get your movie data (e.g., from your search results)
-//     cosc345::Connection con;
-//     con.est_conn();
-//     vector<cosc345::Connection::Movies> movies = con.getDetailMovie();
+    rec = Recommendation(movies, foods);
+}
 
-//     const int layoutCols = 3; // Number of columns in your layout
-//     int row = 0;
-//     int col = 0;
+void MainWindow::setupUI()
+{
+    backendInit();
 
-//     for (const auto &movie : movies)
-//     {
-//         QString name = QString::fromStdString(movie.title);
-//         QString URL = QString::fromStdString(movie.poster);
+    QWidget *centralWidget = new QWidget(this);
 
-//         // Create a QLabel to display the image
-//         QPixmap presetImage("no-image-icon.png");
-//         ClickableLabel *imageLabel = new ClickableLabel();
-//         imageLabel->setPixmap(presetImage);
+    this->setCentralWidget(centralWidget);
+    // window.setMenu();
 
-//         QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
-//                          {
-//                              // Handle the click event for the poster here
-//                              // You can access the movie details like 'name' and 'URL'
-//                          });
+    // Create a layout for the central widget
+    QVBoxLayout *centralLayout = new QVBoxLayout(centralWidget);
 
-//         gridLayout->addWidget(imageLabel, row, col);
+    // Create a custom QWidget to hold both the menu bar and the search bar
+    QWidget *menuAndSearchContainer = new QWidget();
 
-//         // Update the column and row for the next poster
-//         col++;
-//         if (col >= layoutCols)
-//         {
-//             col = 0;
-//             row++;
-//         }
-//     }
+    // Create a layout for the menu bar and search bar
+    QVBoxLayout *menuAndSearchLayout = new QVBoxLayout(menuAndSearchContainer);
 
-//     // Update the layout
-//     gridLayout->update();
-// }
+    // Create a custom widget for the search bar
+    QPushButton pageNum("Page Numbers");
+    QWidget *searchWidget = new QWidget();
+    QHBoxLayout *searchLayout = new QHBoxLayout(searchWidget);
 
-// void MainWindow::clearPosters()
-// {
-//     QLayoutItem *item;
-//     while ((item = gridLayout->takeAt(0)) != nullptr)
-//     {
-//         QWidget *widget = item->widget();
-//         if (widget)
-//         {
-//             // If there is a widget, remove it from the layout and delete it
-//             gridLayout->removeWidget(widget);
-//             delete widget;
-//         }
-//         // Delete the layout item
-//         delete item;
-//     }
-// }
+    // Boolean check for updating page numbers
+    pageCheck = false;
 
-// void MainWindow::handleSearch()
-// {
-//     // Implement search functionality here
-//     // Update the search results and call displayPosters()
-// }
+    // Next page of movies
+    pageNum1 = new QPushButton("<< 1", this);
+    pageNum2 = new QPushButton("2 >>", this);
 
-// void MainWindow::handlePageNumber1()
-// {
-//     // Implement logic to go to the previous page of posters
-//     // Update the page number and call displayPosters()
-// }
+    searchBar = new QLineEdit();
+    searchBar->setClearButtonEnabled(true);
+    QIcon searchIcon("searchIcon.png");
+    searchBar->addAction(searchIcon, QLineEdit::LeadingPosition);
 
-// void MainWindow::handlePageNumber2()
-// {
-//     // Implement logic to go to the next page of posters
-//     // Update the page number and call displayPosters()
-// }
+    searchBar->setPlaceholderText("Search...");
+
+    // Add the search bar and buttons to the search widget
+    searchLayout->addWidget(pageNum1);
+    searchLayout->addWidget(searchBar);
+    searchLayout->addWidget(pageNum2);
+
+    menuAndSearchContainer->setObjectName("menuAndSearchContainer");
+    searchBar->setObjectName("searchBar");
+
+    // Create a QLabel for the title
+    QLabel *titleLabel = new QLabel("MOVIE + FOOD");
+    titleLabel->setAlignment(Qt::AlignCenter); // Center align the title
+    titleLabel->setObjectName("titleLabel");
+
+    // Add the title label to the layout
+    menuAndSearchLayout->addWidget(titleLabel);
+
+    // Add the search widget to the menu and search layout
+    menuAndSearchLayout->addWidget(searchWidget);
+
+    // Set the custom QWidget as the menu bar for the main window
+    this->setMenuWidget(menuAndSearchContainer);
+
+    // Create a scroll area
+    QScrollArea *scrollArea = new QScrollArea(centralWidget);
+    scrollArea->setMinimumSize(1000, 1000);
+    scrollArea->setWidgetResizable(true);
+    centralWidget->setLayout(new QVBoxLayout());
+    centralWidget->layout()->addWidget(scrollArea);
+
+    // Create a widget to hold the grid layout
+    QWidget *scrollWidget = new QWidget();
+    scrollArea->setWidget(scrollWidget);
+    gridLayout = new QGridLayout(scrollWidget);
+    // Auto runs displayPoster when app is launched to give grid layout of movie posters
+    displayPosters(movies, gridLayout, rec);
+
+    // Connect signals to slots
+    connect(searchBar, &QLineEdit::returnPressed, this, &MainWindow::handleSearch);
+    connect(pageNum1, &QPushButton::clicked, this, &MainWindow::handlePageNumber1);
+    connect(pageNum2, &QPushButton::clicked, this, &MainWindow::handlePageNumber2);
+}
+
+void MainWindow::displayPosters(vector<cosc345::Connection::Movies> movies, QGridLayout *gridLayout, Recommendation rec)
+{
+    // clearPosters(gridLayout);
+    // int maxPerPage = 51;
+    const int layoutCols = 3; // Number of columns in your layout
+
+    movies.size();
+    int row = 0;
+    int col = 0;
+
+    for (const auto &movie : movies)
+    {
+
+        QString name = QString::fromStdString(movie.title);
+        QString genres = QString::fromStdString(movie.genres);
+        QString IMDB = QString::fromStdString(movie.imdb_id);
+        QString overview = QString::fromStdString(movie.overview);
+        QString runtime = QString::fromStdString(movie.runtime);
+        QString rating = QString::fromStdString(movie.rating);
+        QString release = QString::fromStdString(movie.release_date);
+        QString URL = QString::fromStdString(movie.poster);
+
+        // Create a QLabel to display the image
+        QPixmap presetImage("no-image-icon.png");
+        ClickableLabel *imageLabel = new ClickableLabel();
+        imageLabel->setPixmap(presetImage);
+
+        QObject::connect(imageLabel, &ClickableLabel::clicked, [=]()
+                         {
+                             // Code to execute when the label is clicked
+                             cosc345::clickHandler ch;
+                             ch.handleItemClicked(name, genres, IMDB, overview, runtime, rating, release, rec); });
+
+        gridLayout->addWidget(imageLabel, row, col);
+        // Create an ImageDownloadWorker to download and display the image
+        ImageDownloadWorker *imageWorker = new ImageDownloadWorker(URL, imageLabel);
+
+        QThreadPool::globalInstance()->start(imageWorker);
+
+        // Update the column and row for the next poster
+        col++;
+        if (col >= layoutCols)
+        {
+            col = 0;
+            row++;
+        }
+
+        // If you've displayed the maximum number of posters, you can break the loop
+        if (row * layoutCols + col >= maxPerPage)
+        {
+            break;
+        }
+    }
+
+    cout << "Displaying Posters..." << endl;
+}
+
+void MainWindow::clearPosters()
+{
+    QLayoutItem *item;
+    while ((item = gridLayout->takeAt(0)) != nullptr)
+    {
+        QWidget *widget = item->widget();
+        if (widget)
+        {
+            gridLayout->removeWidget(widget);
+            delete widget;
+        }
+        delete item;
+    }
+}
+
+void MainWindow::handleSearch()
+{
+    qDebug() << "handleSearch called";
+
+    // Get the search text from the searchBar
+    string newSearchText = searchBar->text().toStdString();
+    transform(newSearchText.begin(), newSearchText.end(), newSearchText.begin(), ::tolower);
+    if (newSearchText == defaultText)
+    {
+        // do nothing;
+    }
+    else
+    {
+        defaultText = newSearchText;
+        searchResult = conn.searching(newSearchText);
+        clearPosters();
+        displayPosters(searchResult, gridLayout, rec);
+    }
+}
+
+void MainWindow::handlePageNumber1()
+{
+    cout << "h1" << endl;
+    if (page1 == 1)
+    {
+        // do nothing
+        cout << "t1" << endl;
+    }
+    else
+    {
+        // Update button text
+        page1--;
+        page2--;
+        pageNum1->setText("<< " + QString::number(page1));
+        pageNum2->setText(QString::number(page2) + " >>");
+
+        // update gridLayout with subset of searchResult
+        if (searchResult.size() >= maxPerPage)
+        {
+            vector<cosc345::Connection::Movies> tempResult;
+
+            // Exception for page1 == 1
+            if (page1 == 1)
+            {
+                tempResult = vector<cosc345::Connection::Movies>(searchResult.begin(), searchResult.end());
+            }
+            else
+            {
+                tempResult = vector<cosc345::Connection::Movies>(searchResult.begin() + (page1 * maxPerPage) - 1, searchResult.end());
+            }
+            clearPosters();
+            displayPosters(tempResult, gridLayout, rec);
+        }
+    }
+}
+
+void MainWindow::handlePageNumber2()
+{
+
+    if (page2 == (searchResult.size() / maxPerPage) || searchResult.size() < maxPerPage)
+    {
+        // do nothing
+    }
+    else
+    {
+
+        page1++;
+        page2++;
+        pageNum1->setText("<< " + QString::number(page1));
+        pageNum2->setText(QString::number(page2) + " >>");
+
+        // update gridLayout with subset of searchResult
+        if (searchResult.size() >= maxPerPage)
+        {
+            vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * maxPerPage) - 1, searchResult.end());
+            clearPosters();
+            displayPosters(tempResult, gridLayout, rec);
+        }
+    }
+}
