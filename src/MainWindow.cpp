@@ -78,7 +78,7 @@ void MainWindow::backendInit()
 
     rec = Recommendation(movies, foods);
 
-    homeList = movies;
+    homeList = conn.getDetailMovie();
     // Calculate the initial tempResult based on maxPerPage
     auto begin = movies.begin();
     auto end = begin + maxPerPage;
@@ -107,7 +107,7 @@ void MainWindow::setupUI()
     QWidget *menuAndSearchContainer = new QWidget();
 
     // Create a layout for the menu bar and search bar
-    QVBoxLayout *menuAndSearchLayout = new QVBoxLayout(menuAndSearchContainer);
+    menuAndSearchLayout = new QVBoxLayout(menuAndSearchContainer);
 
     // Create a custom widget for the search bar
     QPushButton pageNum("Page Numbers");
@@ -248,8 +248,8 @@ void MainWindow::displayPosters(vector<cosc345::Connection::Movies> movies)
     pageNumberLabel->setObjectName("pageNumberLabel");
     pageNumberLabel->setAlignment(Qt::AlignCenter); // Center align the page number
     pageNumberLabel->setText(QString("Page %1 of %2").arg(page1).arg(pages));
-    gridLayout->addWidget(pageNumberLabel);
-    pageNumberLabel->setStyleSheet("font-size: 14px; color: #333;");
+    menuAndSearchLayout->addWidget(pageNumberLabel);
+    pageNumberLabel->setStyleSheet("font-size: 14px; color: #333; background-color:#4eeddb;");
 }
 
 void MainWindow::clearPosters()
@@ -265,18 +265,36 @@ void MainWindow::clearPosters()
         }
         delete item;
     }
+    // Clear the page number label
+    delete pageNumberLabel;
+    pageNumberLabel = nullptr;
 }
 
 void MainWindow ::handleHome()
 {
     searchBar->clear();
+    // reset pages
+    page1 = 1;
+    page2 = 2;
     pageNum1->setText("<<");
     pageNum2->setText("Next >>");
     pageNum1->setStyleSheet("background-color: grey;");
     pageNum2->setStyleSheet("background-color: #4eeddb;");
-    movies = homeList;
+    searchResult = conn.getDetailMovie();
+    pages = (homeList.size() / maxPerPage) + 1;
+    cout << pages << endl;
+
+    // Calculate the initial tempResult based on maxPerPage
+    auto begin = homeList.begin();
+    auto end = begin + maxPerPage;
+    // Ensure that end doesn't exceed the vector's size
+    if (end > homeList.end())
+    {
+        end = homeList.end();
+    }
+    tempResult = vector<cosc345::Connection::Movies>(begin, end);
     clearPosters();
-    displayPosters(movies);
+    displayPosters(homeList);
     if (verticalScrollBar)
     {
 
@@ -292,7 +310,6 @@ void MainWindow::handleShuffle()
     default_random_engine generator(seed);
     shuffle(tempResult.begin(), tempResult.end(), generator);
     searchBar->clear();
-    cout << tempResult.size() << endl;
     clearPosters();
     displayPosters(tempResult);
     if (verticalScrollBar)
@@ -304,47 +321,44 @@ void MainWindow::handleShuffle()
 
 void MainWindow::handleSearch()
 {
-
     // Get the search text from the searchBar
     string newSearchText = searchBar->text().toStdString();
     transform(newSearchText.begin(), newSearchText.end(), newSearchText.begin(), ::tolower);
-    if (newSearchText == defaultText)
-    {
-        // do nothing;
-    }
-    else
-    {
 
+    if (newSearchText != defaultText)
+    {
         defaultText = newSearchText;
         searchResult = conn.searching(newSearchText);
-        // if search reulst is less than maxPerpage directly pass it, other wise select first 30 to it.
-        if (searchResult.size() < maxPerPage)
-        {
-            tempResult = searchResult;
-        }
-        else
-        {
-            auto begin = movies.begin();
-            auto end = begin + maxPerPage;
+        // reset pages
+        page1 = 1;
+        page2 = 2;
+        pageNum1->setText("<<");
+        pageNum2->setText("Next >>");
+        pageNum1->setStyleSheet("background-color: grey;");
+        pageNum2->setStyleSheet("background-color: #4eeddb;");
 
-            // Ensure that end doesn't exceed the vector's size
-            if (end > movies.end())
-            {
-                end = movies.end();
-            }
+        // Set tempResult to the first maxPerPage items in searchResult
+        auto begin = searchResult.begin();
+        auto end = begin + maxPerPage;
 
-            tempResult = vector<cosc345::Connection::Movies>(begin, end);
+        if (end > searchResult.end())
+        {
+            end = searchResult.end();
         }
+
+        tempResult = vector<cosc345::Connection::Movies>(begin, end);
+
         int pages = searchResult.size() / maxPerPage;
         int remain = searchResult.size() % maxPerPage;
         clearPosters();
         displayPosters(searchResult);
+
         // Set the position of the vertical scrollbar to the top
         if (verticalScrollBar)
         {
-
             verticalScrollBar->setValue(0);
         }
+
         if (searchResult.size() < maxPerPage)
         {
             pageNum1->setText("<<");
@@ -387,6 +401,7 @@ void MainWindow::handlePageNumberPrev()
             pageNum1->setText("<< Prev");
             pageNum1->setStyleSheet("background-color: #4eeddb;");
             pageNum2->setText("Next >>");
+            pageNum2->setStyleSheet("background-color: #4eeddb;");
         }
         // Set the position of the vertical scrollbar to the top
         if (verticalScrollBar)
@@ -417,43 +432,41 @@ void MainWindow::handlePageNumberPrev()
 
 void MainWindow::handlePageNumberNext()
 {
-
     if (page2 > pages || searchResult.size() < maxPerPage)
     {
-        // do nothing
-        // cout << page2 << endl;
-        // cout << (searchResult.size() / maxPerPage) << endl;
+        // No more pages to display or not enough items for pagination
+        return;
+    }
+
+    page1++;
+    pageNum1->setText(page1 == 1 ? "<<" : "<< Prev");
+    pageNum1->setStyleSheet("background-color: #4eeddb;");
+
+    page2++;
+
+    if (page2 > pages)
+    {
+        pageNum2->setStyleSheet("background-color: grey;");
+        pageNum2->setText("");
     }
     else
     {
-
-        page1++;
-        if (page1 != 1)
-        {
-            pageNum1->setText("<< Prev");
-            pageNum1->setStyleSheet("background-color: #4eeddb;");
-        }
-        page2++;
-        if (page2 == pages)
-        {
-            pageNum1->setText("<< Pev");
-            pageNum2->setStyleSheet("background-color: grey;");
-            pageNum2->setText("");
-        }
-        pageNum1->setText("<< Prev");
         pageNum2->setText("Next >>");
-        // Set the position of the vertical scrollbar to the top
-        if (verticalScrollBar)
-        {
-            verticalScrollBar->setValue(0);
-        }
-        // update gridLayout with subset of searchResult
-        if (searchResult.size() >= maxPerPage)
-        {
-            // vector<cosc345::Connection::Movies> tempResult(searchResult.begin() + (page1 * maxPerPage) - 1, searchResult.end());
-            tempResult = vector<cosc345::Connection::Movies>(searchResult.begin() + (page1 * maxPerPage) - 1, searchResult.end());
-            clearPosters();
-            displayPosters(tempResult);
-        }
+    }
+
+    // Set the position of the vertical scrollbar to the top
+    if (verticalScrollBar)
+    {
+        verticalScrollBar->setValue(0);
+    }
+
+    // Update the displayed posters
+    if (searchResult.size() >= maxPerPage)
+    {
+        int startIndex = (page1 - 1) * maxPerPage;
+        int endIndex = std::min(startIndex + maxPerPage, static_cast<int>(searchResult.size()));
+        tempResult = std::vector<cosc345::Connection::Movies>(searchResult.begin() + startIndex, searchResult.begin() + endIndex);
+        clearPosters();
+        displayPosters(tempResult);
     }
 }
