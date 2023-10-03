@@ -16,7 +16,7 @@ file(COPY ${CMAKE_SOURCE_DIR}/data/curated2.txt DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/src/searchIcon.png DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/src/no-image-icon.png DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/src/home.png DESTINATION ${CMAKE_BINARY_DIR})
-file(COPY ${CMAKE_SOURCE_DIR}/src/reload.png DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${CMAKE_SOURCE_DIR}/src/shuffle.png DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY ${CMAKE_SOURCE_DIR}/src/myStyles.qss DESTINATION ${CMAKE_BINARY_DIR})
 add_executable(MovieAndFood 
     src/connection.h

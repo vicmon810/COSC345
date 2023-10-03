@@ -119,7 +119,7 @@ void MainWindow::setupUI()
 
     // Create a push button for shuffle
     QPushButton *shuffle = new QPushButton(this);
-    QIcon shuffleIcon("reload.png");
+    QIcon shuffleIcon("shuffle.png");
     shuffle->setIcon(shuffleIcon);
 
     QWidget *searchWidget = new QWidget();
@@ -421,7 +421,10 @@ void MainWindow::handlePageNumberPrev()
             else
             {
 
-                tempResult = vector<cosc345::Connection::Movies>(searchResult.begin() + (page1 * maxPerPage) - 1, searchResult.end());
+                tempResult = vector<cosc345::Connection::Movies>(searchResult.begin() + ((page1 - 1) * maxPerPage) - 1, searchResult.end());
+
+                cout << page1 << endl;
+                cout << tempResult.size() << endl;
             }
 
             clearPosters();
