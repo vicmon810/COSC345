@@ -338,6 +338,18 @@ void MainWindow::handleSearch()
     {
         defaultText = newSearchText;
         searchResult = conn.searching(newSearchText);
+
+        //Check if theres 0 movies, give popup notification
+        if (searchResult.size() == 0) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Movie Search");
+            msgBox.setText("There are no movies or genres\nthat match " + QString::fromStdString(newSearchText));
+            msgBox.exec();
+            //Clear search bar
+            searchBar->clear();
+            return;
+        }
+
         // reset pages
         page1 = 1;
         page2 = 2;
