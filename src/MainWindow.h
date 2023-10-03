@@ -71,7 +71,7 @@ private slots:
 private:
     QGridLayout *gridLayout; /**< Grid layout for displaying movie posters. */
     QVBoxLayout *menuAndSearchLayout;
-        QLineEdit *searchBar;      /**< Text input for searching movies. */
+    QLineEdit *searchBar;      /**< Text input for searching movies. */
     QPushButton *pageNum1;         /**< Button for navigating to the previous page. */
     QPushButton *pageNum2;         /**< Button for navigating to the next page. */
     QScrollBar *verticalScrollBar; /**< Vertical scrollbar for the poster grid. */
