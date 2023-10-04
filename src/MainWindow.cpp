@@ -313,10 +313,19 @@ void MainWindow::handleShuffle()
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
     // Randomiser
     default_random_engine generator(seed);
-    shuffle(tempResult.begin(), tempResult.end(), generator);
+    shuffle(searchResult.begin(), searchResult.end(), generator);
     searchBar->clear();
+    //Reset page numbers
+    page1 = 1;
+    page2 = 2;
+    pageNum1->setText("<<");
+    pageNum2->setText("Next >>");
+    pageNum1->setStyleSheet("background-color: grey;");
+    pageNum2->setStyleSheet("background-color: #4eeddb;");
+    pages = (searchResult.size() / maxPerPage) + 1;
+
     clearPosters();
-    displayPosters(tempResult);
+    displayPosters(searchResult);
     if (verticalScrollBar)
     {
 
@@ -334,6 +343,18 @@ void MainWindow::handleSearch()
     {
         defaultText = newSearchText;
         searchResult = conn.searching(newSearchText);
+
+        //Check if theres 0 movies, give popup notification
+        if (searchResult.size() == 0) {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Movie Search");
+            msgBox.setText("There are no movies or genres\nthat match " + QString::fromStdString(newSearchText));
+            msgBox.exec();
+            //Clear search bar
+            searchBar->clear();
+            return;
+        }
+
         // reset pages
         page1 = 1;
         page2 = 2;
@@ -342,17 +363,7 @@ void MainWindow::handleSearch()
         pageNum1->setStyleSheet("background-color: grey;");
         pageNum2->setStyleSheet("background-color: #4eeddb;");
 
-        // Set tempResult to the first maxPerPage items in searchResult
-        auto begin = searchResult.begin();
-        auto end = begin + maxPerPage;
-
-        if (end > searchResult.end())
-        {
-            end = searchResult.end();
-        }
-
-        tempResult = vector<cosc345::Connection::Movies>(begin, end);
-
+        cout << "start sorting page" << endl;
         int pages = searchResult.size() / maxPerPage;
         int remain = searchResult.size() % maxPerPage;
         clearPosters();
@@ -397,8 +408,8 @@ void MainWindow::handlePageNumberPrev()
         {
             pageNum1->setText("<<");
             pageNum1->setStyleSheet("background-color: grey;");
-            // pageNum1->setStyleSheet()
             pageNum2->setText("Next >>");
+            pageNum2->setStyleSheet("background-color: #4eeddb;");
         }
         else
         {
