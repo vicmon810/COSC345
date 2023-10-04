@@ -125,6 +125,9 @@ void MainWindow::setupUI()
     QWidget *searchWidget = new QWidget();
     QHBoxLayout *searchLayout = new QHBoxLayout(searchWidget);
 
+    QWidget* buttons = new QWidget();
+    buttonLayout = new QHBoxLayout(buttons);
+
     // Boolean check for updating page numbers
     pageCheck = false;
 
@@ -141,10 +144,8 @@ void MainWindow::setupUI()
 
     // Add the search bar and buttons to the search widget
     searchLayout->addWidget(home);
-    searchLayout->addWidget(shuffle);
-    searchLayout->addWidget(pageNum1);
     searchLayout->addWidget(searchBar);
-    searchLayout->addWidget(pageNum2);
+    searchLayout->addWidget(shuffle);
 
     menuAndSearchContainer->setObjectName("menuAndSearchContainer");
     searchBar->setObjectName("searchBar");
@@ -157,8 +158,12 @@ void MainWindow::setupUI()
     // Add the title label to the layout
     menuAndSearchLayout->addWidget(titleLabel);
 
+    buttonLayout->addWidget(pageNum1);
+    buttonLayout->addWidget(pageNum2);
+
     // Add the search widget to the menu and search layout
     menuAndSearchLayout->addWidget(searchWidget);
+    menuAndSearchLayout->addWidget(buttons);
 
     // Set the custom QWidget as the menu bar for the main window
     this->setMenuWidget(menuAndSearchContainer);
@@ -248,7 +253,7 @@ void MainWindow::displayPosters(vector<cosc345::Connection::Movies> movies)
     pageNumberLabel->setObjectName("pageNumberLabel");
     pageNumberLabel->setAlignment(Qt::AlignCenter); // Center align the page number
     pageNumberLabel->setText(QString("Page %1 of %2").arg(page1).arg(pages));
-    menuAndSearchLayout->addWidget(pageNumberLabel);
+    buttonLayout->addWidget(pageNumberLabel);
     pageNumberLabel->setStyleSheet("font-size: 14px; color: #333; background-color:#4eeddb;");
 }
 
