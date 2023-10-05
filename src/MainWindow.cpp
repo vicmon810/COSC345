@@ -125,7 +125,7 @@ void MainWindow::setupUI()
     QWidget *searchWidget = new QWidget();
     QHBoxLayout *searchLayout = new QHBoxLayout(searchWidget);
 
-    QWidget* buttons = new QWidget();
+    QWidget *buttons = new QWidget();
     buttonLayout = new QHBoxLayout(buttons);
 
     // Boolean check for updating page numbers
@@ -204,8 +204,14 @@ void MainWindow::displayPosters(vector<cosc345::Connection::Movies> movies)
         pages++;
     for (const auto &movie : movies)
     {
+        string _name = movie.title;
+        size_t pos;
+        while ((pos = _name.find("=")) != std::string::npos)
+        {
+            _name.replace(pos, 1, ",");
+        }
 
-        QString name = QString::fromStdString(movie.title);
+        QString name = QString::fromStdString(_name);
         QString genres = QString::fromStdString(movie.genres);
         QString IMDB = QString::fromStdString(movie.imdb_id);
         QString overview = QString::fromStdString(movie.overview);
@@ -316,7 +322,7 @@ void MainWindow::handleShuffle()
     default_random_engine generator(seed);
     shuffle(searchResult.begin(), searchResult.end(), generator);
     searchBar->clear();
-    //Reset page numbers
+    // Reset page numbers
     page1 = 1;
     page2 = 2;
     pageNum1->setText("<<");
@@ -345,13 +351,14 @@ void MainWindow::handleSearch()
         defaultText = newSearchText;
         searchResult = conn.searching(newSearchText);
 
-        //Check if theres 0 movies, give popup notification
-        if (searchResult.size() == 0) {
+        // Check if theres 0 movies, give popup notification
+        if (searchResult.size() == 0)
+        {
             QMessageBox msgBox;
             msgBox.setWindowTitle("Movie Search");
             msgBox.setText("There are no movies or genres\nthat match " + QString::fromStdString(newSearchText));
             msgBox.exec();
-            //Clear search bar
+            // Clear search bar
             searchBar->clear();
             return;
         }
