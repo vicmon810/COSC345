@@ -58,7 +58,6 @@ add_executable(UnitTest
     src/Connection.cpp
     src/Recommendation.h
     src/Recommendation.cpp
- 
 )
 
 target_link_libraries(UnitTest PRIVATE 
