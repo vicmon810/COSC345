@@ -146,7 +146,12 @@ namespace cosc345
         vector<Movies> searchResult;
         int sizeMovies = Connection::getSizeMovie();
         cout << key << endl;
-
+        string _name = key;
+        size_t pos;
+        while ((pos = _name.find("=")) != std::string::npos)
+        {
+            _name.replace(pos, 1, ",");
+        }
         // If key is blank, return totalMovie
         if (key == "")
         {
