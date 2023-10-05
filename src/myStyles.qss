@@ -96,6 +96,13 @@ QScrollBar::sub-page:vertical, QScrollBar::add-page:vertical {
     background: none; /* Background for the page buttons */
 }
 
+#pageNumberLabel {
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #4eeddb;
+}
+
 
 
 
