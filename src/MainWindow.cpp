@@ -353,7 +353,7 @@ void MainWindow::handleSearch()
             msgBox.setText("There are no movies or genres\nthat match " + QString::fromStdString(newSearchText));
             msgBox.exec();
             // Clear search bar
-            searchBar->clear();
+            handleHome();
             return;
         }
 
