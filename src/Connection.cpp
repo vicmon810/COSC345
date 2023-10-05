@@ -44,8 +44,15 @@ namespace cosc345
                     movie.poster = fields[1];
                 if (i == 2)
                     movie.imdb_id = fields[2];
-                if (i == fields.size() - 1)
-                    movie.title = fields[fields.size() - 1];
+                if (i == fields.size() - 1) {
+                    string _name = fields[fields.size() - 1];
+                    size_t pos;
+                    while ((pos = _name.find("=")) != std::string::npos)
+                    {
+                        _name.replace(pos, 1, ",");
+                    }
+                    movie.title = _name;
+                }
                 if (i == fields.size() - 2)
                     movie.runtime = fields[fields.size() - 2];
                 if (i == fields.size() - 3)
@@ -55,6 +62,7 @@ namespace cosc345
                 if (i > 2 && i < fields.size() - 4)
                     movie.overview.append(fields[i]);
             }
+            
             moviesDetail.push_back(movie);
         }
         size_movie = moviesDetail.size();

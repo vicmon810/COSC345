@@ -204,14 +204,8 @@ void MainWindow::displayPosters(vector<cosc345::Connection::Movies> movies)
         pages++;
     for (const auto &movie : movies)
     {
-        string _name = movie.title;
-        size_t pos;
-        while ((pos = _name.find("=")) != std::string::npos)
-        {
-            _name.replace(pos, 1, ",");
-        }
 
-        QString name = QString::fromStdString(_name);
+        QString name = QString::fromStdString(movie.title);
         QString genres = QString::fromStdString(movie.genres);
         QString IMDB = QString::fromStdString(movie.imdb_id);
         QString overview = QString::fromStdString(movie.overview);
