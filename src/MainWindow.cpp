@@ -169,7 +169,7 @@ void MainWindow::setupUI()
 
     // Create a scroll area
     QScrollArea *scrollArea = new QScrollArea(centralWidget);
-    scrollArea->setMinimumSize(1000, 1000);
+    scrollArea->setMinimumSize(1100, 1100);
     scrollArea->setWidgetResizable(true);
     centralWidget->setLayout(new QVBoxLayout());
     centralWidget->layout()->addWidget(scrollArea);
