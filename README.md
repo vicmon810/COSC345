@@ -23,10 +23,10 @@ There are also page-turning buttons and the current page will be displayed on th
 If a button on the application menu is spammed, the application will crash. Currently working on a fix.
 
 ## Contributors: 
-[Kris Mao](https://github.com/vicmon810) 7248988 <br>
-[Andrew Goh](https://github.com/andre2410) 3457439 <br>
-[Andrew Booth](https://github.com/boo13103) 8539924 <br>
-[Tommy Light](https://github.com/tlite4) 1589489 <br>
+[Kris Mao](https://github.com/vicmon810) <br>
+[Andrew Goh](https://github.com/andre2410) <br>
+[Andrew Booth](https://github.com/boo13103) <br>
+[Tommy Light](https://github.com/tlite4) <br>
 
 ## Current Implementation
 Written in C++ using the QT5 GUI library.
