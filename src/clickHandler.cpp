@@ -107,10 +107,13 @@ namespace cosc345
         }
         ingredients = QString::fromStdString(resultString2);
 
+        //Dietary requirements
+        QString dietary = QString::fromStdString(food.dietary);
+
         // Create a custom dialog to show the food details
         QDialog dialog;
         QVBoxLayout* layout = new QVBoxLayout;
-        QPushButton* titleButton = new QPushButton(("REFRESH FOOD"));
+        QPushButton* titleButton = new QPushButton(("REFRESH FOOD PAIRING"));
 
         // Display the full food details in QLabel
         QLabel* titleLabel = new QLabel();
@@ -123,13 +126,19 @@ namespace cosc345
         QLabel* directionsLabel = new QLabel();
         directionsLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
 
+        QLabel* dietaryLabel = new QLabel(); 
+        dietaryLabel->setTextInteractionFlags(Qt::TextSelectableByMouse); 
+
         titleLabel->setText(title);
         ingredientsLabel->setText("Ingredients: " + ingredients);
-        directionsLabel->setText("directions: " + directions);
+        directionsLabel->setText("Directions: " + directions);
+        dietaryLabel->setText("Dietary tags:\n" + dietary);
+
 
         layout->addWidget(titleLabel);
         layout->addWidget(ingredientsLabel);
         layout->addWidget(directionsLabel);
+        layout->addWidget(dietaryLabel);
         layout->addWidget(titleButton);
 
         QObject::connect(titleButton, &QPushButton::clicked, [&]()

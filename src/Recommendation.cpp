@@ -24,6 +24,7 @@ namespace cosc345
             food.ingredients = f00d.ingredients;
             food.NER = f00d.NER;
             food.food_type = f00d.food_type;
+            food.dietary = f00d.dietary;
             // Append to either sweet or savoury food list
             if (food.food_type == "Savoury")
             {
