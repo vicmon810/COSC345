@@ -31,12 +31,6 @@ If a button on the application menu is spammed, the application will crash. Curr
 ## Current Implementation
 Written in C++ using the QT5 GUI library.
 
-## Contributors:
-[Kris Mao](https://github.com/vicmon810) 7248988 <br>
-[Andrew Goh](https://github.com/andre2410) 3457439 <br>
-[Andrew Booth](https://github.com/boo13103) 8539924 <br>
-[Tommy Light](https://github.com/tlite4) 1589489 <br>
-
 ## Sources Requirement : 
 [qt open source software](https://www.qt.io/)
 
