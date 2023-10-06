@@ -31,7 +31,7 @@ add_executable(MovieAndFood
     src/MainWindow.cpp
     src/main.cpp 
     )
-    
+   
 
 
 set_target_properties(MovieAndFood PROPERTIES AUTOMOC ON)

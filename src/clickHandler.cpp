@@ -61,7 +61,7 @@ namespace cosc345
         const int maxCharsPerLine = 30;
         string resultString;
         size_t startPos = 0;
-
+        bool isChar = false;
         while (startPos < holder.length())
         {
             // Find the position of the next space within the limit
@@ -70,14 +70,19 @@ namespace cosc345
             // If no space is found, break the line at the maximum characters
             if (endPos == string::npos)
             {
+                isChar = true;
                 endPos = startPos + maxCharsPerLine;
             }
-
-            // Append the substring to the result string with a newline character
-            resultString += holder.substr(startPos, endPos - startPos) + "\n";
-
+            if (!isChar)
+                // Append the substring to the result string with a newline character
+                resultString += holder.substr(startPos, endPos - startPos) + "\n";
+            else
+                resultString += holder.substr(startPos, endPos - startPos);
             // Update the starting position for the next iteration
-            startPos = endPos + 1;
+            if (!isChar)
+                startPos = endPos + 1;
+            else
+                startPos = endPos;
         }
 
         directions = QString::fromStdString(resultString);
@@ -87,7 +92,7 @@ namespace cosc345
         string resultString2;
 
         startPos = 0;
-
+        isChar = false;
         while (startPos < holder2.length())
         {
             // Find the position of the next space within the limit
@@ -96,14 +101,19 @@ namespace cosc345
             // If no space is found, break the line at the maximum characters
             if (endPos == string::npos)
             {
-                endPos = startPos + maxCharsPerLine;
+                isChar = true; 
+                endPos = startPos + maxCharsPerLine; 
             }
-
-            // Append the substring to the result string with a newline character
-            resultString2 += holder2.substr(startPos, endPos - startPos) + "\n";
-
+            if (!isChar)
+                // Append the substring to the result string with a newline character
+                resultString2 += holder2.substr(startPos, endPos - startPos) + "\n";
+            else
+                resultString2 += holder2.substr(startPos, endPos - startPos);
             // Update the starting position for the next iteration
-            startPos = endPos + 1;
+            if (!isChar)
+                startPos = endPos + 1; 
+            else
+                startPos = endPos;
         }
         ingredients = QString::fromStdString(resultString2);
 
