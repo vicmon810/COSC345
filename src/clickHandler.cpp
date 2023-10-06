@@ -5,8 +5,6 @@ namespace cosc345
 
     void clickHandler::pop_food(QString genres, Recommendation rec)
     {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("Food Recommendation");
 
         // Set savoury genres (why is it here? Lmao idgaf)
         vector<string> savouryGenres = {"Action", "Adventure",
@@ -43,7 +41,7 @@ namespace cosc345
             }
         }
 
-        // Give savoury food recommendation
+        // Give food recommendation
         Connection::Food food;
         if (check)
         {
@@ -53,6 +51,7 @@ namespace cosc345
         {
             food = rec.sweetFoodSelect();
         }
+
         // Get message components
         QString title = QString::fromStdString(food.title);
         QString type = QString::fromStdString(food.food_type);
@@ -108,8 +107,48 @@ namespace cosc345
         }
         ingredients = QString::fromStdString(resultString2);
 
-        msgBox.setText("Title: " + title + "\n" + "\n" + "Ingredients: " + ingredients + "\n" + "Directions: " + directions); // Noob way lmao
-        msgBox.exec();
+        // Dietary requirements
+        QString dietary = QString::fromStdString(food.dietary);
+
+        // Create a custom dialog to show the food details
+        QDialog dialog;
+        QVBoxLayout *layout = new QVBoxLayout;
+        QPushButton *titleButton = new QPushButton(("REFRESH FOOD PAIRING"));
+
+        // Display the full food details in QLabel
+        QLabel *titleLabel = new QLabel();
+        titleLabel->setObjectName("movieTitle"); // To use same qss settings
+        titleLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
+
+        QLabel *ingredientsLabel = new QLabel();
+        ingredientsLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
+
+        QLabel *directionsLabel = new QLabel();
+        directionsLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
+
+        QLabel *dietaryLabel = new QLabel();
+        dietaryLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
+
+        titleLabel->setText(title);
+        ingredientsLabel->setText("Ingredients: " + ingredients);
+        directionsLabel->setText("Directions: " + directions);
+        dietaryLabel->setText("Dietary tags:\n" + dietary);
+
+        layout->addWidget(titleLabel);
+        layout->addWidget(ingredientsLabel);
+        layout->addWidget(directionsLabel);
+        layout->addWidget(dietaryLabel);
+        layout->addWidget(titleButton);
+
+        QObject::connect(titleButton, &QPushButton::clicked, [&]()
+                         {   
+                dialog.close();
+                clickHandler::pop_food(genres, rec); });
+
+        dialog.setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+        dialog.setLayout(layout);
+        dialog.setWindowTitle("Food Details");
+        dialog.exec();
     }
 
     void clickHandler::handleItemClicked(QString title, QString genres, QString IMDB, QString overview, QString runtime, QString rating, QString release, Recommendation rec)
@@ -137,10 +176,10 @@ namespace cosc345
         RatingLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
         QLabel *RelatesLabel = new QLabel();
         RelatesLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
-        titleLabel->setText("Title: " + title);
+        titleLabel->setText(title);
         genresLabel->setText("Genres: " + genres);
         IMDBLabel->setText("IMDB Number: " + IMDB);
-        RunTimeLabel->setText("Run time : " + runtime + " mints");
+        RunTimeLabel->setText("Run time : " + runtime + " minutes");
 
         // Convert the rating QString to a double
         double ratingValue = rating.toDouble();
@@ -160,12 +199,11 @@ namespace cosc345
             overview += '\n';
             // overview += "...";
         }
-        // Test code to fix line bug
+        // Test code to fix line bug NEED TO FIX WORDSPLIT BUG
         string holder = overview.toStdString();
         const int maxCharsPerLine = 30;
         string resultString;
         size_t startPos = 0;
-        vector<string> wordsHolder;
         bool isChar = false;
         while (startPos < holder.length())
         {
@@ -175,13 +213,14 @@ namespace cosc345
             // If no space is found, break the line at the maximum characters
             if (endPos == string::npos)
             {
-                endPos = startPos + maxCharsPerLine;
                 isChar = true;
+                endPos = startPos + maxCharsPerLine;
             }
-
-            // Append the substring to the result string with a newline character
-            resultString += holder.substr(startPos, endPos - startPos) + "\n";
-
+            if (!isChar)
+                // Append the substring to the result string with a newline character
+                resultString += holder.substr(startPos, endPos - startPos) + "\n";
+            else
+                resultString += holder.substr(startPos, endPos - startPos);
             // Update the starting position for the next iteration
             if (!isChar)
                 startPos = endPos + 1;
