@@ -165,7 +165,8 @@ namespace cosc345
         const int maxCharsPerLine = 30;
         string resultString;
         size_t startPos = 0;
-
+        vector<string> wordsHolder;
+        istringstream iss = holder;
         while (startPos < holder.length())
         {
             // Find the position of the next space within the limit
