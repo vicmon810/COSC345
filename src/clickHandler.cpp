@@ -166,7 +166,7 @@ namespace cosc345
         string resultString;
         size_t startPos = 0;
         vector<string> wordsHolder;
-        istringstream iss = holder;
+        bool isChar = false;
         while (startPos < holder.length())
         {
             // Find the position of the next space within the limit
@@ -176,13 +176,17 @@ namespace cosc345
             if (endPos == string::npos)
             {
                 endPos = startPos + maxCharsPerLine;
+                isChar = true;
             }
 
             // Append the substring to the result string with a newline character
             resultString += holder.substr(startPos, endPos - startPos) + "\n";
 
             // Update the starting position for the next iteration
-            startPos = endPos + 1;
+            if (!isChar)
+                startPos = endPos + 1;
+            else
+                startPos = endPos;
         }
         overview = QString::fromStdString(resultString);
         overviewLabel->setText("Overview: " + overview);

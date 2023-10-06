@@ -76,7 +76,7 @@ namespace cosc345
         inputFile.close();
 
         // Read Food Data
-        ifstream inputFile2("curated2.txt");
+        ifstream inputFile2("curated3.txt");
         if (!inputFile2.is_open())
         {
             cerr << "Failed to open Food file." << endl;
@@ -106,6 +106,8 @@ namespace cosc345
                     food.NER = fields[3];
                 if (i == 4)
                     food.food_type = fields[4];
+                if (i == 5)
+                    food.dietary = fields[5];
             }
             foodDetail.push_back(food);
         }
