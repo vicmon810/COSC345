@@ -71,8 +71,8 @@ private slots:
 private:
     QGridLayout *gridLayout; /**< Grid layout for displaying movie posters. */
     QVBoxLayout *menuAndSearchLayout;
-    QHBoxLayout* buttonLayout;
-        QLineEdit *searchBar;      /**< Text input for searching movies. */
+    QHBoxLayout *buttonLayout;
+    QLineEdit *searchBar;          /**< Text input for searching movies. */
     QPushButton *pageNum1;         /**< Button for navigating to the previous page. */
     QPushButton *pageNum2;         /**< Button for navigating to the next page. */
     QScrollBar *verticalScrollBar; /**< Vertical scrollbar for the poster grid. */
@@ -83,6 +83,7 @@ private:
     int maxPerPage = 30; /**< Maximum number of posters per page. */
     int pages;
     int remain;
+    bool isFinish = false;
     bool pageCheck = false;                           /**< Flag for page number change. */
     string defaultText = "";                          /**< Default search text. */
     cosc345 ::Recommendation rec;                     /**< Recommendation engine. */
