@@ -3,7 +3,7 @@
 [![codecov](https://codecov.io/gh/vicmon810/COSC345/graph/badge.svg?token=P25HQT144Q)](https://codecov.io/gh/vicmon810/COSC345)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/db37ffc37f4b44fdb96f0b6e863c1410)](https://app.codacy.com/gh/vicmon810/COSC345/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
-# Movies and Food:
+# Movies and Food
 We developed an application that recommends movies and suggests suitable food pairings based on the movie's genre. 
 
 This was for our group project for the paper [COSC345](https://www.otago.ac.nz/courses/papers?papercode=COSC345#t-2024)
